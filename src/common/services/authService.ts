@@ -98,10 +98,6 @@ export function buildAuthService(app: FastifyInstance) {
         ): Promise<boolean> {
             // TODO: verifyCode expiration
             const currentVerifyCode = await this.getVerifyCode(email);
-            if (!currentVerifyCode) {
-                return false;
-            }
-
             if (verifyCode == currentVerifyCode) {
                 await Verify.findOneAndDelete({ email });
                 return true;
