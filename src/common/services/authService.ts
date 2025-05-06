@@ -55,5 +55,22 @@ export function buildAuthService(app: FastifyInstance) {
 
             request.user = user;
         },
+
+        async verifyAuthTokenIgnoringExpiration(request: FastifyRequest, reply: FastifyReply) {
+            const authHeader = request.headers["X-Session"];
+            if (authHeader == undefined) {
+                request.user = null;
+                return;
+            }
+
+            const payload = app.jwt.verify<{
+                userId: string;
+                email: string;
+                type: "auth";
+            }>(authHeader as string, { ignoreExpiration: true });
+            const user = await User.findById(payload.userId);
+
+            request.user = user;
+        },
     };
 }
