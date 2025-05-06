@@ -9,7 +9,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
         },
         async (request) => {
             if (!request.user) {
-                return { status: "fail" };
+                return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
             return {
@@ -26,6 +26,39 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
         }
     );
 
+    app.get(
+        "/get_info",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            return {
+                status: "OK",
+                username: request.user.username,
+                username_id: request.user.usernameCode.toString(),
+
+                rating: request.user.rating,
+                eco: {
+                    ac: request.user.eco!.ac,
+                    dp: request.user.eco!.dp,
+                    navi: request.user.eco!.navi,
+                },
+                style: {
+                    title: request.user.style!.title,
+                    background: request.user.style!.background,
+                },
+
+                has_unread_mail: false, // TODO: Implement this
+                is_fool_sp: 0,
+                max_clear_common_challenge: 0
+            }
+        }
+    )
   
     app.post(
         "/add_coin",
@@ -35,7 +68,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
         },
         async (request) => {
             if (!request.user) {
-                return { status: "fail" };
+                return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
             const { coin_list } = request.body as {
