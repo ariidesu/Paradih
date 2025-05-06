@@ -1,42 +1,11 @@
 import { FastifyInstance } from "fastify";
-import { randomBytes, randomUUID } from "crypto";
 import bcrypt from "bcrypt";
 import type { UserDoc } from "../models/User";
-import { VerifyDoc } from "../models/Verify";
 
 export function buildUserService(app: FastifyInstance) {
     const { User, Verify } = app.models;
 
     return {
-        async createVerifyCode(email: string): Promise<string> {
-            if (await this.getVerifyCode(email) != null) {
-                throw new Error(`Email ${email} already has a verify code.`);
-            }
-
-            const code = randomUUID();
-            await Verify.create({ code, email });
-            return code;
-        },
-
-        async getVerifyCode(email: string): Promise<string | null> {
-            const doc = await Verify.findOne({ email });
-            return doc && doc.code;
-        },
-
-        async checkVerifyCode(email: string, verifyCode: string): Promise<boolean> {
-            // TODO: verifyCode expiration
-            const currentVerifyCode = await this.getVerifyCode(email);
-            if (!currentVerifyCode) {
-                return false;
-            }
-
-            if (verifyCode == currentVerifyCode) {
-                await Verify.findOneAndDelete({ email });
-                return true;
-            }
-            return false;
-        },
-
         async createUser(email: string, password: string): Promise<UserDoc> {
             const passwordHash = await bcrypt.hash(password, 10);
 

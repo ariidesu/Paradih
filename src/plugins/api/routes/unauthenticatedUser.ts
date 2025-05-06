@@ -15,9 +15,9 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             if (actionCode != "555555") {
                 return { status: "failed", code: "INVALID_CODE" };
             }
-            let verifyCode = await app.userService.getVerifyCode(email);
+            let verifyCode = await app.authService.getVerifyCode(email);
             if (verifyCode == null) {
-                verifyCode = await app.userService.createVerifyCode(email);
+                verifyCode = await app.authService.createVerifyCode(email);
             }
             return { status: "success", code: "OK", data: { verifyCode } };
         }
@@ -27,7 +27,7 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
         "/register/confirm",
         async (request) => {
             const { email, verifyCode, password } = request.body as { email: string, verifyCode: string, password: string };
-            if (!await app.userService.checkVerifyCode(email, verifyCode)) {
+            if (!await app.authService.checkVerifyCode(email, verifyCode)) {
                 return { status: "failed", code: "INVALID_VERIFY_CODE" };
             }
             if (await app.userService.findByEmail(email) != null) {
