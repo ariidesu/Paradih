@@ -107,7 +107,38 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             config: { encrypted: true }
         },
         async (request) => {
-            throw new Error("not implemented yippi")
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const mails = await app.mailService.getMails();
+            const mailsResponse = [];
+            for (const mail of mails) {
+                const hasRead = await app.mailService.hasReadMail(request.user, mail.id);
+
+                mailsResponse.push({
+                    mail_id: mail.id,
+                    send_time: mail.createdAt.getMilliseconds(),
+                    expire_time: mail.expireAt?.getMilliseconds(),
+
+                    sender: mail.sender,
+                    title: mail.title,
+                    content: mail.content,
+                    item: mail.items, // NOTE: Schema might change and this might be incorrect. Let's leave it like that for now
+                    
+                    link: mail.link.map((l) => {
+                        return { 
+                            text: l.text,
+                            addr: l.addr
+                        }
+                    }),
+
+                    is_get_item: !hasRead,
+                    is_read: hasRead,
+                })
+            }
+
+            return { status: "OK", mail: mailsResponse };
         }
     )
 
@@ -118,7 +149,39 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             config: { encrypted: true }
         },
         async (request) => {
-            throw new Error("not implemented yippi")
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { mail_id } = request.body as { mail_id: string };
+            const remainingMails = await app.mailService.readMail(request.user, mail_id);
+            const mailsResponse = [];
+            for (const mail of remainingMails) {
+                const hasRead = await app.mailService.hasReadMail(request.user, mail.id);
+
+                mailsResponse.push({
+                    mail_id: mail.id,
+                    send_time: mail.createdAt.getMilliseconds(),
+                    expire_time: mail.expireAt?.getMilliseconds(),
+
+                    sender: mail.sender,
+                    title: mail.title,
+                    content: mail.content,
+                    item: mail.items, // NOTE: Schema might change and this might be incorrect. Let's leave it like that for now
+                    
+                    link: mail.link.map((l) => {
+                        return { 
+                            text: l.text,
+                            addr: l.addr
+                        }
+                    }),
+
+                    is_get_item: !hasRead,
+                    is_read: hasRead,
+                })
+            }
+
+            return { status: "OK", mail: mailsResponse };
         }
     )
 

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, InferSchemaType, Document } from "mongoose";
 
 const MailSchema = new Schema({
     id: { type: String, required: true, unique: true },
@@ -8,7 +8,7 @@ const MailSchema = new Schema({
     content: { type: String, required: true },
 
     time: { type: Date, required: true },
-    expireTime: { type: Date },
+    expireAt: { type: Date },
 
     items: [{ type: Schema.Types.Mixed }],
     link: [
@@ -17,6 +17,7 @@ const MailSchema = new Schema({
             text: { type: String },
         },
     ],
-});
+}, { timestamps: true });
 
+export type MailDoc = InferSchemaType<typeof MailSchema> & Document;
 export default model("Mail", MailSchema);
