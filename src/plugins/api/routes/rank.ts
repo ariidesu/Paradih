@@ -8,7 +8,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             config: { encrypted: true },
         },
         async (request) => {
-            throw new Error("not implemented yippi");
+            return { status: "ok", data: [] };
         }
     );
 
@@ -19,7 +19,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             config: { encrypted: true },
         },
         async (request) => {
-            throw new Error("not implemented yippi");
+            return { status: "ok", data: [] };
         }
     );
 
