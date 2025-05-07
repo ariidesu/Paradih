@@ -2,7 +2,6 @@ import { Schema, model } from "mongoose";
 
 const PlayResultSchema = new Schema(
     {
-        id: { type: String, required: true, unique: true },
         userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
 
         chart: { type: String, required: true },
