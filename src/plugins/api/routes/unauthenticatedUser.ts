@@ -2,7 +2,7 @@ import { FastifyPluginAsync } from "fastify";
 
 const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
     app.post(
-        "/register/sendCode",
+        "/register/send_code",
         async (request) => {
             throw new Error("not implemented yippi")
         }
