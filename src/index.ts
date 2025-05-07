@@ -1,4 +1,5 @@
 import fastify from "fastify";
+import fastifyEnv from "@fastify/env";
 
 import encryptionPlugin from "./common/plugins/encryption";
 import authPlugin from "./common/plugins/auth";
@@ -9,18 +10,58 @@ import servicesPlugin from "./common/plugins/services";
 import apiApp from "./plugins/api";
 // import battleApp from "./plugins/battle";
 
+declare module 'fastify' {
+  interface FastifyInstance {
+    config: {
+      PORT: number,
+      AES_KEY: string,
+      MONGODB_URI: string,
+      JWT_SECRET: string
+    };
+  }
+}
+const ENV_SCHEMA = {
+  type: 'object',
+  required: [ "PORT", "AES_KEY", "MONGODB_URI", "JWT_SECRET" ],
+  properties: {
+    PORT: {
+      type: 'number',
+      default: 3000
+    },
+    AES_KEY: {
+      type: "string",
+    },
+    MONGODB_URI: {
+      type: "string"
+    },
+    JWT_SECRET: {
+      type: "string"
+    }
+  }
+}
+
 async function main() {
     const apiInstance = fastify({ logger: true });
-    await apiInstance.register(mongoosePlugin, { uri: process.env.MONGO_URI! });
+    apiInstance.addHook('preHandler', (request, reply, done) => {
+      request.log.info({ url: request.raw.url, method: request.raw.method }, `received ${typeof request.body == "object" ? JSON.stringify(request.body) : request.body}`)
+      done()
+    })
+    apiInstance.addHook('onSend', (request, reply, payload, done) => {
+      request.log.info({ url: request.raw.url, method: request.raw.method }, `sending ${payload}`)
+      done()
+    })
+
+    await apiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+    await apiInstance.register(mongoosePlugin, { uri: apiInstance.config.MONGODB_URI });
     await apiInstance.register(modelsPlugin);
     await apiInstance.register(servicesPlugin);
     await apiInstance.register(encryptionPlugin, {
-        aesKey: Buffer.from(process.env.AES_KEY!),
+        aesKey: Buffer.from(apiInstance.config.AES_KEY),
     });
     await apiInstance.register(authPlugin);
     apiInstance.register(apiApp);
     apiInstance.listen({
-        port: parseInt(process.env.PORT || "") || 3000,
+        port: apiInstance.config.PORT,
         host: "0.0.0.0",
     });
 
