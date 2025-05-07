@@ -41,7 +41,7 @@ export function buildAuthService(app: FastifyInstance) {
         },
 
         async verifyAuthToken(request: FastifyRequest, reply: FastifyReply) {
-            const authHeader = request.headers["X-Session"];
+            const authHeader = request.headers["x-session"];
             if (authHeader == undefined) {
                 request.user = null;
                 return;
@@ -61,7 +61,7 @@ export function buildAuthService(app: FastifyInstance) {
             request: FastifyRequest,
             reply: FastifyReply
         ) {
-            const authHeader = request.headers["X-Session"];
+            const authHeader = request.headers["x-session"];
             if (authHeader == undefined) {
                 request.user = null;
                 return;
