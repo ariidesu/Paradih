@@ -8,7 +8,6 @@ declare module 'fastify' {
   }
 
 const authPlugin: FastifyPluginAsync = async (app) => {
-    app.decorateRequest("user", null);
     app.decorate("verifyAuthToken", app.authService.verifyAuthToken);
 };
 
