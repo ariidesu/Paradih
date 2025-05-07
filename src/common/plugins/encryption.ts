@@ -16,39 +16,30 @@ const encrypt = function (payload: string, key: Buffer): Buffer {
 };
 
 const decrypt = function (payload: Buffer, key: Buffer): string {
-    const iv = payload.subarray(0, 16);
-    const encrypted = payload.subarray(16);
-    const decipher = createDecipheriv("aes-128-cbc", key, iv);
+    try {
+        const iv = payload.subarray(0, 16);
+        const encrypted = payload.subarray(16);
+        const decipher = createDecipheriv("aes-128-cbc", key, iv);
 
-    let decrypted = decipher.update(encrypted, undefined, "utf-8");
-    decrypted += decipher.final("utf-8");
-    return decrypted;
+        let decrypted = decipher.update(encrypted, undefined, "utf-8");
+        decrypted += decipher.final("utf-8");
+        return decrypted;
+    } catch(e) {
+        return payload.toString("utf-8");
+    }
 };
 
 export default fp<{ aesKey: Buffer }>(async (fastify, opts) => {
     const AES_KEY: Buffer = opts.aesKey;
 
-    fastify.addHook("preParsing", async (request, reply, payload) => {
+    fastify.addContentTypeParser("application/octet-stream", { parseAs: "buffer" }, (request, body, done) => {
         if (request.routeOptions.config?.encrypted) {
-            const rawBody: string = await new Promise((resolve) => {
-                let data = "";
-                payload.on("data", (chunk) => {
-                    data += chunk;
-                });
-                payload.on("end", () => {
-                    resolve(data);
-                });
-            });
-            const decrypted = decrypt(Buffer.from(rawBody), AES_KEY);
-            const stream = new Readable({
-                read() {
-                    this.push(decrypted);
-                    this.push(null);
-                },
-            });
-            return stream;
+            const decrypted = decrypt(body as Buffer, AES_KEY)
+
+            done(null, JSON.parse(decrypted));
+        } else {
+            done(null, body);
         }
-        return payload;
     });
 
     fastify.addHook("onSend", async (request, reply, payload) => {
