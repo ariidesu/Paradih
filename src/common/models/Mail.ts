@@ -8,7 +8,7 @@ const MailSchema = new Schema({
     content: { type: String, required: true },
 
     time: { type: Date, required: true },
-    expireAt: { type: Date },
+    expireAt: { type: Date, required: true },
 
     items: [{ type: Schema.Types.Mixed }],
     link: [

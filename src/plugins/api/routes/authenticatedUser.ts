@@ -1156,8 +1156,8 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                 mailsResponse.push({
                     mail_id: mail.id,
-                    send_time: mail.createdAt.getMilliseconds(),
-                    expire_time: mail.expireAt?.getMilliseconds(),
+                    send_time: mail.createdAt.getTime() / 1000,
+                    expire_time: mail.expireAt.getTime() / 1000,
 
                     sender: mail.sender,
                     title: mail.title,
@@ -1199,8 +1199,8 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                 mailsResponse.push({
                     mail_id: mail.id,
-                    send_time: mail.createdAt.getMilliseconds(),
-                    expire_time: mail.expireAt?.getMilliseconds(),
+                    send_time: mail.createdAt.getTime() / 1000,
+                    expire_time: mail.expireAt.getTime() / 1000,
 
                     sender: mail.sender,
                     title: mail.title,
