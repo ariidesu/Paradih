@@ -48,7 +48,7 @@ export function buildUserService(app: FastifyInstance) {
             ecoType: "ac" | "dp" | "navi",
             amount: number
         ) {
-            user.eco![ecoType] += amount;
+            user.eco[ecoType] += amount;
             await user.save();
         },
     };
