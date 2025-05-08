@@ -48,13 +48,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
     
                     rating: request.user.rating,
                     eco: {
-                        ac: request.user.eco!.ac,
-                        dp: request.user.eco!.dp,
-                        navi: request.user.eco!.navi,
+                        ac: request.user.eco.ac,
+                        dp: request.user.eco.dp,
+                        navi: request.user.eco.navi,
                     },
                     style: {
-                        title: request.user.style!.title,
-                        background: request.user.style!.background,
+                        title: request.user.style.title,
+                        background: request.user.style.background,
                     },
                     own_item: [],
 
@@ -1081,13 +1081,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                 rating: request.user.rating,
                 eco: {
-                    ac: request.user.eco!.ac,
-                    dp: request.user.eco!.dp,
-                    navi: request.user.eco!.navi,
+                    ac: request.user.eco.ac,
+                    dp: request.user.eco.dp,
+                    navi: request.user.eco.navi,
                 },
                 style: {
-                    title: request.user.style!.title,
-                    background: request.user.style!.background,
+                    title: request.user.style.title,
+                    background: request.user.style.background,
                 },
                 own_item: [],
 
@@ -1120,9 +1120,9 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             }
             
             return { status: "OK", eco: {
-                ac: request.user.eco!.ac,
-                dp: request.user.eco!.dp,
-                navi: request.user.eco!.navi
+                ac: request.user.eco.ac,
+                dp: request.user.eco.dp,
+                navi: request.user.eco.navi
             } };
         }
     )
@@ -1244,9 +1244,9 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             return {
                 status: "OK",
                 eco: {
-                    ac: request.user.eco!.ac,
-                    dp: request.user.eco!.dp,
-                    navi: request.user.eco!.navi,
+                    ac: request.user.eco.ac,
+                    dp: request.user.eco.dp,
+                    navi: request.user.eco.navi,
                 }
             }
         }

@@ -9,13 +9,27 @@ const UserSchema = new Schema(
 
         rating: { type: Number, default: 0 },
         eco: {
-            ac: { type: Number, default: 0 },
-            dp: { type: Number, default: 0 },
-            navi: { type: Number, default: 0 },
+            type: new Schema(
+                {
+                    ac: { type: Number, default: 0 },
+                    dp: { type: Number, default: 0 },
+                    navi: { type: Number, default: 0 },
+                },
+                { _id: false }
+            ),
+            required: true,
+            default: {},
         },
         style: {
-            title: { type: String, default: "NPlaytime0" },
-            background: { type: String, default: "BGDefault" },
+            type: new Schema(
+                {
+                    title: { type: String, default: "NPlaytime0" },
+                    background: { type: String, default: "BGDefault" },
+                },
+                { _id: false }
+            ),
+            required: true,
+            default: {},
         },
         owned: [{ type: String }],
         mailsRead: [{ type: String }],
