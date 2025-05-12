@@ -130,8 +130,8 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                             is_new: false,
                         };
                     }),
-                    purchase_list: purchasesList,
                 },
+                purchase_list: purchasesList,
             };
         }
     );
