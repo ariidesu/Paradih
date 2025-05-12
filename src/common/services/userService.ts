@@ -53,8 +53,10 @@ export function buildUserService(app: FastifyInstance) {
             ecoType: "ac" | "dp" | "navi",
             amount: number
         ) {
-            user.eco[ecoType] += amount;
-            await user.save();
+            const result = await User.findByIdAndUpdate(user._id, { $inc: { [`eco.${ecoType}`]: amount } }, { new: true });
+            if (result) {
+                user.eco[ecoType] = result.eco[ecoType];
+            }
         },
 
         async addOwnedItem(

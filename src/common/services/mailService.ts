@@ -3,7 +3,7 @@ import type { MailDoc } from "../models/Mail";
 import { UserDoc } from "../models/User";
 
 export function buildMailService(app: FastifyInstance) {
-    const { Mail } = app.models;
+    const { User, Mail } = app.models;
 
     return {
         async getMails(): Promise<MailDoc[]> {
@@ -25,8 +25,15 @@ export function buildMailService(app: FastifyInstance) {
 
         async readMail(user: UserDoc, mailId: string): Promise<MailDoc[]> {
             if (!user.mailsRead.includes(mailId)) {
-                user.mailsRead.push(mailId);
-                await user.save();
+                const result = await User.findByIdAndUpdate(
+                    user._id,
+                    { $addToSet: { mailsRead: mailId } },
+                    { new: true }
+                );
+                
+                if (result) {
+                    user.mailsRead = result.mailsRead;
+                }
             }
 
             const mails = await this.getMails();

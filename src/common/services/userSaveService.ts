@@ -13,19 +13,24 @@ export function buildUserSaveService(app: FastifyInstance) {
         },
 
         async setSave(user: UserDoc, key: string, value: any) {
-            const save = await this.getSave(user);
-            save.data.set(key, value);
-            
-            await save.save();
+            await UserSave.findOneAndUpdate(
+                { userId: user._id },
+                { $set: { data: { key: value } } },
+                { upsert: true, new: true, setDefaultsOnInsert: true }
+            );
         },
 
         async setSaves(user: UserDoc, map: {[key: string]: any}) {
-            const save = await this.getSave(user);
+            const update: {[key: string]: any} = {};
             for (const [key, value] of Object.entries(map)) {
-                save.data.set(key, value);
+                update[key] = value;
             }
             
-            await save.save();
+            await UserSave.findOneAndUpdate(
+                { userId: user._id },
+                { $set: { data: update} },
+                { upsert: true, new: true, setDefaultsOnInsert: true }
+            );
         }
     };
 }
