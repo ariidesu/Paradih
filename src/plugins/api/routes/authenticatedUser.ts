@@ -118,14 +118,14 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 style_list: {
                     title: request.user.owned.titles.map((item) => {
                         return {
-                            get_time: item.acquiredAt,
+                            get_time: item.acquiredAt.getTime() / 1000,
                             id: item.id,
                             is_new: false,
                         };
                     }),
                     background: request.user.owned.backgrounds.map((item) => {
                         return {
-                            get_time: item.acquiredAt,
+                            get_time: item.acquiredAt.getTime() / 1000,
                             id: item.id,
                             is_new: false,
                         };
