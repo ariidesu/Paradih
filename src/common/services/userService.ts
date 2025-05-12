@@ -33,7 +33,7 @@ export function buildUserService(app: FastifyInstance) {
                     ac: app.config.CONFIG_DEFAULT_AC,
                     dp: app.config.CONFIG_DEFAULT_DP,
                     navi: app.config.CONFIG_DEFAULT_NAVI,
-                }
+                },
             });
         },
 
@@ -53,7 +53,11 @@ export function buildUserService(app: FastifyInstance) {
             ecoType: "ac" | "dp" | "navi",
             amount: number
         ) {
-            const result = await User.findByIdAndUpdate(user._id, { $inc: { [`eco.${ecoType}`]: amount } }, { new: true });
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                { $inc: { [`eco.${ecoType}`]: amount } },
+                { new: true }
+            );
             if (result) {
                 user.eco[ecoType] = result.eco[ecoType];
             }
@@ -64,14 +68,24 @@ export function buildUserService(app: FastifyInstance) {
             itemType: "titles" | "backgrounds" | "purchases",
             itemId: string
         ) {
-            if (!user.owned[itemType].some((item) => item.id == itemId)) {
-                user.owned[itemType].push({
-                    id: itemId,
-                    acquiredAt: new Date(),
-                });
-                
-                await user.save();
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                {
+                    $push: {
+                        owned: {
+                            itemType: {
+                                id: itemId,
+                                acquiredAt: new Date(),
+                            },
+                        },
+                    },
+                },
+                { new: true }
+            );
+
+            if (result) {
+                user.owned[itemType] = result.owned[itemType];
             }
-        }
+        },
     };
 }
