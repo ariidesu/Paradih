@@ -73,7 +73,7 @@ export function buildUserService(app: FastifyInstance) {
                 {
                     $push: {
                         owned: {
-                            itemType: {
+                            [itemType]: {
                                 id: itemId,
                                 acquiredAt: new Date(),
                             },
