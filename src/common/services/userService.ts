@@ -15,12 +15,12 @@ export function buildUserService(app: FastifyInstance) {
                 .select("usernameCode")
                 .sort({ usernameCode: 1 });
 
-            let lastCode = 1;
             for (const user of usedCodes) {
-                if (user.usernameCode > lastCode) {
-                    selectedCode = user.usernameCode + 1;
+                if (user.usernameCode == selectedCode) {
+                    selectedCode++;
+                } else if (user.usernameCode > selectedCode) {
+                    break;
                 }
-                lastCode = user.usernameCode;
             }
 
             return await User.create({
