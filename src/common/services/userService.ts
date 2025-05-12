@@ -15,11 +15,10 @@ export function buildUserService(app: FastifyInstance) {
                 .select("usernameCode")
                 .sort({ usernameCode: 1 });
 
-            let lastCode = 0;
+            let lastCode = 1;
             for (const user of usedCodes) {
-                if (user.usernameCode > lastCode + 1) {
-                    selectedCode = lastCode + 1;
-                    break;
+                if (user.usernameCode > lastCode) {
+                    selectedCode = user.usernameCode + 1;
                 }
                 lastCode = user.usernameCode;
             }
