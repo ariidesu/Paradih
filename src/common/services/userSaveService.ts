@@ -15,7 +15,7 @@ export function buildUserSaveService(app: FastifyInstance) {
         async setSave(user: UserDoc, key: string, value: any) {
             await UserSave.findOneAndUpdate(
                 { userId: user._id },
-                { $set: { data: { key: value } } },
+                { $set: { data: { [key]: value } } },
                 { upsert: true, new: true, setDefaultsOnInsert: true }
             );
         },
