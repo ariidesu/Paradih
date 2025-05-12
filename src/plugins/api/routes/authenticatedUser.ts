@@ -212,7 +212,24 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             config: { encrypted: true },
         },
         async (request) => {
-            throw new Error("not implemented yippi");
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { style_type, style_id } = request.body as {
+                style_type: "title" | "background";
+                style_id: string;
+            };
+
+            const actualStyleType = style_type == "title" ? "titles" : "backgrounds";
+
+            await app.userService.addOwnedItem(
+                request.user,
+                actualStyleType,
+                style_id
+            );
+
+            return { status: "OK" };
         }
     );
 
