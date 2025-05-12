@@ -1,5 +1,13 @@
 import { Document, Schema, model, InferSchemaType } from "mongoose";
 
+const OwnedItemSchema = new Schema(
+    {
+      id: { type: String, required: true },
+      acquiredAt: { type: Date, default: Date.now }
+    },
+    { _id: false }
+  );
+
 const UserSchema = new Schema(
     {
         username: { type: String, required: true },
@@ -31,7 +39,18 @@ const UserSchema = new Schema(
             required: true,
             default: {},
         },
-        owned: [{ type: String }],
+        owned: {
+            type: new Schema(
+                {
+                    titles: [OwnedItemSchema],
+                    backgrounds: [OwnedItemSchema],
+                    purchases: [OwnedItemSchema]
+                },
+                { _id: false }
+            ),
+            required: true,
+            default: { titles: [], bgs: [], purchases: [] }
+        },
         mailsRead: [{ type: String }],
     },
     { timestamps: true }

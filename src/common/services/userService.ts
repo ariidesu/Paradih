@@ -50,5 +50,20 @@ export function buildUserService(app: FastifyInstance) {
             user.eco[ecoType] += amount;
             await user.save();
         },
+
+        async addOwnedItem(
+            user: UserDoc,
+            itemType: "titles" | "backgrounds" | "purchases",
+            itemId: string
+        ) {
+            if (!user.owned[itemType].some((item) => item.id == itemId)) {
+                user.owned[itemType].push({
+                    id: itemId,
+                    acquiredAt: new Date(),
+                });
+                
+                await user.save();
+            }
+        }
     };
 }
