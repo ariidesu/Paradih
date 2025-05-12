@@ -28,6 +28,12 @@ export function buildUserService(app: FastifyInstance) {
                 usernameCode: selectedCode,
                 email,
                 passwordHash,
+
+                eco: {
+                    ac: app.config.CONFIG_DEFAULT_AC,
+                    dp: app.config.CONFIG_DEFAULT_DP,
+                    navi: app.config.CONFIG_DEFAULT_NAVI,
+                }
             });
         },
 

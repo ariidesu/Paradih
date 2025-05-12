@@ -16,7 +16,11 @@ declare module 'fastify' {
       PORT: number,
       AES_KEY: string,
       MONGODB_URI: string,
-      JWT_SECRET: string
+      JWT_SECRET: string,
+
+      CONFIG_DEFAULT_AC: number,
+      CONFIG_DEFAULT_DP: number,
+      CONFIG_DEFAULT_NAVI: number,
     };
   }
 }
@@ -36,7 +40,20 @@ const ENV_SCHEMA = {
     },
     JWT_SECRET: {
       type: "string"
-    }
+    },
+    
+    CONFIG_DEFAULT_AC: {
+      type: "number",
+      default: 0
+    },
+    CONFIG_DEFAULT_DP: {
+      type: "number",
+      default: 0
+    },
+    CONFIG_DEFAULT_NAVI: {
+      type: "number",
+      default: 0
+    },
   }
 }
 
