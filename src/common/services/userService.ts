@@ -55,7 +55,7 @@ export function buildUserService(app: FastifyInstance) {
         ) {
             const result = await User.findByIdAndUpdate(
                 user._id,
-                { $inc: { eco: { [ecoType]: amount } } },
+                { $inc: { [`eco.${ecoType}`]: amount } },
                 { new: true }
             );
             if (result) {
@@ -72,11 +72,9 @@ export function buildUserService(app: FastifyInstance) {
                 user._id,
                 {
                     $push: {
-                        owned: {
-                            [itemType]: {
-                                id: itemId,
-                                acquiredAt: new Date(),
-                            },
+                        [`owned.${itemType}`]: {
+                            id: itemId,
+                            acquiredAt: new Date(),
                         },
                     },
                 },

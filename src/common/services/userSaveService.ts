@@ -15,7 +15,7 @@ export function buildUserSaveService(app: FastifyInstance) {
         async setSave(user: UserDoc, key: string, value: any) {
             await UserSave.findOneAndUpdate(
                 { userId: user._id },
-                { $set: { data: { [key]: value } } },
+                { $set: { [`data.${key}`]: value } },
                 { upsert: true, new: true, setDefaultsOnInsert: true }
             );
         },
@@ -23,12 +23,12 @@ export function buildUserSaveService(app: FastifyInstance) {
         async setSaves(user: UserDoc, map: {[key: string]: any}) {
             const update: {[key: string]: any} = {};
             for (const [key, value] of Object.entries(map)) {
-                update[key] = value;
+                update[`data.${key}`] = value;
             }
             
             await UserSave.findOneAndUpdate(
                 { userId: user._id },
-                { $set: { data: update} },
+                { $set: update },
                 { upsert: true, new: true, setDefaultsOnInsert: true }
             );
         }
