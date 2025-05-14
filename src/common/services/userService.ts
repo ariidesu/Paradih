@@ -85,5 +85,21 @@ export function buildUserService(app: FastifyInstance) {
                 user.owned[itemType] = result.owned[itemType];
             }
         },
+
+        async changeStyle(user: UserDoc, type: "background" | "title", id: string) {
+            const result = await await User.findByIdAndUpdate(
+                user._id,
+                {
+                    $set: {
+                        [`style.${type}`]: id,
+                    },
+                },
+                { new: true }
+            );
+
+            if (result) {
+                user.style[type] = result.style[type];
+            }
+        }
     };
 }

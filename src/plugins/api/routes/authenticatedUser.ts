@@ -106,7 +106,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                                 score: play.score,
                                 grade: play.grade,
-                                rating: 0,
+                                rating: play.rating,
 
                                 decrypted_plus_count: play.stats.decrypted_plus,
                                 decrypted_count: play.stats.decrypted,
@@ -228,6 +228,34 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 actualStyleType,
                 style_id
             );
+
+            return { status: "OK" };
+        }
+    );
+
+    app.post(
+        "/update_style",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { update_list } = request.body as { update_list: {
+                style_type: "title" | "background";
+                style_id: string;
+            }[] };
+
+            for (const item of update_list) {
+                await app.userService.changeStyle(
+                    request.user,
+                    item.style_type,
+                    item.style_id
+                );
+            }
 
             return { status: "OK" };
         }
