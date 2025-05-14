@@ -9,6 +9,7 @@ const PlayResultSchema = new Schema(
         grade: { type: Number, required: true },
         combo: { type: Number, required: true },
         maxCombo: { type: Number, required: true },
+        rating: { type: Number, required: true },
         stats: {
             type: new Schema(
                 {

@@ -54,7 +54,6 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
             const bestResult = await app.playService.getChartBestPlay(request.user, chart_id);
             const is_best = bestResult!.score == score;
             
-            // TODO: Implement proper play statistic, rating calculation
             return {
                 status: "OK",
 
@@ -65,7 +64,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                     lost: lost_count,
                     play_times: 1
                 },
-                rating: 0,
+                rating: request.user.rating,
                 
                 is_best,
                 best_result: {
@@ -75,7 +74,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
 
                     score: bestResult!.score,
                     grade: bestResult!.grade,
-                    rating: 0,
+                    rating: bestResult!.rating,
 
                     decrypted_plus_count: bestResult!.stats.decrypted_plus,
                     decrypted_count: bestResult!.stats.decrypted,

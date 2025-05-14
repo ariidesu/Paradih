@@ -22,11 +22,31 @@ interface GearData {
     dp: number;
 }
 
+interface SongData {
+    songId: string;
+    title: string;
+    bpm: string;
+    composer: string;
+    illustrator: string;
+    version: {
+        x: number;
+        y: number;
+        z: number;
+    };
+    genre: string;
+    charts: {
+        detected: number;
+        invaded: number;
+        massive: number;
+    };
+}
+
 export interface GameData {
     titles: string[];
     backgrounds: string[];
     purchases: Record<string, PurchaseItem>;
     gears: GearData[];
+    songs: SongData[];
 }
 
 export function buildGameDataService(app: FastifyInstance) {
@@ -34,12 +54,14 @@ export function buildGameDataService(app: FastifyInstance) {
     const backgroundsPath = path.join(__dirname, "../../data/backgrounds.json");
     const purchasesPath = path.join(__dirname, "../../data/purchases.json");
     const gearsPath = path.join(__dirname, "../../data/gears.json");
+    const songsPath = path.join(__dirname, "../../data/songs.json");
 
     let gameData: GameData = {
         titles: [],
         backgrounds: [],
         purchases: {},
-        gears: []
+        gears: [],
+        songs: []
     };
 
     const titlesData = JSON.parse(readFileSync(titlesPath, "utf8"));
@@ -54,6 +76,9 @@ export function buildGameDataService(app: FastifyInstance) {
     const gearsData = JSON.parse(readFileSync(gearsPath, "utf8"));
     gameData.gears = gearsData;
 
+    const songsData = JSON.parse(readFileSync(songsPath, "utf8"));
+    gameData.songs = songsData;
+
     return {
         getPurchases(): Record<string, PurchaseItem> {
             return gameData.purchases;
@@ -65,6 +90,14 @@ export function buildGameDataService(app: FastifyInstance) {
 
         getGearData(gearId: number): GearData | undefined {
             return gameData.gears.find((gear) => gear.gear == gearId);
+        },
+
+        getSongs(): SongData[] {
+            return gameData.songs;
+        },
+
+        getSongData(songId: string): SongData | undefined {
+            return gameData.songs.find((song) => song.songId == songId);
         }
     };
 }
