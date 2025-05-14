@@ -108,7 +108,7 @@ export function buildPlayService(app: FastifyInstance) {
         async updatePlayerRating(user: UserDoc) {
             const allBestPlays = await this.getBestPlays(user);
             if (!allBestPlays) {
-                return 0;
+                return;
             }
             
             const latestSeasonPlays: PlayResultDoc[] = [];
@@ -142,7 +142,7 @@ export function buildPlayService(app: FastifyInstance) {
             }
             const finalRating = Math.floor(totalRating / 50 * 100);
 
-            const result = await User.findByIdAndUpdate(user._id, { rating: finalRating });
+            const result = await User.findByIdAndUpdate(user._id, { rating: finalRating }, { new: true });
             if (result) {
                 user.rating = result.rating;
             }
