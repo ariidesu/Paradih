@@ -115,10 +115,11 @@ export function buildAuthService(app: FastifyInstance) {
         },
 
         // https://fastify.dev/docs/latest/Reference/Hooks/#respond-to-a-request-from-a-hook
-        verifyApiKey(request: FastifyRequest, reply: FastifyReply) {
+       async verifyApiKey(request: FastifyRequest, reply: FastifyReply) {
             const apiKey = request.headers["x-api-key"];
             if (apiKey != app.config.API_KEY) {
                 reply.code(401).send({ code: "AUTH_ERROR", error: "Invalid API key." });
+                return reply;
             }
         },
 
