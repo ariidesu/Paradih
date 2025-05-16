@@ -114,13 +114,13 @@ export function buildAuthService(app: FastifyInstance) {
             return false;
         },
 
+        // https://fastify.dev/docs/latest/Reference/Hooks/#respond-to-a-request-from-a-hook
         verifyApiKey(request: FastifyRequest, reply: FastifyReply) {
             const apiKey = request.headers["x-api-key"];
             if (apiKey != app.config.API_KEY) {
                 reply.code(401).send({ code: "AUTH_ERROR", error: "Invalid API key." });
-                return false;
+                return reply;
             }
-            return true
         },
 
         // API token is only used for API users that are logged in using /login api
@@ -140,7 +140,7 @@ export function buildAuthService(app: FastifyInstance) {
                 if (!doNotSendError) {
                     reply.code(401).send({ code: "AUTH_ERROR", error: "Invalid API Auth Token." });
                 }
-                return false;
+                return reply;
             }
 
             const payload = app.jwt.verify<{
@@ -151,7 +151,7 @@ export function buildAuthService(app: FastifyInstance) {
             if (payload.type != "api") {
                 request.user = null;
                 reply.code(401).send({ code: "AUTH_ERROR", error: "Invalid API Auth Token." });
-                return false;
+                return reply;
             }
 
             const user = await User.findById(payload.userId);
@@ -162,10 +162,9 @@ export function buildAuthService(app: FastifyInstance) {
 
         async verifyApiTokenThenApiKey(request: FastifyRequest, reply: FastifyReply) {
             const result = await this.verifyApiToken(request, reply, true);
-            if (!result) {
+            if (result !== true) {
                 return this.verifyApiKey(request, reply);
             }
-            return true;
         }
     };
 }
