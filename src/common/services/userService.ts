@@ -48,6 +48,20 @@ export function buildUserService(app: FastifyInstance) {
             return User.findOne({ username, usernameCode });
         },
 
+        async findById(id: string): Promise<UserDoc | null> {
+            return User.findById(id);
+        },
+
+        async deleteUser(id: string) {
+            const user = await User.findById(id);
+            if (!user) {
+                return null;
+            }
+
+            await Verify.deleteMany({ userId: id });
+            await User.deleteOne({ _id: id });
+        },
+
         async addEconomy(
             user: UserDoc,
             ecoType: "ac" | "dp" | "navi",

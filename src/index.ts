@@ -8,13 +8,16 @@ import modelsPlugin from "./common/plugins/models";
 import servicesPlugin from "./common/plugins/services";
 
 import apiApp from "./plugins/api";
+import gameApiApp from "./plugins/gameapi";
 // import battleApp from "./plugins/battle";
 
 declare module 'fastify' {
   interface FastifyInstance {
     config: {
       PORT: number,
+      API_PORT: number,
       AES_KEY: string,
+      API_KEY: string,
       MONGODB_URI: string,
       JWT_SECRET: string,
 
@@ -31,6 +34,13 @@ const ENV_SCHEMA = {
     PORT: {
       type: 'number',
       default: 3000
+    },
+    API_PORT: {
+      type: 'number',
+      default: 3001
+    },
+    API_KEY: {
+      type: "string"
     },
     AES_KEY: {
       type: "string",
@@ -58,27 +68,39 @@ const ENV_SCHEMA = {
 }
 
 async function main() {
-    const apiInstance = fastify({ logger: true });
-    apiInstance.addHook('preHandler', (request, reply, done) => {
+    const gameApiInstance = fastify({ logger: true });
+    gameApiInstance.addHook('preHandler', (request, reply, done) => {
       request.log.info({ url: request.raw.url, method: request.raw.method }, `received ${typeof request.body == "object" ? JSON.stringify(request.body) : request.body}`)
       done()
     })
-    apiInstance.addHook('onSend', (request, reply, payload, done) => {
+    gameApiInstance.addHook('onSend', (request, reply, payload, done) => {
       request.log.info({ url: request.raw.url, method: request.raw.method }, `sending ${payload}`)
       done()
     })
 
+    await gameApiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+    await gameApiInstance.register(mongoosePlugin, { uri: gameApiInstance.config.MONGODB_URI });
+    await gameApiInstance.register(modelsPlugin);
+    await gameApiInstance.register(servicesPlugin);
+    await gameApiInstance.register(encryptionPlugin, {
+        aesKey: Buffer.from(gameApiInstance.config.AES_KEY),
+    });
+    await gameApiInstance.register(authPlugin);
+    gameApiInstance.register(gameApiApp);
+    gameApiInstance.listen({
+        port: gameApiInstance.config.PORT,
+        host: "0.0.0.0",
+    });
+
+    const apiInstance = fastify({ logger: true });
     await apiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
     await apiInstance.register(mongoosePlugin, { uri: apiInstance.config.MONGODB_URI });
     await apiInstance.register(modelsPlugin);
     await apiInstance.register(servicesPlugin);
-    await apiInstance.register(encryptionPlugin, {
-        aesKey: Buffer.from(apiInstance.config.AES_KEY),
-    });
     await apiInstance.register(authPlugin);
     apiInstance.register(apiApp);
     apiInstance.listen({
-        port: apiInstance.config.PORT,
+        port: apiInstance.config.API_PORT,
         host: "0.0.0.0",
     });
 

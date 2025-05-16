@@ -50,8 +50,12 @@ export function buildAuthService(app: FastifyInstance) {
             const payload = app.jwt.verify<{
                 userId: string;
                 email: string;
-                type: "auth";
+                type: "auth" | "api";
             }>(authHeader as string);
+            if (payload.type != "auth") {
+                request.user = null;
+                return;
+            }
             const user = await User.findById(payload.userId);
 
             request.user = user;
@@ -70,8 +74,13 @@ export function buildAuthService(app: FastifyInstance) {
             const payload = app.jwt.verify<{
                 userId: string;
                 email: string;
-                type: "auth";
+                type: "auth" | "api";
             }>(authHeader as string, { ignoreExpiration: true });
+            if (payload.type != "auth") {
+                request.user = null;
+                return;
+            }
+
             const user = await User.findById(payload.userId);
 
             request.user = user;
@@ -104,5 +113,59 @@ export function buildAuthService(app: FastifyInstance) {
             }
             return false;
         },
+
+        verifyApiKey(request: FastifyRequest, reply: FastifyReply) {
+            const apiKey = request.headers["x-api-key"];
+            if (apiKey != app.config.API_KEY) {
+                reply.code(401).send({ code: "AUTH_ERROR", error: "Invalid API key." });
+                return false;
+            }
+            return true
+        },
+
+        // API token is only used for API users that are logged in using /login api
+        issueApiToken(userId: string, email: string): string {
+            return app.jwt.sign(
+                { userId: userId, email: email, type: "api" },
+                {
+                    algorithm: "HS256",
+                    expiresIn: "12h",
+                }
+            );
+        },
+
+        async verifyApiToken(request: FastifyRequest, reply: FastifyReply, doNotSendError = false) {
+            const authHeader = request.headers["x-auth-token"];
+            if (authHeader == undefined) {
+                if (!doNotSendError) {
+                    reply.code(401).send({ code: "AUTH_ERROR", error: "Invalid API Auth Token." });
+                }
+                return false;
+            }
+
+            const payload = app.jwt.verify<{
+                userId: string;
+                email: string;
+                type: "auth" | "api";
+            }>(authHeader as string, { ignoreExpiration: true });
+            if (payload.type != "api") {
+                request.user = null;
+                reply.code(401).send({ code: "AUTH_ERROR", error: "Invalid API Auth Token." });
+                return false;
+            }
+
+            const user = await User.findById(payload.userId);
+
+            request.user = user;
+            return true;
+        },
+
+        async verifyApiTokenThenApiKey(request: FastifyRequest, reply: FastifyReply) {
+            const result = await this.verifyApiToken(request, reply, true);
+            if (!result) {
+                return this.verifyApiKey(request, reply);
+            }
+            return true;
+        }
     };
 }
