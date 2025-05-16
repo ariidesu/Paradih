@@ -119,7 +119,6 @@ export function buildAuthService(app: FastifyInstance) {
             const apiKey = request.headers["x-api-key"];
             if (apiKey != app.config.API_KEY) {
                 reply.code(401).send({ code: "AUTH_ERROR", error: "Invalid API key." });
-                return reply;
             }
         },
 
@@ -157,12 +156,11 @@ export function buildAuthService(app: FastifyInstance) {
             const user = await User.findById(payload.userId);
 
             request.user = user;
-            return true;
         },
 
         async verifyApiTokenThenApiKey(request: FastifyRequest, reply: FastifyReply) {
             const result = await this.verifyApiToken(request, reply, true);
-            if (result !== true) {
+            if (result == undefined) {
                 return this.verifyApiKey(request, reply);
             }
         }
