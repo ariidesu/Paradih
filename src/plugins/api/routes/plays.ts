@@ -23,6 +23,8 @@ const playRoutes: FastifyPluginAsync = async (app) => {
 
             const plays = isBest ? await app.playService.getBestPlays(user) : await app.playService.getAllPlays(user);
             const formattedData = plays?.map((play) => ({
+                submittedAt: play.createdAt.getTime(),
+
                 chartId: play.chartId,
                 score: play.score,
                 grade: play.grade,
