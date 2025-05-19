@@ -6,8 +6,12 @@ export function buildUserService(app: FastifyInstance) {
     const { User, Verify } = app.models;
 
     return {
+        async hashPassword(password: string): Promise<string> {
+            return await bcrypt.hash(password, 10);
+        },
+
         async createUser(email: string, password: string): Promise<UserDoc> {
-            const passwordHash = await bcrypt.hash(password, 10);
+            const passwordHash = await this.hashPassword(password);
 
             // TODO: Better code choosing?
             let selectedCode = 1;
@@ -113,6 +117,39 @@ export function buildUserService(app: FastifyInstance) {
 
             if (result) {
                 user.style[type] = result.style[type];
+            }
+        },
+
+        async changeUsername(user: UserDoc, username: string, usernameCode: number) {
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                {
+                    $set: {
+                        username,
+                        usernameCode,
+                    },
+                },
+                { new: true }
+            );
+            if (result) {
+                user.username = result.username;
+                user.usernameCode = result.usernameCode;
+            }
+        },
+        
+        async changePassword(user: UserDoc, password: string) {
+            const hashedPassword = await this.hashPassword(password);
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                {
+                    $set: {
+                        passwordHash: hashedPassword,
+                    },
+                },
+                { new: true }
+            );
+            if (result) {
+                user.passwordHash = result.passwordHash;
             }
         }
     };

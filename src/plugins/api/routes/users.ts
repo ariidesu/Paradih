@@ -32,6 +32,43 @@ const usersRoutes: FastifyPluginAsync = async (app) => {
         }
     )
 
+    app.patch(
+        "/:userId",
+        { preHandler: app.authService.verifyApiKey },
+        async (request, reply) => {
+            const { userId } = request.params as { userId: string };
+            if (!userId) {
+                reply.statusCode = 400;
+                return { code: "INVALID_REQUEST", message: "User ID is required." };
+            }
+
+            const user = await app.userService.findById(userId);
+            if (!user) {
+                reply.statusCode = 404;
+                return { code: "USER_NOT_FOUND", message: "User not found." };
+            }
+
+            const { username, usernameCode, password } = request.body as { username: string, usernameCode: number, password: string };
+            if (username && usernameCode) {
+                const existingUser = await app.userService.findByNameAndCode(username, usernameCode);
+                if (existingUser && existingUser._id !== userId) {
+                    reply.statusCode = 409;
+                    return { code: "USERNAME_TAKEN", message: "Username is already taken." };
+                }
+                await app.userService.changeUsername(user, username, usernameCode);
+            } else if (username || usernameCode) {
+                reply.statusCode = 400;
+                return { code: "INVALID_REQUEST", message: "Both username and usernameCode are required." };
+            }
+            if (password) {
+                const hashedPassword = await app.userService.hashPassword(password);
+                await app.userService.changePassword(user, hashedPassword);
+            }
+
+            return { code: "OK" };
+        }
+    )
+
     app.get(
         "/batch",
         { preHandler: app.authService.verifyApiKey },
