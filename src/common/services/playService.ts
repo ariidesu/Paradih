@@ -6,6 +6,10 @@ export function buildPlayService(app: FastifyInstance) {
     const { User, PlayResult } = app.models;
 
     return {
+        async getAllPlays(user: UserDoc): Promise<PlayResultDoc[] | null> {
+            return await PlayResult.find({ userId: user._id });
+        },
+
         async getChartPlays(
             user: UserDoc,
             chartId: string
