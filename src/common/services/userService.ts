@@ -187,46 +187,25 @@ export function buildUserService(app: FastifyInstance) {
             maxViewChartCount: number,
             claimedRewards: string[],
         ) {
-            const result = await User.updateOne(
-                { _id: user._id, "ranksResult.id": rankId },
+            const result = await User.findByIdAndUpdate(
+                user._id,
                 {
                     $set: {
-                        "ranksResult.$.totalScore": totalScore,
-                        "ranksResult.$.clearState": clearState,
-                        "ranksResult.$.fcAdState": fcAdState,
-                        "ranksResult.$.passedStars": passedStars,
-                        "ranksResult.$.maxViewChartCount": maxViewChartCount,
-                        "ranksResult.$.claimedRewards": claimedRewards,
+                        "ranksResult.$[elem].totalScore": totalScore,
+                        "ranksResult.$[elem].clearState": clearState,
+                        "ranksResult.$[elem].fcAdState": fcAdState,
+                        "ranksResult.$[elem].passedStars": passedStars,
+                        "ranksResult.$[elem].maxViewChartCount": maxViewChartCount,
+                        "ranksResult.$[elem].claimedRewards": claimedRewards,
                     },
                 },
+                {
+                    arrayFilters: [{ "elem.id": rankId }],
+                    new: true,
+                }
             );
 
-            if (result.modifiedCount == 0) {
-                const result = await User.findByIdAndUpdate(user._id, {
-                    $push: {
-                        ranksResult: {
-                            id: rankId,
-                            totalScore,
-                            clearState,
-                            fcAdState,
-                            passedStars,
-                            maxViewChartCount,
-                            claimedRewards,
-                        },
-                    },
-                });
-                if (result) {
-                    user.ranksResult.push({
-                        id: rankId,
-                        totalScore,
-                        clearState,
-                        fcAdState,
-                        passedStars,
-                        maxViewChartCount,
-                        claimedRewards,
-                    });
-                }
-            } else {
+            if (result) {
                 const updatedResult = user.ranksResult.find(
                     (result) => result.id == rankId,
                 );
@@ -237,6 +216,36 @@ export function buildUserService(app: FastifyInstance) {
                     updatedResult.passedStars = passedStars;
                     updatedResult.maxViewChartCount = maxViewChartCount;
                     updatedResult.claimedRewards = claimedRewards;
+                }
+            } else {
+                const result = await User.findByIdAndUpdate(
+                    user._id,
+                    {
+                        $push: {
+                            ranksResult: {
+                                id: rankId,
+                                totalScore,
+                                clearState,
+                                fcAdState,
+                                passedStars,
+                                maxViewChartCount,
+                                claimedRewards,
+                            },
+                        },
+                    },
+                    { new: true }
+                );
+                
+                if (result) {
+                    user.ranksResult.push({
+                        id: rankId,
+                        totalScore,
+                        clearState,
+                        fcAdState,
+                        passedStars,
+                        maxViewChartCount,
+                        claimedRewards,
+                    });
                 }
             }
         },
