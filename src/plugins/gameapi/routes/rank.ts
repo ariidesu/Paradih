@@ -207,10 +207,18 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             }
 
             // Add rewards gaming
-            // We merge claimedRewards with get_reward_list
-            claimedRewards = Array.from(
-                new Set([...claimedRewards, ...get_reward_list]),
-            );
+            const rankData = app.gameDataService.getRankData(playData.rankId)!;
+            const rewards = rankData.rewards;
+            for (const reward of rewards) {
+                if (claimedRewards.includes(reward.id) || get_reward_list.includes(reward.id)) {
+                    continue;
+                }
+                if (reward.star > passedStars) {
+                    continue;
+                }
+
+                claimedRewards.push(reward.id);
+            }
 
             // Now we fetch all our play results to see if we have a full FC/AD play.
             let fcAdState = 0;
