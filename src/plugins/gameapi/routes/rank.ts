@@ -75,10 +75,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
 
             const { rank_id_list } = request.body as { rank_id_list: string[] };
 
-            const data: any[] = request.user.ranksResult.map((item) => {
-                if (rank_id_list.length > 0 && !rank_id_list.includes(item.id)) {
-                    return null; // Filter out items not in the requested list
-                }
+            const data: any[] = request.user.ranksResult.filter((item) => rank_id_list.length == 0 || rank_id_list.includes(item.id)).map((item) => {
                 return {
                     id: item.id,
                     clear_state: item.clearState,
