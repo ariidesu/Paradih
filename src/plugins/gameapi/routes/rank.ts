@@ -190,7 +190,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 clearState = 0, alreadyClaimed = 0;
             const existingData = app.userService.findRankResultById(
                 request.user,
-                playData.id,
+                playData.rankId,
             );
             if (existingData) {
                 totalScore = Math.max(totalScore, existingData.totalScore);
@@ -210,7 +210,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             }
 
             // Add rewards gaming
-            const rankData = app.gameDataService.getRankData(playData.id)!;
+            const rankData = app.gameDataService.getRankData(playData.rankId)!;
             const rewards = rankData.rewards;
             for (const reward of rewards) {
                 if (claimedRewards.includes(reward.id) || !get_reward_list.includes(reward.id)) {
