@@ -47,7 +47,7 @@ export function buildUserService(app: FastifyInstance) {
 
         async findByNameAndCode(
             username: string,
-            usernameCode: number
+            usernameCode: number,
         ): Promise<UserDoc | null> {
             return User.findOne({ username, usernameCode });
         },
@@ -69,12 +69,12 @@ export function buildUserService(app: FastifyInstance) {
         async addEconomy(
             user: UserDoc,
             ecoType: "ac" | "dp" | "navi",
-            amount: number
+            amount: number,
         ) {
             const result = await User.findByIdAndUpdate(
                 user._id,
                 { $inc: { [`eco.${ecoType}`]: amount } },
-                { new: true }
+                { new: true },
             );
             if (result) {
                 user.eco[ecoType] = result.eco[ecoType];
@@ -84,7 +84,7 @@ export function buildUserService(app: FastifyInstance) {
         async addOwnedItem(
             user: UserDoc,
             itemType: "titles" | "backgrounds" | "purchases",
-            itemId: string
+            itemId: string,
         ) {
             const result = await User.findByIdAndUpdate(
                 user._id,
@@ -96,7 +96,7 @@ export function buildUserService(app: FastifyInstance) {
                         },
                     },
                 },
-                { new: true }
+                { new: true },
             );
 
             if (result) {
@@ -104,15 +104,19 @@ export function buildUserService(app: FastifyInstance) {
             }
         },
 
-        async changeStyle(user: UserDoc, type: "background" | "title", id: string) {
-            const result = await await User.findByIdAndUpdate(
+        async changeStyle(
+            user: UserDoc,
+            type: "background" | "title",
+            id: string,
+        ) {
+            const result = await User.findByIdAndUpdate(
                 user._id,
                 {
                     $set: {
                         [`style.${type}`]: id,
                     },
                 },
-                { new: true }
+                { new: true },
             );
 
             if (result) {
@@ -120,7 +124,11 @@ export function buildUserService(app: FastifyInstance) {
             }
         },
 
-        async changeUsername(user: UserDoc, username: string, usernameCode: number) {
+        async changeUsername(
+            user: UserDoc,
+            username: string,
+            usernameCode: number,
+        ) {
             const result = await User.findByIdAndUpdate(
                 user._id,
                 {
@@ -129,14 +137,14 @@ export function buildUserService(app: FastifyInstance) {
                         usernameCode,
                     },
                 },
-                { new: true }
+                { new: true },
             );
             if (result) {
                 user.username = result.username;
                 user.usernameCode = result.usernameCode;
             }
         },
-        
+
         async changePassword(user: UserDoc, password: string) {
             const hashedPassword = await this.hashPassword(password);
             const result = await User.findByIdAndUpdate(
@@ -146,11 +154,68 @@ export function buildUserService(app: FastifyInstance) {
                         passwordHash: hashedPassword,
                     },
                 },
-                { new: true }
+                { new: true },
             );
             if (result) {
                 user.passwordHash = result.passwordHash;
             }
-        }
+        },
+
+        async setRankSession(user: UserDoc, rankId: string) {
+            await User.findByIdAndUpdate(
+                user._id,
+                {
+                    $set: {
+                        currentRankSession: rankId,
+                    },
+                },
+                { new: true },
+            );
+        },
+
+        findRankResultById(user: UserDoc, rankId: string) {
+            return user.ranksResult.find((result) => result.id == rankId);
+        },
+
+        async setRankResult(
+            user: UserDoc,
+            rankId: string,
+            totalScore: number,
+            clearState: number,
+            fcAdState: number,
+            passedStars: number,
+            maxViewChartCount: number,
+            claimedRewards: string[],
+        ) {
+            const result = await User.updateOne(
+                { _id: user._id, "ranksResult.id": rankId },
+                {
+                    $set: {
+                        "ranksResult.$.totalScore": totalScore,
+                        "ranksResult.$.clearState": clearState,
+                        "ranksResult.$.fcAdState": fcAdState,
+                        "ranksResult.$.passedStars": passedStars,
+                        "ranksResult.$.maxViewChartCount": maxViewChartCount,
+                        "ranksResult.$.claimedRewards": claimedRewards,
+                    },
+                },
+            );
+
+            if (result.modifiedCount == 0) {
+                await User.findByIdAndUpdate(user._id, {
+                    $push: {
+                        ranksResult: {
+                            id: rankId,
+                            totalScore,
+                            clearState,
+                            fcAdState,
+                            passedStars,
+                            maxViewChartCount,
+                            claimedRewards,
+                        },
+                    },
+                });
+            }
+        },
     };
 }

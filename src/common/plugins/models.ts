@@ -5,6 +5,7 @@ import UserSaveModel from "../models/UserSave";
 import PlayResultModel from "../models/PlayResult";
 import MailModel from "../models/Mail";
 import VerifyModel from "../models/Verify";
+import RankPlayModel from "../models/RankPlay";
 
 declare module "fastify" {
     interface FastifyInstance {
@@ -14,6 +15,7 @@ declare module "fastify" {
             Mail: typeof MailModel;
             PlayResult: typeof PlayResultModel;
             Verify: typeof VerifyModel;
+            RankPlay: typeof RankPlayModel;
         };
     }
 }
@@ -24,6 +26,7 @@ export default fp(async (fastify: FastifyInstance) => {
         UserSave: UserSaveModel,
         Mail: MailModel,
         PlayResult: PlayResultModel,
-        Verify: VerifyModel
+        Verify: VerifyModel,
+        RankPlay: RankPlayModel,
     });
 });
