@@ -187,7 +187,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 passedStars = pass_star_count,
                 maxViewChartCount = result_id_list.length,
                 claimedRewards = [] as string[],
-                clearState = 0;
+                clearState = 0, alreadyClaimed = 0;
             const existingData = app.userService.findRankResultById(
                 request.user,
                 playData.id,
@@ -200,6 +200,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                     existingData.maxViewChartCount,
                 );
                 claimedRewards = existingData.claimedRewards;
+                alreadyClaimed = claimedRewards.length;
                 clearState = existingData.clearState;
             }
 
@@ -209,10 +210,25 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             }
 
             // Add rewards gaming
-            // We merge claimedRewards with get_reward_list
-            claimedRewards = Array.from(
-                new Set([...claimedRewards, ...get_reward_list]),
-            );
+            const rankData = app.gameDataService.getRankData(playData.id)!;
+            const rewards = rankData.rewards;
+            for (const reward of rewards) {
+                if (claimedRewards.includes(reward.id) || !get_reward_list.includes(reward.id)) {
+                    continue;
+                }
+                if (reward.star > passedStars) {
+                    continue;
+                }
+
+                if (reward.reward.type === "dp") {
+                    await app.userService.addEconomy(request.user, "dp", reward.reward.value as number);
+                } else if (reward.reward.type === "title") {
+                    await app.userService.addOwnedItem(request.user, "titles", reward.reward.value as string);
+                } else if (reward.reward.type === "background") {
+                    await app.userService.addOwnedItem(request.user, "backgrounds", reward.reward.value as string);
+                }
+                claimedRewards.push(reward.id);
+            }
 
             // Now we fetch all our play results to see if we have a full FC/AD play.
             let fcAdState = 0;
@@ -246,8 +262,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                     try {
                         const suffix = parseInt(result.id.split("_").pop() || "0");
                         maxClear = Math.max(maxClear, suffix);
-                    } catch (e) {
-                        // Ignore parsing errors
+                    } catch (_) {
                     }
                 }
             }
@@ -265,6 +280,14 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 claimedRewards,
             );
             await app.userService.setRankSession(request.user, "");
+
+            return {
+                status: "ok",
+                eco: request.user.eco,
+                has_new_style: claimedRewards.length > alreadyClaimed,
+                max_clear_common_challenge: maxClear,
+                rank_query_info: await app.userService.findRankResultById(request.user, playData.id),
+            }
         },
     );
 };
