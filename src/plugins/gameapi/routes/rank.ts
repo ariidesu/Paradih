@@ -73,7 +73,12 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
+            const { rank_id_list } = request.body as { rank_id_list: string[] };
+
             const data: any[] = request.user.ranksResult.map((item) => {
+                if (rank_id_list.length > 0 && !rank_id_list.includes(item.id)) {
+                    return null; // Filter out items not in the requested list
+                }
                 return {
                     id: item.id,
                     clear_state: item.clearState,
@@ -87,6 +92,28 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                     result_total_score: item.totalScore,
                 };
             });
+
+            // Add default entries if they don't exist
+            const allRankIds = app.gameDataService.getRanks().map((r) => r.id);
+            for (const rankId of allRankIds) {
+                if (!data.some((item) => item && item.id === rankId) && rank_id_list.includes(rankId)) {
+                    const rankData = app.gameDataService.getRankData(rankId);
+                    if (rankData) {
+                        data.push({
+                            id: rankId,
+                            clear_state: 0,
+                            fc_ad_state: 0,
+                            get_reward_id_list: [],
+                            is_passed: null,
+                            max_view_chart_count: 0,
+                            pass_star_count: 0,
+                            play_cost: rankData.cost,
+                            result_total_score: 0,
+                        });
+                    }
+                }
+            }
+
             return { status: "ok", data };
         },
     );
@@ -212,6 +239,20 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             } else if (fcCount == playData.resultIds.length) {
                 fcAdState = 1;
             }
+
+            let maxClear = 0;
+            for (const result of request.user.ranksResult) {
+                if (result.clearState == 2 && result.id.startsWith("common_season02_")) {
+                    try {
+                        const suffix = parseInt(result.id.split("_").pop() || "0");
+                        maxClear = Math.max(maxClear, suffix);
+                    } catch (e) {
+                        // Ignore parsing errors
+                    }
+                }
+            }
+
+            await app.userService.updateMaxClearedCommonChallenge(request.user, maxClear);
 
             await app.userService.setRankResult(
                 request.user,
