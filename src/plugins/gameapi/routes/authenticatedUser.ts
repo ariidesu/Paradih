@@ -147,6 +147,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
+            // Whenever we fetch user's info (happens everytime we reach menu)
+            // That means we are not in a rank play session
+            // We reset it.
+            if (request.user.currentRankSession != "") {
+                await app.userService.setRankSession(request.user, "");
+            }
+
             return {
                 status: "OK",
                 username: request.user.username,
