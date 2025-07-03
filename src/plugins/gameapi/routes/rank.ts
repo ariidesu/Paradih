@@ -42,7 +42,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                         };
                         return {
                             id: reward.id,
-                            condition_params: ["1", reward.star],
+                            condition_params: ["1", reward.star.toString()],
                             reward_params: [
                                 rewardMapping[reward.reward.type],
                                 reward.reward.value.toString(),
