@@ -33,7 +33,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                     borders: item.borders,
                     star_borders: item.starBorders,
 
-                    charts: item.charts,
+                    chart_list: item.charts,
                     challenge_reward: item.rewards.map((reward) => {
                         const rewardMapping: { [key: string]: string } = {
                             dp: "0",
