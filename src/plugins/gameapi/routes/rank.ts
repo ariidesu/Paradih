@@ -283,7 +283,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 eco: request.user.eco,
                 has_new_style: claimedRewards.length > alreadyClaimed,
                 max_clear_common_challenge: maxClear,
-                rank_query_info: await app.userService.findRankResultById(request.user, playData.id),
+                rank_query_info: await app.userService.findRankResultById(request.user, playData.rankId),
             }
         },
     );
