@@ -202,7 +202,7 @@ export function buildUserService(app: FastifyInstance) {
             );
 
             if (result.modifiedCount == 0) {
-                await User.findByIdAndUpdate(user._id, {
+                const result = await User.findByIdAndUpdate(user._id, {
                     $push: {
                         ranksResult: {
                             id: rankId,
@@ -215,7 +215,45 @@ export function buildUserService(app: FastifyInstance) {
                         },
                     },
                 });
+                if (result) {
+                    user.ranksResult.push({
+                        id: rankId,
+                        totalScore,
+                        clearState,
+                        fcAdState,
+                        passedStars,
+                        maxViewChartCount,
+                        claimedRewards,
+                    });
+                }
+            } else {
+                const updatedResult = user.ranksResult.find(
+                    (result) => result.id == rankId,
+                );
+                if (updatedResult) {
+                    updatedResult.totalScore = totalScore;
+                    updatedResult.clearState = clearState;
+                    updatedResult.fcAdState = fcAdState;
+                    updatedResult.passedStars = passedStars;
+                    updatedResult.maxViewChartCount = maxViewChartCount;
+                    updatedResult.claimedRewards = claimedRewards;
+                }
             }
         },
+
+        async updateMaxClearedCommonChallenge(user: UserDoc, maxCleared: number) {
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                {
+                    $set: {
+                        maxClearedCommonChallenge: maxCleared,
+                    },
+                },
+                { new: true },
+            );
+            if (result) {
+                user.maxClearedCommonChallenge = result.maxClearedCommonChallenge;
+            }
+        }
     };
 }

@@ -88,7 +88,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                     has_unread_mail: false, // TODO: Implement this
                     is_fool_sp: 0,
-                    max_clear_common_challenge: 0,
+                    max_clear_common_challenge: request.user.maxClearedCommonChallenge,
                 },
 
                 save: {
@@ -168,7 +168,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                 has_unread_mail: false, // TODO: Implement this
                 is_fool_sp: 0,
-                max_clear_common_challenge: 0,
+                max_clear_common_challenge: request.user.maxClearedCommonChallenge,
             };
         }
     );
