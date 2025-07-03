@@ -187,55 +187,34 @@ export function buildUserService(app: FastifyInstance) {
             maxViewChartCount: number,
             claimedRewards: string[],
         ) {
-            const result = await User.findByIdAndUpdate(
-                user._id,
+            const result = await User.updateOne(
+                { _id: user._id, "ranksResult.id": rankId },
                 {
                     $set: {
-                        "ranksResult.$[elem].totalScore": totalScore,
-                        "ranksResult.$[elem].clearState": clearState,
-                        "ranksResult.$[elem].fcAdState": fcAdState,
-                        "ranksResult.$[elem].passedStars": passedStars,
-                        "ranksResult.$[elem].maxViewChartCount": maxViewChartCount,
-                        "ranksResult.$[elem].claimedRewards": claimedRewards,
+                        "ranksResult.$.totalScore": totalScore,
+                        "ranksResult.$.clearState": clearState,
+                        "ranksResult.$.fcAdState": fcAdState,
+                        "ranksResult.$.passedStars": passedStars,
+                        "ranksResult.$.maxViewChartCount": maxViewChartCount,
+                        "ranksResult.$.claimedRewards": claimedRewards,
                     },
                 },
-                {
-                    arrayFilters: [{ "elem.id": rankId }],
-                    new: true,
-                }
             );
 
-            if (result) {
-                const updatedResult = user.ranksResult.find(
-                    (result) => result.id == rankId,
-                );
-                if (updatedResult) {
-                    updatedResult.totalScore = totalScore;
-                    updatedResult.clearState = clearState;
-                    updatedResult.fcAdState = fcAdState;
-                    updatedResult.passedStars = passedStars;
-                    updatedResult.maxViewChartCount = maxViewChartCount;
-                    updatedResult.claimedRewards = claimedRewards;
-                }
-            } else {
-                const result = await User.findByIdAndUpdate(
-                    user._id,
-                    {
-                        $push: {
-                            ranksResult: {
-                                id: rankId,
-                                totalScore,
-                                clearState,
-                                fcAdState,
-                                passedStars,
-                                maxViewChartCount,
-                                claimedRewards,
-                            },
+            if (result.modifiedCount == 0) {
+                const result = await User.findByIdAndUpdate(user._id, {
+                    $push: {
+                        ranksResult: {
+                            id: rankId,
+                            totalScore,
+                            clearState,
+                            fcAdState,
+                            passedStars,
+                            maxViewChartCount,
+                            claimedRewards,
                         },
                     },
-                    { new: true }
-                );
-                
+                });
                 if (result) {
                     user.ranksResult.push({
                         id: rankId,
@@ -246,6 +225,18 @@ export function buildUserService(app: FastifyInstance) {
                         maxViewChartCount,
                         claimedRewards,
                     });
+                }
+            } else {
+                const updatedResult = user.ranksResult.find(
+                    (result) => result.id == rankId,
+                );
+                if (updatedResult) {
+                    updatedResult.totalScore = totalScore;
+                    updatedResult.clearState = clearState;
+                    updatedResult.fcAdState = fcAdState;
+                    updatedResult.passedStars = passedStars;
+                    updatedResult.maxViewChartCount = maxViewChartCount;
+                    updatedResult.claimedRewards = claimedRewards;
                 }
             }
         },
