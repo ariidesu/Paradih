@@ -268,7 +268,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
 
             await app.userService.setRankResult(
                 request.user,
-                playData.id,
+                playData.rankId,
                 totalScore,
                 clearState,
                 fcAdState,
