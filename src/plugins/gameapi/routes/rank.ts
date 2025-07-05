@@ -210,7 +210,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             const rankData = app.gameDataService.getRankData(playData.rankId)!;
             const rewards = rankData.rewards;
             for (const reward of rewards) {
-                if (claimedRewards.includes(reward.id) || get_reward_list.includes(reward.id)) {
+                if (claimedRewards.includes(reward.id) || !get_reward_list.includes(reward.id)) {
                     continue;
                 }
                 if (reward.star > passedStars) {
@@ -218,6 +218,16 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 }
 
                 claimedRewards.push(reward.id);
+
+                try {
+                    if (reward.reward.type == "dp") {
+                        await app.userService.addEconomy(request.user, "dp", reward.reward.value as number);
+                    } else if (reward.reward.type == "title") {
+                        await app.userService.addOwnedItem(request.user, "titles", reward.reward.value as string);
+                    } else if (reward.reward.type == "background") {
+                        await app.userService.addOwnedItem(request.user, "backgrounds", reward.reward.value as string);
+                    }
+                } catch (_) {}
             }
 
             // Now we fetch all our play results to see if we have a full FC/AD play.
