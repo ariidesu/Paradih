@@ -271,12 +271,25 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             );
             await app.userService.setRankSession(request.user, "");
 
+            const newResult = await app.userService.findRankResultById(request.user, playData.rankId);
+
             return {
                 status: "ok",
                 eco: request.user.eco,
                 has_new_style: passedStars > 1 && claimedRewards.length > alreadyClaimed,
                 max_clear_common_challenge: maxClear,
-                rank_query_info: await app.userService.findRankResultById(request.user, playData.rankId),
+                rank_query_info: newResult && {
+                    id: playData.rankId,
+                    clear_state: newResult.clearState,
+                    fc_ad_state: newResult.fcAdState,
+                    get_reward_id_list: newResult.claimedRewards,
+                    is_passed: newResult.clearState == 2 ? true : null,
+                    max_view_chart_count: newResult.maxViewChartCount,
+                    pass_star_count: newResult.passedStars,
+                    play_cost:
+                        app.gameDataService.getRankData(playData.rankId)?.cost ?? 0,
+                    result_total_score: newResult.totalScore,
+                },
             }
         },
     );
