@@ -401,6 +401,39 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             };
         }
     );
+    
+    app.get(
+        "/get_style_list",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            return {
+                status: "OK",
+                data: {
+                    title: request.user.owned.titles.map((item) => {
+                        return {
+                            get_time: item.acquiredAt.getTime() / 1000,
+                            id: item.id,
+                            is_new: false,
+                        };
+                    }),
+                    background: request.user.owned.backgrounds.map((item) => {
+                        return {
+                            get_time: item.acquiredAt.getTime() / 1000,
+                            id: item.id,
+                            is_new: false,
+                        };
+                    }),
+                }
+            };
+        }
+    )
 };
 
 export default authenticatedUserRoutes;
