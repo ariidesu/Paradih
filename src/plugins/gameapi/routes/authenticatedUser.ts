@@ -433,6 +433,33 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 }
             };
         }
+    );
+
+    app.post(
+        "/read_style",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { style_list } = request.body as {
+                style_list: {
+                    style_type: "title" | "background";
+                    style_id: string;
+                }[];
+            };
+
+            for (const item of style_list) {
+                const actualStyleType = item.style_type == "title" ? "titles" : "backgrounds";
+                await app.userService.setHasReadOwnedItem(request.user, actualStyleType, item.style_id);
+            }
+
+            return { status: "OK" };
+        }
     )
 };
 
