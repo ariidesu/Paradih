@@ -127,6 +127,12 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             }
 
             const { rank_id } = request.body as { rank_id: string };
+            const rankData = app.gameDataService.getRankData(rank_id);
+            if (!rankData || rankData.cost > request.user.eco[rankData.playCostType]) {
+                return { status: "failed" };
+            }
+
+            await app.userService.addEconomy(request.user, rankData.playCostType, -rankData.cost);
             const newSession = await app.rankPlayService.createRankPlay(
                 request.user,
                 rank_id,
@@ -184,7 +190,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 passedStars = pass_star_count,
                 maxViewChartCount = result_id_list.length,
                 claimedRewards = [] as string[],
-                clearState = 0, alreadyClaimed = 0;
+                clearState = 0;
             const existingData = app.userService.findRankResultById(
                 request.user,
                 playData.rankId,
@@ -197,7 +203,6 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                     existingData.maxViewChartCount,
                 );
                 claimedRewards = existingData.claimedRewards;
-                alreadyClaimed = claimedRewards.length;
                 clearState = existingData.clearState;
             }
 
@@ -206,11 +211,12 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 clearState = is_passed ? 2 : 1;
             }
 
+            let gotNewStyle = false;
             // Add rewards gaming
             const rankData = app.gameDataService.getRankData(playData.rankId)!;
             const rewards = rankData.rewards;
             for (const reward of rewards) {
-                if (claimedRewards.includes(reward.id) || !get_reward_list.includes(reward.id)) {
+                if (claimedRewards.includes(reward.id) || get_reward_list.includes(reward.id)) {
                     continue;
                 }
                 if (reward.star > passedStars) {
@@ -224,8 +230,10 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                         await app.userService.addEconomy(request.user, "dp", reward.reward.value as number);
                     } else if (reward.reward.type == "title") {
                         await app.userService.addOwnedItem(request.user, "titles", reward.reward.value as string);
+                        gotNewStyle = true;
                     } else if (reward.reward.type == "background") {
                         await app.userService.addOwnedItem(request.user, "backgrounds", reward.reward.value as string);
+                        gotNewStyle = true;
                     }
                 } catch (_) {}
             }
@@ -285,9 +293,15 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
 
             return {
                 status: "ok",
-                eco: request.user.eco,
-                has_new_style: passedStars > 1 && claimedRewards.length > alreadyClaimed,
+
+                eco: {
+                    ac: request.user.eco.ac,
+                    dp: request.user.eco.dp,
+                    navi: request.user.eco.navi,
+                },
+                has_new_style: gotNewStyle,
                 max_clear_common_challenge: maxClear,
+                
                 rank_query_info: newResult && {
                     id: playData.rankId,
                     clear_state: newResult.clearState,
