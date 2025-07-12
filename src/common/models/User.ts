@@ -4,6 +4,7 @@ const OwnedItemSchema = new Schema(
     {
         id: { type: String, required: true },
         acquiredAt: { type: Date, default: Date.now },
+        isNew: { type: Boolean, default: true },
     },
     { _id: false },
 );

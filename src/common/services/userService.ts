@@ -93,6 +93,7 @@ export function buildUserService(app: FastifyInstance) {
                         [`owned.${itemType}`]: {
                             id: itemId,
                             acquiredAt: new Date(),
+                            isNew: true,
                         },
                     },
                 },
@@ -101,6 +102,30 @@ export function buildUserService(app: FastifyInstance) {
 
             if (result) {
                 user.owned[itemType] = result.owned[itemType];
+            }
+        },
+
+        async setHasReadOwnedItem(
+            user: UserDoc,
+            itemType: "titles" | "backgrounds" | "purchases",
+            itemId: string,
+        ) {
+            const result = await User.updateOne(
+                { _id: user._id, [`owned.${itemType}.id`]: itemId },
+                {
+                    $set: {
+                        [`owned.${itemType}.$.isNew`]: false,
+                    },
+                },
+            );
+
+            if (result.modifiedCount > 0) {
+                const item = user.owned[itemType].find(
+                    (i) => i.id === itemId,
+                );
+                if (item) {
+                    item.isNew = false;
+                }
             }
         },
 
