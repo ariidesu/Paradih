@@ -93,7 +93,7 @@ export function buildUserService(app: FastifyInstance) {
                         [`owned.${itemType}`]: {
                             id: itemId,
                             acquiredAt: new Date(),
-                            isNew: true,
+                            new: true,
                         },
                     },
                 },
@@ -114,7 +114,7 @@ export function buildUserService(app: FastifyInstance) {
                 { _id: user._id, [`owned.${itemType}.id`]: itemId },
                 {
                     $set: {
-                        [`owned.${itemType}.$.isNew`]: false,
+                        [`owned.${itemType}.$.new`]: false,
                     },
                 },
             );
@@ -124,7 +124,7 @@ export function buildUserService(app: FastifyInstance) {
                     (i) => i.id === itemId,
                 );
                 if (item) {
-                    item.isNew = false;
+                    item.new = false;
                 }
             }
         },

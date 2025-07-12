@@ -120,14 +120,14 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                         return {
                             get_time: item.acquiredAt.getTime() / 1000,
                             id: item.id,
-                            is_new: item.isNew,
+                            is_new: item.new,
                         };
                     }),
                     background: request.user.owned.backgrounds.map((item) => {
                         return {
                             get_time: item.acquiredAt.getTime() / 1000,
                             id: item.id,
-                            is_new: item.isNew,
+                            is_new: item.new,
                         };
                     }),
                 },
@@ -420,14 +420,14 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                         return {
                             get_time: item.acquiredAt.getTime() / 1000,
                             id: item.id,
-                            is_new: item.isNew,
+                            is_new: item.new,
                         };
                     }),
                     background: request.user.owned.backgrounds.map((item) => {
                         return {
                             get_time: item.acquiredAt.getTime() / 1000,
                             id: item.id,
-                            is_new: item.isNew,
+                            is_new: item.new,
                         };
                     }),
                 }
