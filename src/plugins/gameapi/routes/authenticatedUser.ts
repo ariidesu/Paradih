@@ -15,10 +15,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             return {
                 status: "OK",
 
-                api_min_ver: 63,
+                api_min_ver: 68,
                 first_login: false,
                 last_device_id: "",
-                latest_ver: 63,
+                latest_ver: 68,
 
                 battle_token: "",
                 web_token: "",
@@ -36,6 +36,9 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             if (!request.user) {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
+
+            // This is done to ensure that the rating is always up-to-date
+            await app.playService.updatePlayerRating(request.user);
 
             const purchasesList: any = {};
 

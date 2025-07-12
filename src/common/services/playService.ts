@@ -145,9 +145,9 @@ export function buildPlayService(app: FastifyInstance) {
                 const songId = `${prefix}/${songName}`;
 
                 const songData = app.gameDataService.getSongData(songId);
-                // Our current season is 02, which starts from 3.0.0 onwards.
-                // Hence we only need to check the "x" field of the version.
-                if (songData && songData.version.x == 3) {
+                // Our current season is 03, which starts from 3.9.0 onwards.
+                // We need to check the x.y field of the song version.
+                if (songData && ((songData.version.x == 3 && songData.version.y >= 9) || songData.version.x > 3)) {
                     latestSeasonPlays.push(play);
                 } else {
                     otherPlays.push(play);
