@@ -88,7 +88,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                     has_unread_mail: false, // TODO: Implement this
                     is_fool_sp: 0,
-                    max_clear_common_challenge: 0,
+                    max_clear_common_challenge: request.user.maxClearedCommonChallenge,
                 },
 
                 save: {
@@ -120,14 +120,14 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                         return {
                             get_time: item.acquiredAt.getTime() / 1000,
                             id: item.id,
-                            is_new: false,
+                            is_new: item.new,
                         };
                     }),
                     background: request.user.owned.backgrounds.map((item) => {
                         return {
                             get_time: item.acquiredAt.getTime() / 1000,
                             id: item.id,
-                            is_new: false,
+                            is_new: item.new,
                         };
                     }),
                 },
@@ -145,6 +145,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
         async (request) => {
             if (!request.user) {
                 return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            // Whenever we fetch user's info (happens everytime we reach menu)
+            // That means we are not in a rank play session
+            // We reset it.
+            if (request.user.currentRankSession != "") {
+                await app.userService.setRankSession(request.user, "");
             }
 
             return {
@@ -168,7 +175,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                 has_unread_mail: false, // TODO: Implement this
                 is_fool_sp: 0,
-                max_clear_common_challenge: 0,
+                max_clear_common_challenge: request.user.maxClearedCommonChallenge,
             };
         }
     );
@@ -394,6 +401,66 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             };
         }
     );
+    
+    app.get(
+        "/get_style_list",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            return {
+                status: "OK",
+                data: {
+                    title: request.user.owned.titles.map((item) => {
+                        return {
+                            get_time: item.acquiredAt.getTime() / 1000,
+                            id: item.id,
+                            is_new: item.new,
+                        };
+                    }),
+                    background: request.user.owned.backgrounds.map((item) => {
+                        return {
+                            get_time: item.acquiredAt.getTime() / 1000,
+                            id: item.id,
+                            is_new: item.new,
+                        };
+                    }),
+                }
+            };
+        }
+    );
+
+    app.post(
+        "/read_style",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { style_list } = request.body as {
+                style_list: {
+                    style_type: "title" | "background";
+                    style_id: string;
+                }[];
+            };
+
+            for (const item of style_list) {
+                const actualStyleType = item.style_type == "title" ? "titles" : "backgrounds";
+                await app.userService.setHasReadOwnedItem(request.user, actualStyleType, item.style_id);
+            }
+
+            return { status: "OK" };
+        }
+    )
 };
 
 export default authenticatedUserRoutes;
