@@ -69,7 +69,7 @@ const UserSchema = new Schema(
         mailsRead: [{ type: String }],
 
         battleBanned: { type: Boolean, default: false },
-        battleBanUntil: { type: Date, default: null },
+        battleBanUntil: { type: Date, default: 0 },
         currentRankSession: { type: String, default: "" },
         ranksResult: [RankResultSchema],
         maxClearedCommonChallenge: { type: Number, default: 0 },
