@@ -39,6 +39,12 @@ const battleApp: FastifyPluginAsync = async (app) => {
             }
 
             const battleData = app.gameDataService.getBattleData();
+            const playerRank = await app.models.User.countDocuments({
+                $or: [
+                    { battleRating: { $gt: request.user.battleRating } },
+                    { $and: [ { battleRating: request.user.battleRating } ] },
+                ],
+            });
             return {
                 status: "ok",
                 code: "OK",
@@ -49,7 +55,7 @@ const battleApp: FastifyPluginAsync = async (app) => {
                     annoucement: "",
 
                     battleRating: request.user.battleRating,
-                    battleRatingRank: 0, // TODO: Implement battle ranking
+                    battleRatingRank: playerRank,
 
                     isBanned: request.user.battleBanned,
                     unbanTime: request.user.battleBanUntil.getUTCSeconds(),
@@ -57,6 +63,42 @@ const battleApp: FastifyPluginAsync = async (app) => {
             };
         }
     );
+
+    app.get(
+        "/rank_list",
+        {
+            preHandler: app.authService.verifyBattleToken,
+        },
+        async (request, reply) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const users = await app.models.User.find().sort({ battleRating: -1 });
+            const rankList = users.map(async (user, index) => {
+                const userSave = (await app.userSaveService.getSave(user)).data;
+                const activeCharacter = (userSave.get("/dict/currentCharacter") as string) ?? "para";
+                const activeSkin = (userSave.get(`/dict/skin/active/${activeCharacter}`) as string) ?? "para/default";
+                return {
+                    rank: index + 1,
+                    username: user.username,
+                    usernameMask: user.usernameCode,
+                    styleInfo: {
+                        backgroundId: user.style.background,
+                        titleId: user.style.title,
+                        skinId: activeSkin,
+                    },
+                    rating: user.battleRating
+                };
+            });
+
+            return {
+                status: "ok",
+                code: "OK",
+                data: { rankList },
+            };
+        }
+    )
 };
 
 export default battleApp;
