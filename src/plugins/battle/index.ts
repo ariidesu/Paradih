@@ -75,7 +75,7 @@ const battleApp: FastifyPluginAsync = async (app) => {
             }
 
             const users = await app.models.User.find().sort({ battleRating: -1 });
-            const rankList = users.map(async (user, index) => {
+            const rankList = await users.map(async (user, index) => {
                 const userSave = (await app.userSaveService.getSave(user)).data;
                 const activeCharacter = (userSave.get("/dict/currentCharacter") as string) ?? "para";
                 const activeSkin = (userSave.get(`/dict/skin/active/${activeCharacter}`) as string) ?? "para/default";
