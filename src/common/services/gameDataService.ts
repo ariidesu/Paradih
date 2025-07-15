@@ -76,6 +76,17 @@ interface RankData {
     unlockTag: string[];
 }
 
+interface BattleData {
+    enabled: boolean;
+    seasonId: string;
+    startTime: number;
+    endTime: number;
+    timeSlots: {
+        start: string;
+        end: string;
+    }[];
+}
+
 export interface GameData {
     titles: string[];
     backgrounds: string[];
@@ -83,8 +94,8 @@ export interface GameData {
     gears: GearData[];
     songs: SongData[];
     ranks: RankData[];
+    battleData: BattleData;
 }
-
 export function buildGameDataService(app: FastifyInstance) {
     const titlesPath = path.join(__dirname, "../../data/titles.json");
     const backgroundsPath = path.join(__dirname, "../../data/backgrounds.json");
@@ -92,6 +103,7 @@ export function buildGameDataService(app: FastifyInstance) {
     const gearsPath = path.join(__dirname, "../../data/gears.json");
     const songsPath = path.join(__dirname, "../../data/songs.json");
     const ranksPath = path.join(__dirname, "../../data/ranks.json");
+    const battlePath = path.join(__dirname, "../../data/battle.json");
 
     let gameData: GameData = {
         titles: [],
@@ -100,6 +112,7 @@ export function buildGameDataService(app: FastifyInstance) {
         gears: [],
         songs: [],
         ranks: [],
+        battleData: undefined as any // remove the god damn error real!!!!!!
     };
 
     const titlesData = JSON.parse(readFileSync(titlesPath, "utf8"));
@@ -119,6 +132,9 @@ export function buildGameDataService(app: FastifyInstance) {
 
     const ranksData = JSON.parse(readFileSync(ranksPath, "utf8"));
     gameData.ranks = ranksData;
+
+    const battleData = JSON.parse(readFileSync(battlePath, "utf8"));
+    gameData.battleData = battleData;
 
     return {
         getPurchases(): Record<string, PurchaseItem> {
@@ -148,5 +164,9 @@ export function buildGameDataService(app: FastifyInstance) {
         getRankData(id: string): RankData | undefined {
             return gameData.ranks.find((rank) => rank.id == id);
         },
+
+        getBattleData(): BattleData {
+            return gameData.battleData;
+        }
     };
 }

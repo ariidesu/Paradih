@@ -12,6 +12,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
+            const battleToken = await app.authService.issueBattleToken(request.user._id as string, request.user.email)
             return {
                 status: "OK",
 
@@ -20,7 +21,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 last_device_id: "",
                 latest_ver: 68,
 
-                battle_token: "",
+                battle_token: battleToken,
                 web_token: "",
             };
         }

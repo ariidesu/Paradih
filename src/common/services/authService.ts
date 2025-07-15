@@ -40,6 +40,16 @@ export function buildAuthService(app: FastifyInstance) {
             );
         },
 
+        issueBattleToken(userId: string, email: string): string {
+            return app.jwt.sign(
+                { userId: userId, email: email, type: "battle_auth" },
+                {
+                    algorithm: "HS256",
+                    expiresIn: "1d",
+                }
+            );
+        },
+
         async verifyAuthToken(request: FastifyRequest, reply: FastifyReply) {
             const authHeader = request.headers["x-session"];
             if (authHeader == undefined) {
@@ -50,7 +60,7 @@ export function buildAuthService(app: FastifyInstance) {
             const payload = app.jwt.verify<{
                 userId: string;
                 email: string;
-                type: "auth" | "api";
+                type: "auth" |" battle_auth" | "api";
             }>(authHeader as string);
             if (payload.type != "auth") {
                 request.user = null;
@@ -74,13 +84,35 @@ export function buildAuthService(app: FastifyInstance) {
             const payload = app.jwt.verify<{
                 userId: string;
                 email: string;
-                type: "auth" | "api";
+                type: "auth" | "battle_auth" | "api";
             }>(authHeader as string, { ignoreExpiration: true });
             if (payload.type != "auth") {
                 request.user = null;
                 return;
             }
 
+            const user = await User.findById(payload.userId);
+
+            request.user = user;
+        },
+
+        async verifyBattleToken(request: FastifyRequest, reply: FastifyReply) {
+            // Battle API uses Authorization header
+            const authHeader = request.headers["authorization"];
+            if (authHeader == undefined) {
+                request.user = null;
+                return;
+            }
+
+            const payload = app.jwt.verify<{
+                userId: string;
+                email: string;
+                type: "auth" | "battle_auth" | "api";
+            }>(authHeader as string);
+            if (payload.type != "battle_auth") {
+                request.user = null;
+                return;
+            }
             const user = await User.findById(payload.userId);
 
             request.user = user;

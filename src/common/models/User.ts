@@ -30,6 +30,7 @@ const UserSchema = new Schema(
         passwordHash: { type: String, required: true },
 
         rating: { type: Number, default: 0 },
+        battleRating: { type: Number, default: 0 },
         eco: {
             type: new Schema(
                 {
@@ -67,6 +68,8 @@ const UserSchema = new Schema(
         },
         mailsRead: [{ type: String }],
 
+        battleBanned: { type: Boolean, default: false },
+        battleBanUntil: { type: Date, default: null },
         currentRankSession: { type: String, default: "" },
         ranksResult: [RankResultSchema],
         maxClearedCommonChallenge: { type: Number, default: 0 },
