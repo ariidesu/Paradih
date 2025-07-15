@@ -75,12 +75,14 @@ const battleApp: FastifyPluginAsync = async (app) => {
             }
 
             const users = await app.models.User.find().sort({ battleRating: -1 });
-            const rankList = await users.map(async (user, index) => {
+            const rankList = [];
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i];
                 const userSave = (await app.userSaveService.getSave(user)).data;
                 const activeCharacter = (userSave.get("/dict/currentCharacter") as string) ?? "para";
                 const activeSkin = (userSave.get(`/dict/skin/active/${activeCharacter}`) as string) ?? "para/default";
-                return {
-                    rank: index + 1,
+                rankList.push({
+                    rank: i + 1,
                     username: user.username,
                     usernameMask: user.usernameCode,
                     styleInfo: {
@@ -89,8 +91,8 @@ const battleApp: FastifyPluginAsync = async (app) => {
                         skinId: activeSkin,
                     },
                     rating: user.battleRating
-                };
-            });
+                });
+            }
 
             return {
                 status: "ok",
