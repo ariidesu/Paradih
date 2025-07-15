@@ -18,6 +18,7 @@ declare module 'fastify' {
       API_PORT: number,
       BATTLE_PORT: number,
       AES_KEY: string,
+      BATTLE_AES_KEY: string,
       API_KEY: string,
       MONGODB_URI: string,
       JWT_SECRET: string,
@@ -30,7 +31,7 @@ declare module 'fastify' {
 }
 const ENV_SCHEMA = {
   type: 'object',
-  required: [ "PORT", "BATTLE_PORT", "AES_KEY", "MONGODB_URI", "JWT_SECRET" ],
+  required: [ "PORT", "BATTLE_PORT", "AES_KEY", "BATTLE_AES_KEY", "MONGODB_URI", "JWT_SECRET" ],
   properties: {
     PORT: {
       type: 'number',
@@ -48,6 +49,9 @@ const ENV_SCHEMA = {
       type: "string"
     },
     AES_KEY: {
+      type: "string",
+    },
+    BATTLE_AES_KEY: {
       type: "string",
     },
     MONGODB_URI: {
@@ -110,16 +114,17 @@ async function main() {
     });
 
     const battleInstance = fastify({ logger: true });
-    await battleInstance.register(mongoosePlugin, { uri: process.env.MONGO_URI! });
+    await battleInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+    await battleInstance.register(mongoosePlugin, { uri: battleInstance.config.MONGODB_URI });
     await battleInstance.register(modelsPlugin);
     await battleInstance.register(servicesPlugin);
     await battleInstance.register(encryptionPlugin, {
-        aesKey: Buffer.from(process.env.BATTLE_AES_KEY!),
+        aesKey: Buffer.from(battleInstance.config.BATTLE_AES_KEY),
     });
     await battleInstance.register(authPlugin);
     battleInstance.register(battleApp);
     battleInstance.listen({
-        port: parseInt(process.env.BATTLE_PORT || "") || 3001,
+        port: battleInstance.config.BATTLE_PORT,
         host: "0.0.0.0",
     });
 }
