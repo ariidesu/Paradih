@@ -52,7 +52,7 @@ const battleApp: FastifyPluginAsync = async (app) => {
                     battleRatingRank: 0, // TODO: Implement battle ranking
 
                     isBanned: request.user.battleBanned,
-                    unbanTime: request.user.battleBanUntil,
+                    unbanTime: request.user.battleBanUntil.getUTCSeconds(),
                 },
             };
         }
