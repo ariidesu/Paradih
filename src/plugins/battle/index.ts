@@ -84,7 +84,7 @@ const battleApp: FastifyPluginAsync = async (app) => {
                 rankList.push({
                     rank: i + 1,
                     username: user.username,
-                    usernameMask: user.usernameCode,
+                    usernameMask: user.usernameCode.toString(),
                     styleInfo: {
                         backgroundId: user.style.background,
                         titleId: user.style.title,
