@@ -104,11 +104,12 @@ export function buildAuthService(app: FastifyInstance) {
                 return;
             }
 
+            const token = authHeader.substring(7).trim();
             const payload = app.jwt.verify<{
                 userId: string;
                 email: string;
                 type: "auth" | "battle_auth" | "api";
-            }>(authHeader as string);
+            }>(token);
             if (payload.type != "battle_auth") {
                 request.user = null;
                 return;
