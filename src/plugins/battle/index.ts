@@ -45,7 +45,7 @@ const battleApp: FastifyPluginAsync = async (app) => {
 
                 data: {
                     isEnableBattle: battleData.enabled,
-                    timeSlots: battleData.timeSlots,
+                    timeSlot: battleData.timeSlots,
                     annoucement: "",
 
                     battleRating: request.user.battleRating,
