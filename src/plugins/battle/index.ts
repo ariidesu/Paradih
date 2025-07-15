@@ -55,7 +55,7 @@ const battleApp: FastifyPluginAsync = async (app) => {
                     annoucement: "",
 
                     battleRating: request.user.battleRating,
-                    battleRatingRank: playerRank,
+                    battleRatingRank: playerRank + 1,
 
                     isBanned: request.user.battleBanned,
                     unbanTime: request.user.battleBanUntil.getUTCSeconds(),
