@@ -18,8 +18,9 @@ const battleApp: FastifyPluginAsync = async (app) => {
 
                     battleSeasonStatus: "STARTED", // TODO: Implement logic to determine the status
                     battleSeasonId: battleData.seasonId,
-                    battleSeasonStartTime: battleData.startTime,
-                    battleSeasonEndTime: battleData.endTime,
+                    battleSeasonStartTime: battleData.seasonStartTime,
+                    battleSeasonEndTime: battleData.seasonEndTime,
+                    battleEndTime: battleData.endTime,
 
                     isNewUser: false // too lazy lol
                 },

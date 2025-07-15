@@ -78,9 +78,11 @@ interface RankData {
 
 interface BattleData {
     enabled: boolean;
-    seasonId: string;
-    startTime: number;
     endTime: number;
+
+    seasonId: string;
+    seasonStartTime: number;
+    seasonEndTime: number;
     timeSlots: {
         start: string;
         end: string;
