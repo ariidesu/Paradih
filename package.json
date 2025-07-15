@@ -1,7 +1,9 @@
 {
   "scripts": {
     "build": "npx tsc && npx copyfiles -u 1 src/data/**/*.json dist/",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "dev": "npm run build && npm run start",
+    "watch": "npx nodemon"
   },
   "dependencies": {
     "@fastify/env": "^5.0.2",
@@ -16,6 +18,8 @@
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.15.3",
     "copyfiles": "^2.4.1",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }
