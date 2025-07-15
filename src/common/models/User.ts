@@ -46,7 +46,7 @@ const UserSchema = new Schema(
         style: {
             type: new Schema(
                 {
-                    title: { type: String, default: "NPlaytime0" },
+                    title: { type: String, default: "NWelcomeBack" },
                     background: { type: String, default: "BGDefault" },
                 },
                 { _id: false },
