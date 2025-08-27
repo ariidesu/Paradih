@@ -31,6 +31,10 @@ async function requestCatalog() {
         const response = await request("/server/hotassets/catalog", {
             headers: { "X-Platform": platform },
         });
+        fs.writeFileSync("../src/data/catalog/metadata.json", JSON.stringify({
+            version: response.version
+        }, null, 4));
+
         console.log(`Downloading catalog.json (Platform: ${platform})...`);
         await download(
             response.url.catalog,
