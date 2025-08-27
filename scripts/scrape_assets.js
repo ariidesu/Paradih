@@ -131,6 +131,7 @@ async function requestAssets() {
                 const filename = fileKey.split("/").pop();
 
                 bar.update(cnt / length, {
+                    platform: PLATFORMS[platformKey],
                     filename,
                 });
                 const outPath = `../assets/${platformKey}${fileKey}`;
@@ -140,7 +141,10 @@ async function requestAssets() {
                 }
                 await download(files[fileKey], outPath);
                 cnt++;
-                bar.update(cnt / length);
+                bar.update(cnt / length, {
+                    platform: PLATFORMS[platformKey],
+                    filename,
+                });
             }
         })
     );
