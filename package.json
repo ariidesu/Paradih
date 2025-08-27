@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "npx tsc && npx copyfiles -u 1 src/data/**/* dist/",
+    "build": "npx tsc && npx copyfiles -u 2 src/data/**/* src/data/* dist/data",
     "start": "node dist/index.js",
     "dev": "npm run build && npm run start",
     "watch": "npx nodemon"
