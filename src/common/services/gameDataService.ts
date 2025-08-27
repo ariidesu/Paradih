@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { readFileSync } from "fs";
+import { readFileSync, createReadStream, existsSync } from "fs";
 import path from "path";
 
 interface PurchaseItem {
@@ -97,6 +97,19 @@ export interface GameData {
     songs: SongData[];
     ranks: RankData[];
     battleData: BattleData;
+    catalog: {
+        metadata: {
+            version: string;
+        };
+        ios: {
+            data: any;
+            checksum: any;
+        };
+        android: {
+            data: any;
+            checksum: any;
+        };
+    }
 }
 export function buildGameDataService(app: FastifyInstance) {
     const titlesPath = path.join(__dirname, "../../data/titles.json");
@@ -107,36 +120,31 @@ export function buildGameDataService(app: FastifyInstance) {
     const ranksPath = path.join(__dirname, "../../data/ranks.json");
     const battlePath = path.join(__dirname, "../../data/battle.json");
 
+    const iosCatalogPath = path.join(__dirname, "../../data/catalog/ios/catalog.json");
+    const iosCatalogChecksumPath = path.join(__dirname, "../../data/catalog/ios/catalog_checksum.json");
+    const androidCatalogPath = path.join(__dirname, "../../data/catalog/android/catalog.json");
+    const androidCatalogChecksumPath = path.join(__dirname, "../../data/catalog/android/catalog_checksum.json");
+
     let gameData: GameData = {
-        titles: [],
-        backgrounds: [],
-        purchases: {},
-        gears: [],
-        songs: [],
-        ranks: [],
-        battleData: undefined as any // remove the god damn error real!!!!!!
+        titles: JSON.parse(readFileSync(titlesPath, "utf8")),
+        backgrounds: JSON.parse(readFileSync(backgroundsPath, "utf8")),
+        purchases: JSON.parse(readFileSync(purchasesPath, "utf8")),
+        gears: JSON.parse(readFileSync(gearsPath, "utf8")),
+        songs: JSON.parse(readFileSync(songsPath, "utf8")),
+        ranks: JSON.parse(readFileSync(ranksPath, "utf8")),
+        battleData: JSON.parse(readFileSync(battlePath, "utf8")),
+        catalog: {
+            metadata: JSON.parse(readFileSync(path.join(__dirname, "../../data/catalog/metadata.json"), "utf8")),
+            ios: {
+                data: readFileSync(iosCatalogPath, "utf8"),
+                checksum: readFileSync(iosCatalogChecksumPath, "utf8")
+            },
+            android: {
+                data: readFileSync(androidCatalogPath, "utf8"),
+                checksum: readFileSync(androidCatalogChecksumPath, "utf8")
+            }
+        }
     };
-
-    const titlesData = JSON.parse(readFileSync(titlesPath, "utf8"));
-    gameData.titles = titlesData;
-
-    const backgroundsData = JSON.parse(readFileSync(backgroundsPath, "utf8"));
-    gameData.backgrounds = backgroundsData;
-
-    const purchasesData = JSON.parse(readFileSync(purchasesPath, "utf8"));
-    gameData.purchases = purchasesData;
-
-    const gearsData = JSON.parse(readFileSync(gearsPath, "utf8"));
-    gameData.gears = gearsData;
-
-    const songsData = JSON.parse(readFileSync(songsPath, "utf8"));
-    gameData.songs = songsData;
-
-    const ranksData = JSON.parse(readFileSync(ranksPath, "utf8"));
-    gameData.ranks = ranksData;
-
-    const battleData = JSON.parse(readFileSync(battlePath, "utf8"));
-    gameData.battleData = battleData;
 
     return {
         getPurchases(): Record<string, PurchaseItem> {
@@ -169,6 +177,35 @@ export function buildGameDataService(app: FastifyInstance) {
 
         getBattleData(): BattleData {
             return gameData.battleData;
+        },
+
+        getCatalogMetadata(): { version: string } {
+            return gameData.catalog.metadata;
+        },
+
+        getCatalog(platform: "ios" | "android"): { data: any; checksum: any } {
+            return gameData.catalog[platform];
+        },
+
+        assetExists(platform: "ios" | "android", assetPath: string): boolean {
+            const basePath = path.join(__dirname, `../../assets/${platform}/`);
+            const fullPath = path.join(basePath, assetPath);
+            if (!fullPath.startsWith(basePath)) {
+                return false;
+            }
+
+            return existsSync(fullPath);
+        },
+
+        createAssetBinaryStreaming(platform: "ios" | "android", assetPath: string) {
+            const basePath = path.join(__dirname, `../../assets/${platform}/`);
+            const fullPath = path.join(basePath, assetPath);
+
+            if (!fullPath.startsWith(basePath)) {
+                throw new Error("Invalid asset path");
+            }
+
+            return createReadStream(fullPath);
         }
     };
 }
