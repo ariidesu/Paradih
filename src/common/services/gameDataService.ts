@@ -1,5 +1,5 @@
-import { FastifyInstance } from "fastify";
-import { readFileSync, createReadStream, existsSync } from "fs";
+import { FastifyInstance, FastifyReply } from "fastify";
+import { readFileSync, createReadStream, existsSync, statSync } from "fs";
 import path from "path";
 
 interface PurchaseItem {
@@ -178,13 +178,16 @@ export function buildGameDataService(app: FastifyInstance) {
             return existsSync(fullPath);
         },
 
-        createAssetBinaryStreaming(platform: "ios" | "android", assetPath: string) {
+        createAssetBinaryStreaming(reply: FastifyReply, platform: "ios" | "android", assetPath: string) {
             const basePath = path.join(__dirname, `../../../assets/${platform}/`);
             const fullPath = path.join(basePath, assetPath);
 
             if (!fullPath.startsWith(basePath)) {
                 throw new Error("Invalid asset path");
             }
+
+            const stat = statSync(fullPath);
+            reply.header("Content-Length", stat.size.toString());
 
             return createReadStream(fullPath);
         }
