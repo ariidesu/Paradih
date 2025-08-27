@@ -40,7 +40,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                 return "";
             }
 
-            return reply.send(app.gameDataService.createAssetBinaryStreaming(platform, assetPath));
+            return reply.send(app.gameDataService.createAssetBinaryStreaming(reply, platform, assetPath));
         }
     )
 
