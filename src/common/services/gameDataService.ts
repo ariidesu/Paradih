@@ -188,7 +188,7 @@ export function buildGameDataService(app: FastifyInstance) {
         },
 
         assetExists(platform: "ios" | "android", assetPath: string): boolean {
-            const basePath = path.join(__dirname, `../../assets/${platform}/`);
+            const basePath = path.join(__dirname, `../../../assets/${platform}/`);
             const fullPath = path.join(basePath, assetPath);
             if (!fullPath.startsWith(basePath)) {
                 return false;
@@ -198,7 +198,7 @@ export function buildGameDataService(app: FastifyInstance) {
         },
 
         createAssetBinaryStreaming(platform: "ios" | "android", assetPath: string) {
-            const basePath = path.join(__dirname, `../../assets/${platform}/`);
+            const basePath = path.join(__dirname, `../../../assets/${platform}/`);
             const fullPath = path.join(basePath, assetPath);
 
             if (!fullPath.startsWith(basePath)) {
