@@ -5,7 +5,11 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
     app.get(
         "/download_catalog/:platform",
         { preHandler: app.authService.verifyAuthToken },
-            async (request, reply) => {
+        async (request, reply) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+            
             const platform = (request.params as any).platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
@@ -18,7 +22,11 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
     app.get(
         "/download_catalog_checksum/:platform",
         { preHandler: app.authService.verifyAuthToken },
-            async (request, reply) => {
+        async (request, reply) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
             const platform = (request.params as any).platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
@@ -31,7 +39,11 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
     app.get(
         "/download_asset/:platform/*",
         { preHandler: app.authService.verifyAuthToken },
-            async (request, reply) => {
+        async (request, reply) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
             const platform = (request.params as any).platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
@@ -51,6 +63,10 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
         "/catalog",
         { preHandler: app.authService.verifyAuthToken, config: { encrypted: true } },
         async (request, reply) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+            
             const platform = (request.headers["x-platform"] as string)?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
@@ -72,6 +88,10 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
         "/sign",
         { preHandler: app.authService.verifyAuthToken, config: { encrypted: true } },
         async (request, reply) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
             const platform = (request.headers["x-platform"] as string)?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
