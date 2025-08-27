@@ -4,12 +4,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
     // NOTE: These three doesn't exist in the actual server lol
     app.get(
         "/download_catalog/:platform",
-        { preHandler: app.authService.verifyAuthToken },
         async (request, reply) => {
-            if (!request.user) {
-                return { status: "failed", code: "USER_NOT_FOUND" };
-            }
-            
             const platform = (request.params as any).platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
@@ -21,12 +16,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
 
     app.get(
         "/download_catalog_checksum/:platform",
-        { preHandler: app.authService.verifyAuthToken },
         async (request, reply) => {
-            if (!request.user) {
-                return { status: "failed", code: "USER_NOT_FOUND" };
-            }
-
             const platform = (request.params as any).platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
@@ -38,12 +28,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
 
     app.get(
         "/download_asset/:platform/*",
-        { preHandler: app.authService.verifyAuthToken },
         async (request, reply) => {
-            if (!request.user) {
-                return { status: "failed", code: "USER_NOT_FOUND" };
-            }
-
             const platform = (request.params as any).platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
