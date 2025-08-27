@@ -118,13 +118,13 @@ async function requestAssets() {
             const length = Object.keys(files).length;
             if (length == 0) return;
 
-            const bar = bars.newBar("  [:percent] ETA: :etas [:bar] :filename", {
+            const bar = bars.newBar("  :platform [:percent] ETA: :etas [:bar] :filename", {
                 complete: "#",
                 incomplete: " ",
                 width: 30,
                 total: length,
             });
-            bar.update(0, { filename: "" });
+            bar.update(0, { platform: PLATFORMS[platformKey], filename: "" });
 
             let cnt = 0;
             for (const fileKey in files) {
