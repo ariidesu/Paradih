@@ -12,15 +12,16 @@ const PLATFORMS = {
 
 const streamPipeline = promisify(pipeline);
 
-function download(url, outPath) {
-    return new Promise(async (resolve, reject) => {
-        const response = await fetch(url);
-        if (!response.ok) {
-            return reject(new Error("Download failed: " + response.statusText));
-        }
-
-        await streamPipeline(response.body, fs.createWriteStream(outPath));
-    });
+async function download(url, outPath) {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error("Download failed: " + response.statusText);
+    }
+    const dir = outPath.split("/").slice(0, -1).join("/");
+    if (dir && !fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+    await streamPipeline(response.body, fs.createWriteStream(outPath));
 }
 
 async function requestCatalog() {
