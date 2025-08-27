@@ -3,11 +3,17 @@
         "id": "common_season03_01",
         "level": 1,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 100,
         "charts": [
             "s/awakeninruins/invaded",
             "s/selenotaxis/invaded",
@@ -62,8 +68,14 @@
         "id": "common_season03_02",
         "level": 2,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
         "cost": 1000,
@@ -121,11 +133,17 @@
         "id": "common_season03_03",
         "level": 3,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 2000,
         "charts": [
             "s/karappononfiction/invaded",
             "s/drasticgenerate/invaded",
@@ -180,11 +198,17 @@
         "id": "common_season03_04",
         "level": 4,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 2000,
         "charts": [
             "s/encore/massive",
             "s/press/massive",
@@ -239,11 +263,17 @@
         "id": "common_season03_05",
         "level": 5,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 5000,
         "charts": [
             "s/immyhero/massive",
             "s/actbeloved/massive",
@@ -298,11 +328,17 @@
         "id": "common_season03_06",
         "level": 6,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 5000,
         "charts": [
             "s/fadingstar/massive",
             "s/whirlwind/massive",
@@ -357,11 +393,17 @@
         "id": "common_season03_07",
         "level": 7,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 5000,
         "charts": [
             "s/bluesphere/massive",
             "s/crossray/massive",
@@ -416,11 +458,17 @@
         "id": "common_season03_08",
         "level": 8,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 10000,
         "charts": [
             "s/yuurei/massive",
             "s/forgottenasteroid/massive",
@@ -475,11 +523,17 @@
         "id": "common_season03_09",
         "level": 9,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 10000,
         "charts": [
             "s/blmf/massive",
             "s/zangsongge/massive",
@@ -534,11 +588,17 @@
         "id": "common_season03_10",
         "level": 10,
         "type": 0,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 1000,
+        "cost": 10000,
         "charts": [
             "s/secretmaneuvers/massive",
             "s/spellofchaos/massive",
@@ -593,8 +653,14 @@
         "id": "special_megarex_02",
         "level": 0,
         "type": 1,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
         "cost": 1000,
@@ -611,7 +677,7 @@
                     "type": "dp",
                     "value": 50000
                 },
-                "id": "special_megarex_02_r01"
+                "id": "special_megarex_01_r01"
             },
             {
                 "star": 2,
@@ -619,7 +685,7 @@
                     "type": "dp",
                     "value": 100000
                 },
-                "id": "special_megarex_02_r02"
+                "id": "special_megarex_01_r02"
             },
             {
                 "star": 3,
@@ -627,7 +693,7 @@
                     "type": "background",
                     "value": "BGChallengeMEGA175"
                 },
-                "id": "special_megarex_02_r03"
+                "id": "special_megarex_01_r03"
             }
         ],
         "gauge": {
@@ -639,15 +705,24 @@
             }
         },
         "unlockTag": {
-            "package": ["side15", "side16"]
+            "package": [
+                "side15",
+                "side16"
+            ]
         }
     },
     {
         "id": "special_megarex_01",
         "level": 0,
         "type": 1,
-        "borders": [200000, 600000],
-        "starBorders": [200000, 600000],
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
         "untilTime": 0,
         "playCostType": "dp",
         "cost": 1000,
@@ -692,7 +767,134 @@
             }
         },
         "unlockTag": {
-            "package": ["side15", "side16"]
+            "package": [
+                "side15",
+                "side16"
+            ]
+        }
+    },
+    {
+        "id": "special_lanota_02",
+        "level": 0,
+        "type": 1,
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
+        "untilTime": 0,
+        "playCostType": "dp",
+        "cost": 1000,
+        "charts": [
+            "s/freysphilosophy/invaded",
+            "s/cyanine/invaded",
+            "s/stasis/invaded",
+            "s/wolvesstanding/invaded"
+        ],
+        "rewards": [
+            {
+                "star": 1,
+                "reward": {
+                    "type": "dp",
+                    "value": 50000
+                },
+                "id": "special_lanota_01_r01"
+            },
+            {
+                "star": 2,
+                "reward": {
+                    "type": "dp",
+                    "value": 100000
+                },
+                "id": "special_lanota_01_r02"
+            },
+            {
+                "star": 3,
+                "reward": {
+                    "type": "background",
+                    "value": "BGChallengeAncientRhyme"
+                },
+                "id": "special_lanota_01_r03"
+            }
+        ],
+        "gauge": {
+            "type": 1,
+            "values": {
+                "decrypted": 1000,
+                "received": -10000,
+                "lost": -100000
+            }
+        },
+        "unlockTag": {
+            "package": [
+                "side17",
+                "side18"
+            ]
+        }
+    },
+    {
+        "id": "special_lanota_01",
+        "level": 0,
+        "type": 1,
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
+        "untilTime": 0,
+        "playCostType": "dp",
+        "cost": 1000,
+        "charts": [
+            "s/freysphilosophy/massive",
+            "s/cyanine/massive",
+            "s/stasis/massive",
+            "s/wolvesstanding/massive"
+        ],
+        "rewards": [
+            {
+                "star": 1,
+                "reward": {
+                    "type": "dp",
+                    "value": 50000
+                },
+                "id": "special_lanota_01_r01"
+            },
+            {
+                "star": 2,
+                "reward": {
+                    "type": "dp",
+                    "value": 100000
+                },
+                "id": "special_lanota_01_r02"
+            },
+            {
+                "star": 3,
+                "reward": {
+                    "type": "background",
+                    "value": "BGChallengeAncientRhyme"
+                },
+                "id": "special_lanota_01_r03"
+            }
+        ],
+        "gauge": {
+            "type": 1,
+            "values": {
+                "decrypted": 1000,
+                "received": -10000,
+                "lost": -100000
+            }
+        },
+        "unlockTag": {
+            "package": [
+                "side17",
+                "side18"
+            ]
         }
     }
 ]
