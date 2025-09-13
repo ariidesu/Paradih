@@ -49,4 +49,4 @@ It currently supports:
 
 ## Disclaimer
 
-This project is not affiliated with TunerGames. (also tunergames suck)
+This project is not affiliated with TunerGames.
