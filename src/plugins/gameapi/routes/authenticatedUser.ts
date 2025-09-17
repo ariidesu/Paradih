@@ -16,10 +16,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             return {
                 status: "OK",
 
-                api_min_ver: 68,
+                api_min_ver: 73,
                 first_login: false,
                 last_device_id: "",
-                latest_ver: 68,
+                latest_ver: 73,
 
                 battle_token: battleToken,
                 web_token: "",
@@ -136,6 +136,8 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     }),
                 },
                 purchase_list: purchasesList,
+
+                po_b50: {b35: [], b15: []}
             };
         }
     );
@@ -180,6 +182,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 has_unread_mail: false, // TODO: Implement this
                 is_fool_sp: 0,
                 max_clear_common_challenge: request.user.maxClearedCommonChallenge,
+                
+                prd_online: false,
+                prd_online_time: -1,
+                prd_bind_account: true
             };
         }
     );
