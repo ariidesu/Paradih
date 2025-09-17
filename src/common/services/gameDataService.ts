@@ -76,6 +76,19 @@ interface RankData {
     unlockTag: string[];
 }
 
+interface BattleData {
+    enabled: boolean;
+    endTime: number;
+
+    seasonId: string;
+    seasonStartTime: number;
+    seasonEndTime: number;
+    timeSlots: {
+        start: string;
+        end: string;
+    }[];
+}
+
 export interface GameData {
     titles: string[];
     backgrounds: string[];
@@ -83,6 +96,7 @@ export interface GameData {
     gears: GearData[];
     songs: SongData[];
     ranks: RankData[];
+    battleData: BattleData;
     catalog: {
         metadata: {
             version: string;
@@ -97,7 +111,6 @@ export interface GameData {
         };
     }
 }
-
 export function buildGameDataService(app: FastifyInstance) {
     const titlesPath = path.join(__dirname, "../../data/titles.json");
     const backgroundsPath = path.join(__dirname, "../../data/backgrounds.json");
@@ -105,6 +118,7 @@ export function buildGameDataService(app: FastifyInstance) {
     const gearsPath = path.join(__dirname, "../../data/gears.json");
     const songsPath = path.join(__dirname, "../../data/songs.json");
     const ranksPath = path.join(__dirname, "../../data/ranks.json");
+    const battlePath = path.join(__dirname, "../../data/battle.json");
 
     const iosCatalogPath = path.join(__dirname, "../../data/catalog/ios/catalog.json");
     const iosCatalogChecksumPath = path.join(__dirname, "../../data/catalog/ios/catalog_checksum.json");
@@ -118,6 +132,7 @@ export function buildGameDataService(app: FastifyInstance) {
         gears: JSON.parse(readFileSync(gearsPath, "utf8")),
         songs: JSON.parse(readFileSync(songsPath, "utf8")),
         ranks: JSON.parse(readFileSync(ranksPath, "utf8")),
+        battleData: JSON.parse(readFileSync(battlePath, "utf8")),
         catalog: {
             metadata: JSON.parse(readFileSync(path.join(__dirname, "../../data/catalog/metadata.json"), "utf8")),
             ios: {
@@ -158,6 +173,10 @@ export function buildGameDataService(app: FastifyInstance) {
 
         getRankData(id: string): RankData | undefined {
             return gameData.ranks.find((rank) => rank.id == id);
+        },
+
+        getBattleData(): BattleData {
+            return gameData.battleData;
         },
 
         getCatalogMetadata(): { version: string } {

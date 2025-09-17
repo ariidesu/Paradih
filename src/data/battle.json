@@ -1,0 +1,13 @@
+{
+    "enabled": true,
+    "endTime": 9999999999,
+    "seasonId": "phase_02",
+    "seasonStartTime": 1727755200,
+    "seasonEndTime": 9999999999,
+    "timeSlots": [
+        {
+            "start": "0:00",
+            "end": "23:59"
+        }
+    ]   
+}

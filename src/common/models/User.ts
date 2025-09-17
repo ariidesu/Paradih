@@ -30,6 +30,7 @@ const UserSchema = new Schema(
         passwordHash: { type: String, required: true },
 
         rating: { type: Number, default: 0 },
+        battleRating: { type: Number, default: 0 },
         eco: {
             type: new Schema(
                 {
@@ -45,7 +46,7 @@ const UserSchema = new Schema(
         style: {
             type: new Schema(
                 {
-                    title: { type: String, default: "NPlaytime0" },
+                    title: { type: String, default: "NWelcomeBack" },
                     background: { type: String, default: "BGDefault" },
                 },
                 { _id: false },
@@ -67,6 +68,8 @@ const UserSchema = new Schema(
         },
         mailsRead: [{ type: String }],
 
+        battleBanned: { type: Boolean, default: false },
+        battleBanUntil: { type: Date, default: 0 },
         currentRankSession: { type: String, default: "" },
         ranksResult: [RankResultSchema],
         maxClearedCommonChallenge: { type: Number, default: 0 },

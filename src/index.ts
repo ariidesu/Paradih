@@ -9,14 +9,16 @@ import servicesPlugin from "./common/plugins/services";
 
 import apiApp from "./plugins/api";
 import gameApiApp from "./plugins/gameapi";
-// import battleApp from "./plugins/battle";
+import battleApp from "./plugins/battle";
 
 declare module 'fastify' {
   interface FastifyInstance {
     config: {
       PORT: number,
       API_PORT: number,
+      BATTLE_PORT: number,
       AES_KEY: string,
+      BATTLE_AES_KEY: string,
       API_KEY: string,
       MONGODB_URI: string,
       JWT_SECRET: string,
@@ -29,7 +31,7 @@ declare module 'fastify' {
 }
 const ENV_SCHEMA = {
   type: 'object',
-  required: [ "PORT", "AES_KEY", "MONGODB_URI", "JWT_SECRET" ],
+  required: [ "PORT", "BATTLE_PORT", "AES_KEY", "BATTLE_AES_KEY", "MONGODB_URI", "JWT_SECRET" ],
   properties: {
     PORT: {
       type: 'number',
@@ -39,10 +41,17 @@ const ENV_SCHEMA = {
       type: 'number',
       default: 3001
     },
+    BATTLE_PORT: {
+      type: 'number',
+      default: 3002
+    },
     API_KEY: {
       type: "string"
     },
     AES_KEY: {
+      type: "string",
+    },
+    BATTLE_AES_KEY: {
       type: "string",
     },
     MONGODB_URI: {
@@ -104,19 +113,20 @@ async function main() {
         host: "0.0.0.0",
     });
 
-    // const battleInstance = fastify({ logger: true });
-    // await battleInstance.register(mongoosePlugin, { uri: process.env.MONGO_URI! });
-    // await battleInstance.register(modelsPlugin);
-    // await battleInstance.register(servicesPlugin);
-    // await battleInstance.register(encryptionPlugin, {
-    //     aesKey: Buffer.from(process.env.BATTLE_AES_KEY!),
-    // });
-    // await battleInstance.register(authPlugin);
-    // battleInstance.register(battleApp);
-    // battleInstance.listen({
-    //     port: parseInt(process.env.BATTLE_PORT || "") || 3001,
-    //     host: "0.0.0.0",
-    // });
+    const battleInstance = fastify({ logger: true });
+    await battleInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+    await battleInstance.register(mongoosePlugin, { uri: battleInstance.config.MONGODB_URI });
+    await battleInstance.register(modelsPlugin);
+    await battleInstance.register(servicesPlugin);
+    await battleInstance.register(encryptionPlugin, {
+        aesKey: Buffer.from(battleInstance.config.BATTLE_AES_KEY),
+    });
+    await battleInstance.register(authPlugin);
+    battleInstance.register(battleApp);
+    battleInstance.listen({
+        port: battleInstance.config.BATTLE_PORT,
+        host: "0.0.0.0",
+    });
 }
 
 main().catch(console.error);
