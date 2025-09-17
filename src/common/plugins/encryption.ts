@@ -3,6 +3,10 @@ import fp from "fastify-plugin";
 import { randomBytes, createCipheriv, createDecipheriv } from "crypto";
 
 declare module "fastify" {
+    interface FastifyInstance {
+        encryptPara: (payload: string) => Buffer;
+        decryptPara: (payload: Buffer) => string;
+    }
     interface FastifyContextConfig {
         encrypted?: boolean;
     }
@@ -31,6 +35,13 @@ const decrypt = function (payload: Buffer, key: Buffer): string {
 
 export default fp<{ aesKey: Buffer }>(async (fastify, opts) => {
     const AES_KEY: Buffer = opts.aesKey;
+
+    fastify.decorate("encryptPara", function(payload: string) {
+        return encrypt(payload, AES_KEY);
+    });
+    fastify.decorate("decryptPara", function(payload: Buffer) {
+        return decrypt(payload, AES_KEY);
+    });
 
     fastify.addContentTypeParser("application/octet-stream", { parseAs: "buffer" }, (request, body, done) => {
         if (request.routeOptions.config?.encrypted) {

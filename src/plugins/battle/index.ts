@@ -1,6 +1,9 @@
 import { FastifyPluginAsync } from "fastify";
+import battleWs from "./ws";
 
 const battleApp: FastifyPluginAsync = async (app) => {
+    await app.register(battleWs);
+
     app.get(
         "/init_client",
         {
