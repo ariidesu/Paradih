@@ -3,9 +3,6 @@
   <img src=".github/images/logo.jpg" alt="Logo" height="30">
 </h1>
 
-> [!WARNING]
-> This is a private repository. Do not share, distribute, or leak any code or information from this repository.
-
 ## Overview
 
 Paradih is an implementation of Paradigm: Reboot's server, aiming to replicate as much of the game functionalities as possible.
@@ -52,4 +49,4 @@ It currently supports:
 
 ## Disclaimer
 
-This project is not affiliated with TunerGames. (also tunergames suck)
+This project is not affiliated with TunerGames.
