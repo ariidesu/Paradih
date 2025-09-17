@@ -17,6 +17,10 @@ export function buildPlayService(app: FastifyInstance) {
             return await PlayResult.findOne({ userId: user._id, _id: playId });
         },
 
+        async getChartPlayByOnlyId(playId: string): Promise<PlayResultDoc | null> {
+            return await PlayResult.findOne({ _id: playId });
+        },
+
         async getChartPlays(
             user: UserDoc,
             chartId: string,
