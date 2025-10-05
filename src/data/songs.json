@@ -558,6 +558,78 @@
         }
     },
     {
+        "songId": "s/antler",
+        "title": "Antler",
+        "bpm": "180",
+        "genre": "Future Bass / Botanica",
+        "composer": "Juggernaut.",
+        "illustrator": "Sin:cK",
+        "version": {
+            "x": 3,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 9,
+            "massive": 14.6
+        }
+    },
+    {
+        "songId": "s/diva",
+        "title": "Diva",
+        "bpm": "200",
+        "genre": "Artcore",
+        "composer": "Juggernaut.",
+        "illustrator": "Cube",
+        "version": {
+            "x": 3,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 11,
+            "massive": 15.3
+        }
+    },
+    {
+        "songId": "s/rebellion",
+        "title": "Rebellion",
+        "bpm": "170",
+        "genre": "Symphonic Trancecore",
+        "composer": "Juggernaut.",
+        "illustrator": "ゲソきんぐ & Cube",
+        "version": {
+            "x": 3,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 12,
+            "massive": 15.8
+        }
+    },
+    {
+        "songId": "s/spiritofthemonarch",
+        "title": "Spirit of the Monarch",
+        "bpm": "215",
+        "genre": "Hardcore",
+        "composer": "Juggernaut.",
+        "illustrator": "M.Ghost",
+        "version": {
+            "x": 3,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 7,
+            "invaded": 13.3,
+            "massive": 16.5
+        }
+    },
+    {
         "songId": "s/resistance",
         "title": "RESISTANCE",
         "bpm": "130",
@@ -831,9 +903,9 @@
         "songId": "s/lunaticcrazy",
         "title": "ルナティッククレイジー feat. PANXI",
         "bpm": "176",
-        "genre": "LUNATIC CORE",
+        "genre": "DEVILCORE",
         "composer": "lapix & Zekk",
-        "illustrator": "ぽよし & さんぱち",
+        "illustrator": "DFRA",
         "version": {
             "x": 3,
             "y": 9,
@@ -849,9 +921,9 @@
         "songId": "s/dawn",
         "title": "DAWN",
         "bpm": "175",
-        "genre": "Techcore",
+        "genre": "Alternative Utopia",
         "composer": "Mylta",
-        "illustrator": "ぽよし",
+        "illustrator": "おのこ",
         "version": {
             "x": 3,
             "y": 9,
@@ -867,9 +939,9 @@
         "songId": "s/shiftw",
         "title": "SHIFT (・ω・)",
         "bpm": "172",
-        "genre": "NEO DIGITAL FUTURE",
+        "genre": "席替えPOP",
         "composer": "Blacklolita",
-        "illustrator": "ぽよし",
+        "illustrator": "おゆざき",
         "version": {
             "x": 3,
             "y": 9,
@@ -903,9 +975,9 @@
         "songId": "s/findmydream",
         "title": "Find my dream",
         "bpm": "174",
-        "genre": "DEVILCORE",
+        "genre": "Vocal Pop",
         "composer": "rejection & Mameyudoufu × 棗いつき",
-        "illustrator": "DFRA",
+        "illustrator": "ぽよし & 内山ユニコ",
         "version": {
             "x": 3,
             "y": 9,
@@ -921,9 +993,9 @@
         "songId": "s/astronomicalopt",
         "title": "Astronomical Optical Interferometry",
         "bpm": "150",
-        "genre": "Alternative Utopia",
+        "genre": "TranceStep",
         "composer": "poplavor & Zekk",
-        "illustrator": "おのこ",
+        "illustrator": "ぽよし & 内山ユニコ",
         "version": {
             "x": 3,
             "y": 9,
@@ -939,9 +1011,9 @@
         "songId": "s/marionette",
         "title": "マリオネット feat. 梓川",
         "bpm": "164",
-        "genre": "席替えPOP",
+        "genre": "Puppet Core",
         "composer": "lapix",
-        "illustrator": "おゆざき",
+        "illustrator": "ぽよし & 残",
         "version": {
             "x": 3,
             "y": 9,
@@ -1440,39 +1512,39 @@
         }
     },
     {
-        "songId": "s/chromevox",
-        "title": "Chrome VOX",
-        "bpm": "205",
-        "genre": "Hardcore",
-        "composer": "t+pazolite",
-        "illustrator": "Cytus II ©Rayark Inc.",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
+        "bpm": "174",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
-            "y": 2,
-            "z": -1
+            "x": 1,
+            "y": 9,
+            "z": 3
         },
         "charts": {
-            "detected": 4,
-            "invaded": 12,
-            "massive": 15.4
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 15.7
         }
     },
     {
-        "songId": "s/alexandriteonoken",
-        "title": "Alexandrite",
-        "bpm": "175",
-        "genre": "Artcore",
-        "composer": "onoken",
-        "illustrator": "Cytus II ©Rayark Inc.",
+        "songId": "s/reboot",
+        "title": "RE; Boot",
+        "bpm": "150",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
         "version": {
-            "x": 3,
-            "y": 2,
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
             "detected": 5,
-            "invaded": 10,
-            "massive": 15.6
+            "invaded": 11.5,
+            "massive": 15.8
         }
     },
     {
@@ -1512,39 +1584,39 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
-        "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "songId": "s/flamedark",
+        "title": "Flame Dark",
+        "bpm": "138",
+        "genre": "Epic Dubstep",
+        "composer": "KIVΛ",
+        "illustrator": "VOEZ ©Rayark Inc.",
         "version": {
-            "x": 1,
-            "y": 9,
-            "z": 3
+            "x": 3,
+            "y": 2,
+            "z": -1
         },
         "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 15.7
+            "detected": 4,
+            "invaded": 9,
+            "massive": 14.7
         }
     },
     {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
-        "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
+        "songId": "s/tougenkyou",
+        "title": "Tougenkyou",
+        "bpm": "185",
+        "genre": "Drumstep",
+        "composer": "MYTK",
+        "illustrator": "VOEZ ©Rayark Inc.",
         "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 2,
             "z": -1
         },
         "charts": {
             "detected": 5,
             "invaded": 11.5,
-            "massive": 15.8
+            "massive": 15.3
         }
     },
     {
@@ -4158,6 +4230,24 @@
         }
     },
     {
+        "songId": "s/ignite",
+        "title": "IGNITE",
+        "bpm": "200",
+        "genre": "Frenchcore",
+        "composer": "USAO & Massive New Krew",
+        "illustrator": "LAM",
+        "version": {
+            "x": 3,
+            "y": 11,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 10,
+            "massive": 15
+        }
+    },
+    {
         "songId": "s/subterraneanblastoff",
         "title": "Subterranean Blastoff",
         "bpm": "195",
@@ -4662,6 +4752,24 @@
         }
     },
     {
+        "songId": "s/synthesis",
+        "title": "Synthesis.",
+        "bpm": "180",
+        "genre": "Techcore",
+        "composer": "tn-shi",
+        "illustrator": "Jizici",
+        "version": {
+            "x": 3,
+            "y": 11,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 13.3,
+            "massive": 16.3
+        }
+    },
+    {
         "songId": "s/classmemories",
         "title": "Class Memories",
         "bpm": "145",
@@ -4860,6 +4968,24 @@
         }
     },
     {
+        "songId": "s/aventyr",
+        "title": "Äventyr",
+        "bpm": "76-132",
+        "genre": "Neo Pagan Folk",
+        "composer": "Grand Thaw / Rigël Theatre",
+        "illustrator": "しいたけ",
+        "version": {
+            "x": 3,
+            "y": 11,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 8,
+            "massive": 13.7
+        }
+    },
+    {
         "songId": "s/vezzelix",
         "title": "VEZZELiX",
         "bpm": "190",
@@ -5040,6 +5166,24 @@
         }
     },
     {
+        "songId": "s/roadtostarlightz",
+        "title": "Road to Starlightz feat. ninnikuu",
+        "bpm": "170",
+        "genre": "UK Hardcore",
+        "composer": "Normal1zer",
+        "illustrator": "清衣 + Konseki Takane",
+        "version": {
+            "x": 3,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 9.5,
+            "massive": 14.2
+        }
+    },
+    {
         "songId": "s/crosssoul",
         "title": "Cross†Soul",
         "bpm": "200",
@@ -5073,6 +5217,24 @@
             "detected": 3,
             "invaded": 8,
             "massive": 13.4
+        }
+    },
+    {
+        "songId": "s/random",
+        "title": "Random",
+        "bpm": "132",
+        "genre": "Electronic Jazz",
+        "composer": "Sobrem × Silentroom",
+        "illustrator": "Jizici",
+        "version": {
+            "x": 3,
+            "y": 11,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 15.2
         }
     },
     {
@@ -5184,6 +5346,24 @@
         }
     },
     {
+        "songId": "s/dontblink",
+        "title": "Don't Blink",
+        "bpm": "155",
+        "genre": "Rawstyle",
+        "composer": "Valtrax",
+        "illustrator": "senriOnn + Konseki Takane",
+        "version": {
+            "x": 3,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 11.5,
+            "massive": 14.4
+        }
+    },
+    {
         "songId": "s/reendofadream",
         "title": "Re: End of a Dream",
         "bpm": "212",
@@ -5256,6 +5436,24 @@
         }
     },
     {
+        "songId": "s/goodworld2024",
+        "title": "GOODWORLD",
+        "bpm": "165",
+        "genre": "GOODHARD",
+        "composer": "EBIMAYO",
+        "illustrator": "EBIMAYO",
+        "version": {
+            "x": 3,
+            "y": 11,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 12,
+            "massive": 15.6
+        }
+    },
+    {
         "songId": "s/travelerstandaloof",
         "title": "Traveler ~Stand Aloof~",
         "bpm": "205",
@@ -5271,6 +5469,24 @@
             "detected": 7,
             "invaded": 13.2,
             "massive": 16.6
+        }
+    },
+    {
+        "songId": "s/endtime",
+        "title": "End Time",
+        "bpm": "180",
+        "genre": "ReQuiEm tRanCe",
+        "composer": "Cres.",
+        "illustrator": "Jizici",
+        "version": {
+            "x": 3,
+            "y": 11,
+            "z": -1
+        },
+        "charts": {
+            "detected": 7,
+            "invaded": 13.6,
+            "massive": 16.7
         }
     }
 ]
