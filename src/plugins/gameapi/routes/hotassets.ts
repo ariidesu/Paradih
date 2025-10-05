@@ -103,7 +103,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
 
     app.get(
         "/songmeta",
-        { preHandler: app.authService.verifyAuthToken, con>
+        { preHandler: app.authService.verifyAuthToken, config: { encrypted: true } },
         async (request, reply) => {
             return {"status": "OK", "data": {}};
         }
