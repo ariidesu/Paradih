@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import fastifyEnv from "@fastify/env";
-import fastifyMail from "@autotelic/fastify-mail";
+
+import { createTransport, Transporter } from "nodemailer";
 
 import encryptionPlugin from "./common/plugins/encryption";
 import authPlugin from "./common/plugins/auth";
@@ -34,6 +35,7 @@ declare module 'fastify' {
       SMTP_PASSWORD: string,
       SMTP_FROM: string,
     };
+    mail: Transporter;
   }
 }
 const ENV_SCHEMA = {
@@ -111,18 +113,16 @@ async function main() {
     })
 
     await gameApiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
-    await gameApiInstance.register(fastifyMail, {
-        transporter: {
-            default: { from: gameApiInstance.config.SMTP_FROM },
-            host: gameApiInstance.config.SMTP_HOST,
-            port: gameApiInstance.config.SMTP_PORT,
-            secure: gameApiInstance.config.SMTP_PORT == 465,
-            auth: {
-                user: gameApiInstance.config.SMTP_USERNAME,
-                pass: gameApiInstance.config.SMTP_PASSWORD,
-            },
-        }
-    });
+    await gameApiInstance.decorate("mail", createTransport({
+        host: gameApiInstance.config.SMTP_HOST,
+        port: gameApiInstance.config.SMTP_PORT,
+        secure: gameApiInstance.config.SMTP_PORT == 465,
+        auth: {
+            user: gameApiInstance.config.SMTP_USERNAME,
+            pass: gameApiInstance.config.SMTP_PASSWORD,
+        },
+        from: gameApiInstance.config.SMTP_FROM,
+    }));
     await gameApiInstance.register(mongoosePlugin, { uri: gameApiInstance.config.MONGODB_URI });
     await gameApiInstance.register(modelsPlugin);
     await gameApiInstance.register(servicesPlugin);
