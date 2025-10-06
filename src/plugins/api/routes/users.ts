@@ -140,6 +140,7 @@ const usersRoutes: FastifyPluginAsync = async (app) => {
             }
 
             const user = await app.userService.createUser(email, password);
+            await app.userService.addOwnedItem(user, "backgrounds", "BGDefault");
             const token = app.authService.issueApiToken(user._id as string, user.email);
             return { code: "OK", data: { token, userId: user._id } };
         }
