@@ -8,6 +8,7 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             const newCode = app.authService.createActionCode(email);
 
             await app.mail.sendMail({
+                from: app.config.SMTP_FROM,
                 to: email,
                 subject: "Account action - Verification Code",
                 text: `You're trying to register your account. Your verification code is: ${newCode}`
@@ -84,6 +85,7 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             const newCode = app.authService.createActionCode(email);
 
             await app.mail.sendMail({
+                from: app.config.SMTP_FROM,
                 to: email,
                 subject: "Account action - Verification Code",
                 text: `You're trying to login into your account. Your verification code is: ${newCode}`

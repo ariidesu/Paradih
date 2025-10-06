@@ -120,8 +120,7 @@ async function main() {
         auth: {
             user: gameApiInstance.config.SMTP_USERNAME,
             pass: gameApiInstance.config.SMTP_PASSWORD,
-        },
-        from: gameApiInstance.config.SMTP_FROM,
+        }
     }));
     await gameApiInstance.register(mongoosePlugin, { uri: gameApiInstance.config.MONGODB_URI });
     await gameApiInstance.register(modelsPlugin);
