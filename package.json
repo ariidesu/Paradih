@@ -6,6 +6,7 @@
     "watch": "npx nodemon"
   },
   "dependencies": {
+    "@autotelic/fastify-mail": "^0.8.0",
     "@fastify/env": "^5.0.2",
     "@fastify/jwt": "^9.1.0",
     "@fastify/websocket": "^11.2.0",

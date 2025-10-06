@@ -1,5 +1,6 @@
 import fastify from "fastify";
 import fastifyEnv from "@fastify/env";
+import fastifyMail from "@autotelic/fastify-mail";
 
 import encryptionPlugin from "./common/plugins/encryption";
 import authPlugin from "./common/plugins/auth";
@@ -26,12 +27,18 @@ declare module 'fastify' {
       CONFIG_DEFAULT_AC: number,
       CONFIG_DEFAULT_DP: number,
       CONFIG_DEFAULT_NAVI: number,
+
+      SMTP_HOST: string,
+      SMTP_PORT: number,
+      SMTP_USERNAME: string,
+      SMTP_PASSWORD: string,
+      SMTP_FROM: string,
     };
   }
 }
 const ENV_SCHEMA = {
   type: 'object',
-  required: [ "PORT", "BATTLE_PORT", "AES_KEY", "BATTLE_AES_KEY", "MONGODB_URI", "JWT_SECRET" ],
+  required: [ "PORT", "BATTLE_PORT", "AES_KEY", "BATTLE_AES_KEY", "MONGODB_URI", "JWT_SECRET", "SMTP_HOST", "SMTP_PORT", "SMTP_USERNAME", "SMTP_PASSWORD", "SMTP_FROM" ],
   properties: {
     PORT: {
       type: 'number',
@@ -73,8 +80,24 @@ const ENV_SCHEMA = {
       type: "number",
       default: 0
     },
+    
+    SMTP_HOST: {
+      type: "string"
+    },
+    SMTP_PORT: {
+      type: "number"
+    },
+    SMTP_USERNAME: {
+      type: "string"
+    },
+    SMTP_PASSWORD: {
+      type: "string"
+    },
+    SMTP_FROM: {
+      type: "string"
+    },
   }
-}
+};
 
 async function main() {
     const gameApiInstance = fastify({ logger: true });
@@ -88,6 +111,18 @@ async function main() {
     })
 
     await gameApiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+    await gameApiInstance.register(fastifyMail, {
+        transporter: {
+            default: { from: gameApiInstance.config.SMTP_FROM },
+            host: gameApiInstance.config.SMTP_HOST,
+            port: gameApiInstance.config.SMTP_PORT,
+            secure: gameApiInstance.config.SMTP_PORT == 465,
+            auth: {
+                user: gameApiInstance.config.SMTP_USERNAME,
+                pass: gameApiInstance.config.SMTP_PASSWORD,
+            },
+        }
+    });
     await gameApiInstance.register(mongoosePlugin, { uri: gameApiInstance.config.MONGODB_URI });
     await gameApiInstance.register(modelsPlugin);
     await gameApiInstance.register(servicesPlugin);

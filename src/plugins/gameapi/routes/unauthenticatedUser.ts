@@ -4,7 +4,16 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
     app.post(
         "/register/send_code",
         async (request) => {
-            throw new Error("not implemented yippi")
+            const { email } = request.body as { email: string };
+            const newCode = app.authService.createActionCode(email);
+
+            await app.mail.sendMail({
+                to: email,
+                subject: "Account action - Verification Code",
+                text: `You're trying to register your account. Your verification code is: ${newCode}`
+            });
+
+            return { status: "success", code: "OK", data: {} };
         }
     );
 
@@ -12,9 +21,11 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
         "/register/verify",
         async (request) => {
             const { email, actionCode } = request.body as { email: string, actionCode: string };
-            if (actionCode != "555555") {
-                return { status: "failed", code: "INVALID_CODE" };
+            const [success, expired] = app.authService.verifyActionCode(email, actionCode);
+            if (!success) {
+                return { status: "failed", code: expired ? "CODE_EXPIRED" : "INVALID_CODE" };
             }
+            
             let verifyCode = await app.authService.getVerifyCode(email);
             if (verifyCode == null) {
                 verifyCode = await app.authService.createVerifyCode(email);
@@ -69,14 +80,35 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
     app.post(
         "/login/email/send_code",
         async (request) => {
-            throw new Error("not implemented yippi")
+            const { email } = request.body as { email: string };
+            const newCode = app.authService.createActionCode(email);
+
+            await app.mail.sendMail({
+                to: email,
+                subject: "Account action - Verification Code",
+                text: `You're trying to login into your account. Your verification code is: ${newCode}`
+            });
+
+            return { status: "success", code: "OK", data: {} };
         }
     );
 
     app.post(
         "/login/email/confirm",
         async (request) => {
-            throw new Error("not implemented yippi")
+            const { email, actionCode } = request.body as { email: string, actionCode: string };
+            const [success, expired] = app.authService.verifyActionCode(email, actionCode);
+            if (!success) {
+                return { status: "failed", code: expired ? "CODE_EXPIRED" : "INVALID_CODE" };
+            }
+
+            const user = await app.userService.findByEmail(email);
+            if (user == null) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const authToken = app.authService.issueAuthToken(user._id as string, email);
+            return { status: "success", code: "OK", data: { authToken } };
         }
     );
 
