@@ -46,7 +46,8 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "EMAIL_ALREADY_EXISTS" };
             }
 
-            await app.userService.createUser(email, password);
+            const user = await app.userService.createUser(email, password);
+            await app.userService.addOwnedItem(user, "backgrounds", "BGDefault");
             return { status: "success", code: "OK", data: {} };
         }
     );
