@@ -117,14 +117,14 @@
         "startTime": 0
     },
     "side07": {
-        "cost": 60,
+        "cost": 80,
         "moneyType": "ac",
         "productType": "side",
         "discount": {
-            "afterDiscount": 60,
-            "beforeDiscount": 80,
-            "discountTime": 1759939200,
-            "enable": true
+            "afterDiscount": 0,
+            "beforeDiscount": 0,
+            "discountTime": 0,
+            "enable": false
         },
         "limitedTime": 0,
         "startTime": 0
@@ -143,14 +143,14 @@
         "startTime": 0
     },
     "side09": {
-        "cost": 60,
+        "cost": 80,
         "moneyType": "ac",
         "productType": "side",
         "discount": {
-            "afterDiscount": 60,
-            "beforeDiscount": 80,
-            "discountTime": 1759939200,
-            "enable": true
+            "afterDiscount": 0,
+            "beforeDiscount": 0,
+            "discountTime": 0,
+            "enable": false
         },
         "limitedTime": 0,
         "startTime": 0
@@ -533,6 +533,32 @@
         "startTime": 0
     },
     "side39": {
+        "cost": 100,
+        "moneyType": "ac",
+        "productType": "side",
+        "discount": {
+            "afterDiscount": 0,
+            "beforeDiscount": 0,
+            "discountTime": 0,
+            "enable": false
+        },
+        "limitedTime": 0,
+        "startTime": 0
+    },
+    "side40": {
+        "cost": 100,
+        "moneyType": "ac",
+        "productType": "side",
+        "discount": {
+            "afterDiscount": 0,
+            "beforeDiscount": 0,
+            "discountTime": 0,
+            "enable": false
+        },
+        "limitedTime": 0,
+        "startTime": 0
+    },
+    "side41": {
         "cost": 100,
         "moneyType": "ac",
         "productType": "side",

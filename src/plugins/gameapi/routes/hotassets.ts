@@ -97,7 +97,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
         "/translation",
         { preHandler: app.authService.verifyAuthToken, config: { encrypted: true } },
         async (request, reply) => {
-            return {"status": "OK", "data": {"jp": {"achv_title_way__BSoarToINFwithCiel": "[Ciel] \u3092\u643a\u5e2f\u3057\u3066 soar to \u00d8 \u3092\u30d7\u30ec\u30a4\u3057\u3001Rank INF \u3092\u9054\u6210\u3059\u308b"}}}
+            return {"status": "OK", "data": app.gameDataService.getTranslations() };
         }
     );
 
@@ -105,7 +105,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
         "/songmeta",
         { preHandler: app.authService.verifyAuthToken, config: { encrypted: true } },
         async (request, reply) => {
-            return {"status": "OK", "data": {}};
+            return {"status": "OK", "data": app.gameDataService.getSongMeta() };
         }
     );
 };

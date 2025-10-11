@@ -16,10 +16,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             return {
                 status: "OK",
 
-                api_min_ver: 75,
+                api_min_ver: 76,
                 first_login: false,
                 last_device_id: "",
-                latest_ver: 75,
+                latest_ver: 76,
 
                 battle_token: battleToken,
                 web_token: "",

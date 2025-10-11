@@ -1,0 +1,52 @@
+{
+    "s/grandluxoblivio": {
+        "chart": {
+            "invaded": {
+                "level": "9"
+            }
+        }
+    },
+    "s/pixelloverflow": {
+        "chart": {
+            "invaded": {
+                "level": "8"
+            }
+        }
+    },
+    "s/mermaidinbinary": {
+        "chart": {
+            "detected": {
+                "level": "5"
+            }
+        }
+    },
+    "s/zankyou404ddd": {
+        "comment": "a.k.a. The Highway No.404 [DDD]",
+        "chart": {
+            "detected": {
+                "level": "7"
+            }
+        }
+    },
+    "s/kiokukairo": {
+        "comment": "a.k.a. MEMORY Circuit",
+        "chart": {
+            "detected": {
+                "level": "3"
+            }
+        }
+    },
+    "s/guiling": {
+        "chart": {
+            "detected": {
+                "level": "4"
+            },
+            "invaded": {
+                "level": "9"
+            }
+        }
+    },
+    "s/datterror": {
+        "comment": "a.k.a. data error"
+    }
+}

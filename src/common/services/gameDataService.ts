@@ -89,6 +89,14 @@ interface BattleData {
     }[];
 }
 
+interface SongMetaData  {
+
+}
+
+interface TranslationData {
+    "jp": Record<string, string>;
+}
+
 export interface GameData {
     titles: string[];
     backgrounds: string[];
@@ -97,6 +105,8 @@ export interface GameData {
     songs: SongData[];
     ranks: RankData[];
     battleData: BattleData;
+    songMeta: SongMetaData;
+    translation: TranslationData;
     catalog: {
         metadata: {
             version: string;
@@ -111,6 +121,7 @@ export interface GameData {
         };
     }
 }
+
 export function buildGameDataService(app: FastifyInstance) {
     const titlesPath = path.join(__dirname, "../../data/titles.json");
     const backgroundsPath = path.join(__dirname, "../../data/backgrounds.json");
@@ -119,6 +130,8 @@ export function buildGameDataService(app: FastifyInstance) {
     const songsPath = path.join(__dirname, "../../data/songs.json");
     const ranksPath = path.join(__dirname, "../../data/ranks.json");
     const battlePath = path.join(__dirname, "../../data/battle.json");
+    const songMetaPath = path.join(__dirname, "../../data/songmeta.json");
+    const translationPath = path.join(__dirname, "../../data/translation.json");
 
     const iosCatalogPath = path.join(__dirname, "../../data/catalog/ios/catalog.json");
     const iosCatalogChecksumPath = path.join(__dirname, "../../data/catalog/ios/catalog_checksum.json");
@@ -133,6 +146,8 @@ export function buildGameDataService(app: FastifyInstance) {
         songs: JSON.parse(readFileSync(songsPath, "utf8")),
         ranks: JSON.parse(readFileSync(ranksPath, "utf8")),
         battleData: JSON.parse(readFileSync(battlePath, "utf8")),
+        songMeta: JSON.parse(readFileSync(songMetaPath, "utf8")),
+        translation: JSON.parse(readFileSync(translationPath, "utf8")),
         catalog: {
             metadata: JSON.parse(readFileSync(path.join(__dirname, "../../data/catalog/metadata.json"), "utf8")),
             ios: {
@@ -177,6 +192,14 @@ export function buildGameDataService(app: FastifyInstance) {
 
         getBattleData(): BattleData {
             return gameData.battleData;
+        },
+
+        getTranslations(): TranslationData {
+            return gameData.translation;
+        },
+
+        getSongMeta(): SongMetaData {
+            return gameData.songMeta;
         },
 
         getCatalogMetadata(): { version: string } {
