@@ -11,9 +11,9 @@ const data = JSON.parse(fs.readFileSync(rawDataPath, "utf8"));
     const proberData = await (await fetch("https://api.prp.icel.site/songs")).json();
     // we modify the prober data to only include what we need
     let filteredData = {};
-    for (const songData in proberData) {
-        if (!proberData[songData.title]) {
-            filteredData[songData.title] = { title: songData.title, charts: {} };
+    for (const songData of proberData) {
+        if (!filteredData[songData.title]) {
+            filteredData[songData.title] = { title: songData.title.replace(/[\s-]/g, "").toLowerCase(), charts: {} };
         }
 
         filteredData[songData.title].charts[songData.difficulty_id] = { const: songData.level };
@@ -22,30 +22,22 @@ const data = JSON.parse(fs.readFileSync(rawDataPath, "utf8"));
     filteredData = Object.values(filteredData);
 
     const difficultyMapping = {
-        1: "detected",
-        2: "invaded",
-        3: "massive",
+        0: "detected",
+        1: "invaded",
+        2: "massive",
     };
     const songs = data.map((song) => {
-        const songIdFromAddress = song.address.split("/")[1];
-        const wikiSongData =
-            wikiData[songIdFromAddress] ??
-            Object.values(wikiData).find((entry) => {
-                const sanitizedTitle = song.title
-                    .replace(/[\s-]/g, "")
-                    .toLowerCase();
-                const sanitizedEntryTitle = entry.title
-                    .replace(/[\s-]/g, "")
-                    .toLowerCase();
-                return sanitizedTitle == sanitizedEntryTitle;
-            });
-
+        const sanitizedTitle = song.title
+            .replace(/[\s-]/g, "")
+            .toLowerCase();
+        const foundSongData = filteredData.find((entry) => entry.title == sanitizedTitle);
+        console.log(foundSongData)
         const charts = { detected: 0, invaded: 0, massive: 0 };
-        if (wikiSongData) {
+        if (foundSongData) {
             song.charts.forEach((chart) => {
-                const difficulty = difficultyMapping[chart.difficulty];
-                if (wikiSongData.charts[difficulty]) {
-                    charts[difficulty] = wikiSongData.charts[difficulty].const;
+                const difficulty = (chart.difficulty + 1).toString();
+                if (foundSongData.charts[difficulty]) {
+                    charts[difficultyMapping[chart.difficulty]] = foundSongData.charts[difficulty].const;
                 }
             });
         }
