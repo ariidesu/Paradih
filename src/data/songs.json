@@ -558,12 +558,372 @@
         }
     },
     {
+        "songId": "s/grandluxoblivio",
+        "title": "GRANDLUX::OBLIVIO",
+        "bpm": "153",
+        "genre": "HyperTrance",
+        "composer": "DRIVE.",
+        "illustrator": "U11",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/pixeloverflow",
+        "title": "『PIXEL OVERFLØW』",
+        "bpm": "130",
+        "genre": "Complextro / Melodic House",
+        "composer": "AisE & zsry",
+        "illustrator": "N1A6现",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/memorialtimecapsule",
+        "title": "Memorial Time Capsule",
+        "bpm": "190",
+        "genre": "Dramatic Hardcore",
+        "composer": "yuudo",
+        "illustrator": "fog",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/mermaidinbinary",
+        "title": "Mermaid in binary",
+        "bpm": "212",
+        "genre": "Future Core",
+        "composer": "みーに feat. はらもりよしな",
+        "illustrator": "U11",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/zankyou404ddd",
+        "title": "残響404号DDD線",
+        "bpm": "206",
+        "genre": "ポストロック",
+        "composer": "Nyan.PLANET (TAKIO + 羽鳥玲)",
+        "illustrator": "提嘟",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/kiokukairo",
+        "title": "キオク回路",
+        "bpm": "123",
+        "genre": "Electronic",
+        "composer": "ShiBa",
+        "illustrator": "31chan",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/guiling",
+        "title": "归零",
+        "bpm": "172",
+        "genre": "Artcore",
+        "composer": "KAIRCI × Aletta",
+        "illustrator": "U11",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/installme",
+        "title": "Install me",
+        "bpm": "180",
+        "genre": "Breakcore / Hi-Tech / Hardcore",
+        "composer": "CHRYSAD",
+        "illustrator": "白羊姐姐",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/datteerror",
+        "title": "だってerror",
+        "bpm": "124",
+        "genre": "pops",
+        "composer": "Alice. feat. 記憶に残る",
+        "illustrator": "松本摸摸餐",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/invertedparadise",
+        "title": "Inverted Paradise",
+        "bpm": "200",
+        "genre": "Heavencore",
+        "composer": "Essbee",
+        "illustrator": "素苒",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/takeontheheat",
+        "title": "Take On The H.E.A.T.!!!",
+        "bpm": "147",
+        "genre": "Speed House",
+        "composer": "Supa7onyz",
+        "illustrator": "咸鱼烧菜",
+        "version": {
+            "x": 3,
+            "y": 14,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/fieldtransistoreffect",
+        "title": "Field Transistor Effect",
+        "bpm": "210",
+        "genre": "Military Splash",
+        "composer": "Sephid",
+        "illustrator": "松本摸摸餐",
+        "version": {
+            "x": 3,
+            "y": 14,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 13.3,
+            "massive": 16.4
+        }
+    },
+    {
+        "songId": "s/argonovice",
+        "title": "Argonovice",
+        "bpm": "210",
+        "genre": "Frenchcore",
+        "composer": "Knighthood",
+        "illustrator": "U11",
+        "version": {
+            "x": 3,
+            "y": 14,
+            "z": -1
+        },
+        "charts": {
+            "detected": 7,
+            "invaded": 13.3,
+            "massive": 16.5
+        }
+    },
+    {
+        "songId": "s/anova",
+        "title": "ANOVA",
+        "bpm": "182",
+        "genre": "Ultrafunk",
+        "composer": "cybermiso",
+        "illustrator": "Kanvien_",
+        "version": {
+            "x": 3,
+            "y": 14,
+            "z": -1
+        },
+        "charts": {
+            "detected": 8,
+            "invaded": 13.8,
+            "massive": 16.8
+        }
+    },
+    {
+        "songId": "s/labyrinthox",
+        "title": "LABYRINTHOX",
+        "bpm": "200",
+        "genre": "Industrial Gothic Bass",
+        "composer": "BlackYooh vs. siromaru",
+        "illustrator": "2Al4wU4 feat. 微菌",
+        "version": {
+            "x": 3,
+            "y": 14,
+            "z": -1
+        },
+        "charts": {
+            "detected": 8,
+            "invaded": 14.1,
+            "massive": 16.9
+        }
+    },
+    {
+        "songId": "s/lovelikeweredying",
+        "title": "Love like we're dying",
+        "bpm": "175",
+        "genre": "Trancecore",
+        "composer": "Arch",
+        "illustrator": "C4Cat",
+        "version": {
+            "x": 3,
+            "y": 13,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 10.5,
+            "massive": 14.7
+        }
+    },
+    {
+        "songId": "s/rocketlanterns",
+        "title": "Rocket Lanterns",
+        "bpm": "128",
+        "genre": "Oriental House",
+        "composer": "Farhan",
+        "illustrator": "C4Cat",
+        "version": {
+            "x": 3,
+            "y": 13,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 10,
+            "massive": 15.2
+        }
+    },
+    {
+        "songId": "s/libra",
+        "title": "Libra",
+        "bpm": "196",
+        "genre": "Trancecore",
+        "composer": "MIssionary vs Mimineko",
+        "illustrator": "C4Cat",
+        "version": {
+            "x": 3,
+            "y": 13,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 11,
+            "massive": 15.8
+        }
+    },
+    {
+        "songId": "s/soartophi",
+        "title": "soar to Ø",
+        "bpm": "195",
+        "genre": "Drum and Bass",
+        "composer": "Aoi",
+        "illustrator": "ケシｋｓくん",
+        "version": {
+            "x": 3,
+            "y": 13,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 12,
+            "massive": 15.8
+        }
+    },
+    {
+        "songId": "s/keigannozettaireido",
+        "title": "炯眼の絶対零度",
+        "bpm": "175",
+        "genre": "DEVILCORE",
+        "composer": "polysha",
+        "illustrator": "DFRA",
+        "version": {
+            "x": 3,
+            "y": 13,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 13,
+            "massive": 16.1
+        }
+    },
+    {
         "songId": "s/antler",
         "title": "Antler",
         "bpm": "180",
-        "genre": "Future Bass / Botanica",
+        "genre": "Alternative Utopia",
         "composer": "Juggernaut.",
-        "illustrator": "Sin:cK",
+        "illustrator": "おのこ",
         "version": {
             "x": 3,
             "y": 12,
@@ -579,9 +939,9 @@
         "songId": "s/diva",
         "title": "Diva",
         "bpm": "200",
-        "genre": "Artcore",
+        "genre": "席替えPOP",
         "composer": "Juggernaut.",
-        "illustrator": "Cube",
+        "illustrator": "おゆざき",
         "version": {
             "x": 3,
             "y": 12,
@@ -678,9 +1038,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 5,
-            "invaded": 12,
-            "massive": 15.8
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 14.5
         }
     },
     {
@@ -903,9 +1263,9 @@
         "songId": "s/lunaticcrazy",
         "title": "ルナティッククレイジー feat. PANXI",
         "bpm": "176",
-        "genre": "DEVILCORE",
+        "genre": "LUNATIC CORE",
         "composer": "lapix & Zekk",
-        "illustrator": "DFRA",
+        "illustrator": "ぽよし & さんぱち",
         "version": {
             "x": 3,
             "y": 9,
@@ -921,9 +1281,9 @@
         "songId": "s/dawn",
         "title": "DAWN",
         "bpm": "175",
-        "genre": "Alternative Utopia",
+        "genre": "Techcore",
         "composer": "Mylta",
-        "illustrator": "おのこ",
+        "illustrator": "ぽよし",
         "version": {
             "x": 3,
             "y": 9,
@@ -939,9 +1299,9 @@
         "songId": "s/shiftw",
         "title": "SHIFT (・ω・)",
         "bpm": "172",
-        "genre": "席替えPOP",
+        "genre": "NEO DIGITAL FUTURE",
         "composer": "Blacklolita",
-        "illustrator": "おゆざき",
+        "illustrator": "ぽよし",
         "version": {
             "x": 3,
             "y": 9,
@@ -1152,39 +1512,39 @@
         }
     },
     {
-        "songId": "s/galdr",
-        "title": "GALDЯ",
-        "bpm": "195",
-        "genre": "Archaic Seal",
-        "composer": "Nego_tiator",
-        "illustrator": "M1aky",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
+        "bpm": "174",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
-            "y": 7,
-            "z": -1
+            "x": 1,
+            "y": 9,
+            "z": 3
         },
         "charts": {
-            "detected": 6,
-            "invaded": 12,
-            "massive": 16.4
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 15.7
         }
     },
     {
-        "songId": "s/senseofwonder",
-        "title": "sense of wonder",
-        "bpm": "178",
-        "genre": "ATONEMENT",
-        "composer": "Yu_Asahina",
-        "illustrator": "Wrist",
+        "songId": "s/reboot",
+        "title": "RE; Boot",
+        "bpm": "150",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
         "version": {
-            "x": 3,
-            "y": 7,
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
-            "detected": 8,
-            "invaded": 13.9,
-            "massive": 16.8
+            "detected": 5,
+            "invaded": 11.5,
+            "massive": 15.8
         }
     },
     {
@@ -1309,7 +1669,7 @@
         },
         "charts": {
             "detected": 6,
-            "invaded": 13.1,
+            "invaded": 13.4,
             "massive": 16.3
         }
     },
@@ -1326,9 +1686,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 7,
+            "invaded": 13.7,
+            "massive": 16.8
         }
     },
     {
@@ -1417,7 +1777,7 @@
         },
         "charts": {
             "detected": 2,
-            "invaded": 8,
+            "invaded": 8.5,
             "massive": 13.1
         }
     },
@@ -1435,7 +1795,7 @@
         },
         "charts": {
             "detected": 4,
-            "invaded": 10,
+            "invaded": 10.5,
             "massive": 14.6
         }
     },
@@ -1453,7 +1813,7 @@
         },
         "charts": {
             "detected": 3,
-            "invaded": 9,
+            "invaded": 9.5,
             "massive": 15.1
         }
     },
@@ -1471,7 +1831,7 @@
         },
         "charts": {
             "detected": 5,
-            "invaded": 11,
+            "invaded": 11.5,
             "massive": 15.9
         }
     },
@@ -1512,38 +1872,38 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
-        "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "songId": "s/chromevox",
+        "title": "Chrome VOX",
+        "bpm": "205",
+        "genre": "Hardcore",
+        "composer": "t+pazolite",
+        "illustrator": "Cytus II ©Rayark Inc.",
         "version": {
-            "x": 1,
-            "y": 9,
-            "z": 3
-        },
-        "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 15.7
-        }
-    },
-    {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
-        "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
-        "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 2,
             "z": -1
         },
         "charts": {
-            "detected": 5,
-            "invaded": 11.5,
+            "detected": 4,
+            "invaded": 12,
+            "massive": 15.4
+        }
+    },
+    {
+        "songId": "s/alexandriteonoken",
+        "title": "Alexandrite",
+        "bpm": "175",
+        "genre": "Artcore",
+        "composer": "onoken",
+        "illustrator": "Cytus II ©Rayark Inc.",
+        "version": {
+            "x": 3,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 12,
             "massive": 15.8
         }
     },
@@ -1578,7 +1938,7 @@
             "z": -1
         },
         "charts": {
-            "detected": 2,
+            "detected": 3,
             "invaded": 8.5,
             "massive": 13.6
         }
@@ -1849,7 +2209,7 @@
         },
         "charts": {
             "detected": 4,
-            "invaded": 12,
+            "invaded": 12.5,
             "massive": 14.9
         }
     },
@@ -1885,7 +2245,7 @@
         },
         "charts": {
             "detected": 6,
-            "invaded": 11,
+            "invaded": 11.5,
             "massive": 16.5
         }
     },
@@ -2137,7 +2497,7 @@
         },
         "charts": {
             "detected": 4,
-            "invaded": 10,
+            "invaded": 10.5,
             "massive": 14.7
         }
     },
@@ -2173,7 +2533,7 @@
         },
         "charts": {
             "detected": 6,
-            "invaded": 12,
+            "invaded": 12.5,
             "massive": 16.3
         }
     },
@@ -3109,7 +3469,7 @@
         },
         "charts": {
             "detected": 8,
-            "invaded": 8,
+            "invaded": 8.5,
             "massive": 15.6
         }
     },
@@ -3451,7 +3811,7 @@
         },
         "charts": {
             "detected": 3,
-            "invaded": 8,
+            "invaded": 8.5,
             "massive": 13.1
         }
     },
@@ -3685,7 +4045,7 @@
         },
         "charts": {
             "detected": 4,
-            "invaded": 8,
+            "invaded": 8.5,
             "massive": 14.2
         }
     },
@@ -4153,7 +4513,7 @@
         },
         "charts": {
             "detected": 3,
-            "invaded": 8,
+            "invaded": 8.5,
             "massive": 13.5
         }
     },
@@ -4245,6 +4605,24 @@
             "detected": 4,
             "invaded": 10,
             "massive": 15
+        }
+    },
+    {
+        "songId": "s/nanashinosenkyoushi",
+        "title": "名無しの宣教師",
+        "bpm": "195",
+        "genre": "Trancecore",
+        "composer": "MIssionary",
+        "illustrator": "C4Cat",
+        "version": {
+            "x": 3,
+            "y": 13,
+            "z": -1
+        },
+        "charts": {
+            "detected": 2,
+            "invaded": 9,
+            "massive": 14.8
         }
     },
     {
@@ -4387,7 +4765,7 @@
         },
         "charts": {
             "detected": 4,
-            "invaded": 10,
+            "invaded": 10.5,
             "massive": 14.9
         }
     },
@@ -4999,7 +5377,7 @@
         },
         "charts": {
             "detected": 4,
-            "invaded": 9,
+            "invaded": 8,
             "massive": 14
         }
     },
@@ -5467,7 +5845,7 @@
         },
         "charts": {
             "detected": 7,
-            "invaded": 13.2,
+            "invaded": 13.4,
             "massive": 16.6
         }
     },
