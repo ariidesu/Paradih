@@ -31,7 +31,6 @@ const data = JSON.parse(fs.readFileSync(rawDataPath, "utf8"));
             .replace(/[\s-]/g, "")
             .toLowerCase();
         const foundSongData = filteredData.find((entry) => entry.title == sanitizedTitle);
-        console.log(foundSongData)
         const charts = { detected: 0, invaded: 0, massive: 0 };
         if (foundSongData) {
             song.charts.forEach((chart) => {
