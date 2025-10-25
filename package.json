@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "npx tsc && npx copyfiles --up 1 src/data/**/* dist/data",
+    "build": "npx tsc",
     "start": "node dist/index.js",
     "dev": "npm run build && npm run start",
     "watch": "npx nodemon"
@@ -19,7 +19,6 @@
     "@types/node": "^22.15.3",
     "@types/nodemailer": "^7.0.2",
     "@types/ws": "^8.18.1",
-    "copyfiles": "^2.4.1",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"

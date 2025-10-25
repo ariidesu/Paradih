@@ -52,7 +52,7 @@ const { request } = require("./utils/paradigm");
     });
 
     fs.writeFileSync(
-        "../src/data/purchases.json",
+        "../data/purchases.json",
         JSON.stringify(newList, null, 4)
     );
 

@@ -57,5 +57,5 @@ const data = JSON.parse(fs.readFileSync(rawDataPath, "utf8"));
         };
     });
 
-    fs.writeFileSync("../src/data/songs.json", JSON.stringify(songs, null, 4), "utf8");
+    fs.writeFileSync("../data/songs.json", JSON.stringify(songs, null, 4), "utf8");
 })();

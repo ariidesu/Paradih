@@ -54,5 +54,5 @@ const { request } = require('./utils/paradigm');
         };
     });
 
-    fs.writeFileSync('../src/data/ranks.json', JSON.stringify(ranks, null, 4), 'utf8');
+    fs.writeFileSync('../data/ranks.json', JSON.stringify(ranks, null, 4), 'utf8');
 })();

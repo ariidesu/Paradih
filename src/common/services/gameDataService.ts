@@ -123,20 +123,20 @@ export interface GameData {
 }
 
 export function buildGameDataService(app: FastifyInstance) {
-    const titlesPath = path.join(__dirname, "../../data/titles.json");
-    const backgroundsPath = path.join(__dirname, "../../data/backgrounds.json");
-    const purchasesPath = path.join(__dirname, "../../data/purchases.json");
-    const gearsPath = path.join(__dirname, "../../data/gears.json");
-    const songsPath = path.join(__dirname, "../../data/songs.json");
-    const ranksPath = path.join(__dirname, "../../data/ranks.json");
-    const battlePath = path.join(__dirname, "../../data/battle.json");
-    const songMetaPath = path.join(__dirname, "../../data/songmeta.json");
-    const translationPath = path.join(__dirname, "../../data/translation.json");
+    const titlesPath = path.join(__dirname, "../../../data/titles.json");
+    const backgroundsPath = path.join(__dirname, "../../../data/backgrounds.json");
+    const purchasesPath = path.join(__dirname, "../../../data/purchases.json");
+    const gearsPath = path.join(__dirname, "../../../data/gears.json");
+    const songsPath = path.join(__dirname, "../../../data/songs.json");
+    const ranksPath = path.join(__dirname, "../../../data/ranks.json");
+    const battlePath = path.join(__dirname, "../../../data/battle.json");
+    const songMetaPath = path.join(__dirname, "../../../data/songmeta.json");
+    const translationPath = path.join(__dirname, "../../../data/translation.json");
 
-    const iosCatalogPath = path.join(__dirname, "../../data/catalog/ios/catalog.json");
-    const iosCatalogChecksumPath = path.join(__dirname, "../../data/catalog/ios/catalog_checksum.json");
-    const androidCatalogPath = path.join(__dirname, "../../data/catalog/android/catalog.json");
-    const androidCatalogChecksumPath = path.join(__dirname, "../../data/catalog/android/catalog_checksum.json");
+    const iosCatalogPath = path.join(__dirname, "../../../data/catalog/ios/catalog.json");
+    const iosCatalogChecksumPath = path.join(__dirname, "../../../data/catalog/ios/catalog_checksum.json");
+    const androidCatalogPath = path.join(__dirname, "../../../data/catalog/android/catalog.json");
+    const androidCatalogChecksumPath = path.join(__dirname, "../../../data/catalog/android/catalog_checksum.json");
 
     let gameData: GameData = {
         titles: JSON.parse(readFileSync(titlesPath, "utf8")),
@@ -149,7 +149,7 @@ export function buildGameDataService(app: FastifyInstance) {
         songMeta: JSON.parse(readFileSync(songMetaPath, "utf8")),
         translation: JSON.parse(readFileSync(translationPath, "utf8")),
         catalog: {
-            metadata: JSON.parse(readFileSync(path.join(__dirname, "../../data/catalog/metadata.json"), "utf8")),
+            metadata: JSON.parse(readFileSync(path.join(__dirname, "../../../data/catalog/metadata.json"), "utf8")),
             ios: {
                 data: readFileSync(iosCatalogPath, "utf8"),
                 checksum: readFileSync(iosCatalogChecksumPath, "utf8")

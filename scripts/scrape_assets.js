@@ -40,32 +40,32 @@ async function requestHot() {
         const response = await request("/server/hotassets/catalog", {
             headers: { "X-Platform": platform },
         });
-        fs.writeFileSync("../src/data/catalog/metadata.json", JSON.stringify({
+        fs.writeFileSync("../data/catalog/metadata.json", JSON.stringify({
             version: response.version
         }, null, 4));
 
         console.log(`Downloading catalog.json (Platform: ${platform})...`);
         await download(
             response.url.catalog,
-            `../src/data/catalog/${platformKey}/catalog.json`
+            `../data/catalog/${platformKey}/catalog.json`
         );
         console.log(
             `Downloading catalog_checksum.json (Platform: ${platform})...`
         );
         await download(
             response.url.checksum,
-            `../src/data/catalog/${platformKey}/catalog_checksum.json`
+            `../data/catalog/${platformKey}/catalog_checksum.json`
         );
     }
     console.log(`Downloading translation.json...`);
     await downloadEncryptedDataResponse(
         "/server/hotassets/translation",
-        "../src/data/translation.json"
+        "../data/translation.json"
     );
     console.log(`Downloading songmeta.json...`);
     await downloadEncryptedDataResponse(
         "/server/hotassets/songmeta",
-        "../src/data/songmeta.json"
+        "../data/songmeta.json"
     );
 }
 
@@ -77,13 +77,13 @@ async function requestAssets() {
 
         const catalog = JSON.parse(
             fs.readFileSync(
-                `../src/data/catalog/${platformKey}/catalog.json`,
+                `../data/catalog/${platformKey}/catalog.json`,
                 "utf-8"
             )
         );
         const catalogChecksum = JSON.parse(
             fs.readFileSync(
-                `../src/data/catalog/${platformKey}/catalog_checksum.json`,
+                `../data/catalog/${platformKey}/catalog_checksum.json`,
                 "utf-8"
             )
         );
