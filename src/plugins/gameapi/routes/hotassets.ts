@@ -61,8 +61,8 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
             return {
                 status: "OK",
                 url: {
-                    catalog: `https://api.paradigm.ariidesu.moe/server/hotassets/download_catalog/${platform}`,
-                    checksum: `https://api.paradigm.ariidesu.moe/server/hotassets/download_catalog_checksum/${platform}`
+                    catalog: `${request.protocol}://${request.host}/server/hotassets/download_catalog/${platform}`,
+                    checksum: `${request.protocol}://${request.host}/server/hotassets/download_catalog_checksum/${platform}`
                 },
                 version: app.gameDataService.getCatalogMetadata().version
             };
@@ -87,7 +87,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
 
             const data: {[key: string]: string} = {};
             url_list.forEach((url) => {
-                data[url] = `https://api.paradigm.ariidesu.moe/server/hotassets/download_asset/${platform}${url}`;
+                data[url] = `${request.protocol}://${request.host}/server/hotassets/download_asset/${platform}${url}`;
             });
             return { status: "OK", data };
         }
