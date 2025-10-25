@@ -33,7 +33,7 @@ const HEADERS = {
     "X-Language": "en",
     "X-game-version": "3.15",
     "X-game-build": "b5546a309dd637543a4a8f5535c78583",
-    "X-api-version": "76",
+    "X-api-version": "77",
     "X-Device-Id": settings.deviceId,
     "X-Session": settings.token,
     "X-Unity-Version": "2021.3.40f1c1",

@@ -570,9 +570,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 4,
+            "invaded": 8,
+            "massive": 14.3
         }
     },
     {
@@ -588,9 +588,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 3,
+            "invaded": 9,
+            "massive": 14.6
         }
     },
     {
@@ -606,9 +606,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 4,
+            "invaded": 11.5,
+            "massive": 15.3
         }
     },
     {
@@ -624,9 +624,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 5,
+            "invaded": 13.4,
+            "massive": 16.1
         }
     },
     {
@@ -642,9 +642,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 7,
+            "invaded": 14.4,
+            "massive": 16.8
         }
     },
     {
@@ -660,9 +660,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 3,
+            "invaded": 10,
+            "massive": 14.2
         }
     },
     {
@@ -678,9 +678,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 4,
+            "invaded": 9.5,
+            "massive": 14.6
         }
     },
     {
@@ -696,9 +696,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 5,
+            "invaded": 11.5,
+            "massive": 15.2
         }
     },
     {
@@ -714,9 +714,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 6,
+            "invaded": 12,
+            "massive": 15.9
         }
     },
     {
@@ -732,9 +732,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 6,
+            "invaded": 13.8,
+            "massive": 16.6
         }
     },
     {

@@ -6,7 +6,7 @@
             }
         }
     },
-    "s/pixelloverflow": {
+    "s/pixeloverflow": {
         "chart": {
             "invaded": {
                 "level": "8"
@@ -46,7 +46,7 @@
             }
         }
     },
-    "s/datterror": {
+    "s/datteerror": {
         "comment": "a.k.a. data error"
     }
 }
