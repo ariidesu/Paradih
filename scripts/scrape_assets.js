@@ -24,7 +24,16 @@ async function download(url, outPath) {
     await streamPipeline(response.body, fs.createWriteStream(outPath));
 }
 
-async function requestCatalog() {
+async function downloadEncryptedDataResponse(url, outPath) {
+    const data = (await request(url)).data;
+    const dir = outPath.split("/").slice(0, -1).join("/");
+    if (dir && !fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(outPath, data);
+}
+
+async function requestHot() {
     for (const platformKey in PLATFORMS) {
         const platform = PLATFORMS[platformKey];
 
@@ -48,6 +57,16 @@ async function requestCatalog() {
             `../src/data/catalog/${platformKey}/catalog_checksum.json`
         );
     }
+    console.log(`Downloading translation.json...`);
+    await downloadEncryptedDataResponse(
+        "/server/hotassets/translation",
+        "../src/data/translation.json"
+    );
+    console.log(`Downloading songmeta.json...`);
+    await downloadEncryptedDataResponse(
+        "/server/hotassets/songmeta",
+        "../src/data/songmeta.json"
+    );
 }
 
 async function requestAssets() {
@@ -155,7 +174,7 @@ async function requestAssets() {
 }
 
 (async () => {
-    await requestCatalog();
+    await requestHot();
     await requestAssets();
 
     process.exit(0);
