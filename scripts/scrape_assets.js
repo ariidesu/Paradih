@@ -30,7 +30,7 @@ async function downloadEncryptedDataResponse(url, outPath) {
     if (dir && !fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(outPath, data);
+    fs.writeFileSync(outPath, JSON.stringify(data, null, 4));
 }
 
 async function requestHot() {
