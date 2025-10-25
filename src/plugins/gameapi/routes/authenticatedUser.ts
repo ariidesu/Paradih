@@ -41,6 +41,11 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             // This is done to ensure that the rating is always up-to-date
             await app.playService.updatePlayerRating(request.user);
 
+            // Check if existing user don't own the item (bug)
+            if (!request.user.owned.backgrounds.find((b) => b.id == "BGDefault")) {
+                await app.userService.addOwnedItem(request.user, "backgrounds", "BGDefault");
+            }
+
             const purchasesList: any = {};
 
             for (const [id, item] of Object.entries(
