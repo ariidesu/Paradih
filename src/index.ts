@@ -107,7 +107,14 @@ const ENV_SCHEMA = {
 };
 
 async function main() {
-    const gameApiInstance = fastify({ logger: true, trustProxy: gameApiInstance.config.TRUST_PROXY });
+    let gameApiInstance = fastify({ logger: true });
+    await gameApiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+
+    // This is very stupid
+    if (gameApiInstance.config.TRUST_PROXY) {
+        gameApiInstance = fastify({ logger: true, trustProxy: true });
+        await gameApiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+    }
     gameApiInstance.addHook('preHandler', (request, reply, done) => {
       request.log.info({ url: request.raw.url, method: request.raw.method }, `received ${typeof request.body == "object" ? JSON.stringify(request.body) : request.body}`)
       done()
@@ -117,7 +124,6 @@ async function main() {
       done()
     })
 
-    await gameApiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
     await gameApiInstance.decorate("mail", createTransport({
         host: gameApiInstance.config.SMTP_HOST,
         port: gameApiInstance.config.SMTP_PORT,
