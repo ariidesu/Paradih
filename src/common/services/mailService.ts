@@ -6,17 +6,43 @@ export function buildMailService(app: FastifyInstance) {
     const { User, Mail } = app.models;
 
     return {
-        async getMails(): Promise<MailDoc[]> {
-            const now = new Date();
-
+        async getMails(user: UserDoc): Promise<MailDoc[]> {
             const mails = await Mail.find({
-                $or: [
-                    { expireTime: { $exists: false } },
-                    { expireTime: { $gt: now } },
+                $and: [
+                    {
+                        $or: [
+                            { expireAt: { $exists: false } },
+                            { expireAt: { $gt: new Date() } },
+                        ],
+                    },
+                    {
+                        $or: [
+                            { broadcast: true },
+                            { receipents: user._id },
+                        ],
+                    },
                 ],
             });
 
             return mails;
+        },
+
+        async sendMail(sender: string, title: string, content: string, broadcast: boolean, receipents: string[], expireAt: Date, items: [{ type: string, count: number, id: string }] | [], links: [{ addr: string, text: string }] | []): Promise<MailDoc> {
+            const result = await Mail.insertOne({
+                sender,
+
+                receipents: receipents,
+                broadcast,
+
+                title,
+                content,
+
+                time: new Date(),
+                expireAt,
+                items: items,
+                link: links,
+            });
+            return result;
         },
 
         async hasReadMail(user: UserDoc, mailId: string) {
@@ -36,10 +62,30 @@ export function buildMailService(app: FastifyInstance) {
                 }
             }
 
-            const mails = await this.getMails();
+            const mails = await this.getMails(user);
             return mails.filter(mail => !this.hasReadMail(user, mailId));
         },
 
-        // TODO: sendMail for creation of Mail
+        // Gameplay-related mails
+        async gameplaySendStormyRageMail(user: UserDoc): Promise<void> {
+            const existingMail = await Mail.findOne({
+                sender: "The Storm",
+                title: "The Key",
+                receipents: user._id
+            });
+
+            if (!existingMail) {
+                await app.mailService.sendMail(
+                    "The Storm",
+                    "The Key",
+                    "Please save it properly.",
+                    false,
+                    [(user._id as any).toString()],
+                    new Date(Date.now() + 999999999),
+                    [{ type: "bg", count: 1, id: "BGEverlastingRain" }],
+                    []
+                );
+            }
+        }
     };
 }

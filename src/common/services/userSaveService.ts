@@ -18,6 +18,10 @@ export function buildUserSaveService(app: FastifyInstance) {
                 { $set: { [`data.${key}`]: value } },
                 { upsert: true, new: true, setDefaultsOnInsert: true }
             );
+
+            if (key == "/sp/storm_rage_mail" && value == 1) {
+                await app.mailService.gameplaySendStormyRageMail(user);
+            }
         },
 
         async setSaves(user: UserDoc, map: {[key: string]: any}) {

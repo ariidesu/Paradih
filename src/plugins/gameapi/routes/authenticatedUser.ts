@@ -73,6 +73,11 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             }
 
             const userSave = await app.userSaveService.getSave(request.user);
+            // We implemented mail later on, so check if user has stormy rage flag
+            const stormyRageFlag = userSave.data.get("/sp/storm_rage_mail");
+            if (stormyRageFlag == 1) {
+                await app.mailService.gameplaySendStormyRageMail(request.user);
+            }
 
             return {
                 status: "OK",
@@ -294,7 +299,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const mails = await app.mailService.getMails();
+            const mails = await app.mailService.getMails(request.user);
             const mailsResponse = [];
             for (const mail of mails) {
                 const hasRead = await app.mailService.hasReadMail(
