@@ -21,6 +21,7 @@ declare module 'fastify' {
       BATTLE_PORT: number,
       AES_KEY: string,
       BATTLE_AES_KEY: string,
+      TRUST_PROXY: boolean,
       API_KEY: string,
       MONGODB_URI: string,
       JWT_SECRET: string,
@@ -40,7 +41,7 @@ declare module 'fastify' {
 }
 const ENV_SCHEMA = {
   type: 'object',
-  required: [ "PORT", "BATTLE_PORT", "AES_KEY", "BATTLE_AES_KEY", "MONGODB_URI", "JWT_SECRET", "SMTP_HOST", "SMTP_PORT", "SMTP_USERNAME", "SMTP_PASSWORD", "SMTP_FROM" ],
+  required: [ "PORT", "BATTLE_PORT", "TRUST_PROXY", "AES_KEY", "BATTLE_AES_KEY", "MONGODB_URI", "JWT_SECRET", "SMTP_HOST", "SMTP_PORT", "SMTP_USERNAME", "SMTP_PASSWORD", "SMTP_FROM" ],
   properties: {
     PORT: {
       type: 'number',
@@ -56,6 +57,10 @@ const ENV_SCHEMA = {
     },
     API_KEY: {
       type: "string"
+    },
+    TRUST_PROXY: {
+      type: "boolean",
+      default: false
     },
     AES_KEY: {
       type: "string",
@@ -102,7 +107,7 @@ const ENV_SCHEMA = {
 };
 
 async function main() {
-    const gameApiInstance = fastify({ logger: true });
+    const gameApiInstance = fastify({ logger: true, trustProxy: gameApiInstance.config.TRUST_PROXY });
     gameApiInstance.addHook('preHandler', (request, reply, done) => {
       request.log.info({ url: request.raw.url, method: request.raw.method }, `received ${typeof request.body == "object" ? JSON.stringify(request.body) : request.body}`)
       done()
