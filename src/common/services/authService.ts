@@ -160,7 +160,8 @@ export function buildAuthService(app: FastifyInstance) {
         },
 
         createActionCode(email: string): string {
-            if (actionCodes.has(email)) {
+            const existingActionCodeData = actionCodes.get(email);
+            if (existingActionCodeData && existingActionCodeData.expiresAt > Date.now()) {
                 throw new Error(`Email ${email} already has an action code.`);
             }
 
@@ -187,7 +188,8 @@ export function buildAuthService(app: FastifyInstance) {
 
         // API action code is only used for API authentication
         createApiActionCode(email: string): string {
-            if (apiActionCodes.has(email)) {
+            const existingActionCodeData = apiActionCodes.get(email);
+            if (existingActionCodeData && existingActionCodeData.expiresAt > Date.now()) {
                 throw new Error(`Email ${email} already has an action code.`);
             }
 
