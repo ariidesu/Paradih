@@ -64,9 +64,10 @@ const UserSchema = new Schema(
                 { _id: false },
             ),
             required: true,
-            default: { titles: [], bgs: [], purchases: [] },
+            default: { titles: [], backgrounds: [ { id: "BGDefault", acquiredAt: new Date(), new: true } ], purchases: [] },
         },
         mailsRead: [{ type: String }],
+        mailsClaimed: [{ type: String }],
 
         battleBanned: { type: Boolean, default: false },
         battleBanUntil: { type: Date, default: 0 },
