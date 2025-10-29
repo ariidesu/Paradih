@@ -198,6 +198,11 @@ export function buildAuthService(app: FastifyInstance) {
             return code;
         },
 
+        hasApiActionCodePending(email: string): boolean {
+            const existingActionCodeData = apiActionCodes.get(email);
+            return existingActionCodeData != undefined && existingActionCodeData.expiresAt > Date.now();
+        },
+
         verifyApiActionCode(email: string, code: string): [boolean, boolean] { // success, expired
             const foundActionCodeData = apiActionCodes.get(email);
             if (foundActionCodeData) {

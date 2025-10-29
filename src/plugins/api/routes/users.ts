@@ -260,6 +260,14 @@ const usersRoutes: FastifyPluginAsync = async (app) => {
         }
     );
 
+    app.get(
+        "/auth/email/:email/has_pending_action",
+        async (request, reply) => {
+            const { email } = request.params as { email: string };
+            return { code: "OK", data: { hasPendingAction: app.authService.hasApiActionCodePending(email) } };
+        }
+    );
+
     app.post(
         "/auth/email/confirm",
         async (request, reply) => {
