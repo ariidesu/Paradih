@@ -62,6 +62,10 @@ export function buildMailService(app: FastifyInstance) {
             return user.mailsRead.includes(mailId);
         },
 
+        async hasClaimedMail(user: UserDoc, mailId: string) {
+            return user.mailsClaimed.includes(mailId);
+        },
+
         async readMail(user: UserDoc, mailId: string): Promise<MailDoc[]> {
             if (!user.mailsRead.includes(mailId)) {
                 const result = await User.findByIdAndUpdate(
@@ -77,6 +81,45 @@ export function buildMailService(app: FastifyInstance) {
 
             const mails = await this.getMails(user);
             return mails.filter(mail => !this.hasReadMail(user, mailId));
+        },
+
+        async claimMail(user: UserDoc, mailId: string): Promise<void> {
+            if (!user.mailsClaimed.includes(mailId)) {
+                const result = await User.findByIdAndUpdate(
+                    user._id,
+                    { $addToSet: { mailsClaimed: mailId } },
+                    { new: true }
+                );
+                if (result) {
+                    user.mailsClaimed = result.mailsClaimed;
+
+                    const items = await this.getMailItems(
+                        user,
+                        mailId
+                    );
+                    if (items) {
+                        for (const item of items) {
+                            if (item.type == "background" || item.type == "title") {
+                                const actualType = item.type == "background" ? "backgrounds" : "titles";
+                                if (!user.owned[actualType].find((i) => i.id == item.id)) {
+                                    await app.userService.addOwnedItem(
+                                        user,
+                                        item.type == "background" ? "backgrounds" : "titles",
+                                        item.id
+                                    );
+                                }
+                            } else {
+                                await app.userService.addEconomy(
+                                    user,
+                                    // Is this right?
+                                    item.type as "ac" | "dp" | "navi",
+                                    item.count
+                                );
+                            }
+                        }
+                    }
+                }
+            }
         },
 
         // Gameplay-related mails
