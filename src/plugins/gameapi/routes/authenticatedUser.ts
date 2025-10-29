@@ -306,6 +306,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     request.user,
                     mail.id
                 );
+                const hasClaimed = await app.mailService.hasClaimedMail(
+                    request.user,
+                    mail.id
+                );
 
                 mailsResponse.push({
                     mail_id: mail.id,
@@ -324,7 +328,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                         };
                     }),
 
-                    is_get_item: !hasRead,
+                    is_get_item: hasClaimed,
                     is_read: hasRead,
                 });
             }
@@ -355,6 +359,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     request.user,
                     mail.id
                 );
+                const hasClaimed = await app.mailService.hasClaimedMail(
+                    request.user,
+                    mail.id
+                );
 
                 mailsResponse.push({
                     mail_id: mail.id,
@@ -373,7 +381,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                         };
                     }),
 
-                    is_get_item: !hasRead,
+                    is_get_item: hasClaimed,
                     is_read: hasRead,
                 });
             }
@@ -395,31 +403,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
             const { mail_id } = request.body as { mail_id: string };
 
-            const items = await app.mailService.getMailItems(
-                request.user,
-                mail_id
-            );
-            if (items) {
-                for (const item of items) {
-                    if (item.type == "background" || item.type == "title") {
-                        const actualType = item.type == "background" ? "backgrounds" : "titles";
-                        if (!request.user.owned[actualType].find((i) => i.id == item.id)) {
-                            await app.userService.addOwnedItem(
-                                request.user,
-                                item.type == "background" ? "backgrounds" : "titles",
-                                item.id
-                            );
-                        }
-                    } else {
-                        await app.userService.addEconomy(
-                            request.user,
-                            // Is this right?
-                            item.type as "ac" | "dp" | "navi",
-                            item.count
-                        );
-                    }
-                }
-            }
+            await app.mailService.claimMail(request.user, mail_id);
 
             return { status: "OK" };
         }
