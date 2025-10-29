@@ -148,7 +148,7 @@ async function main() {
 
     const apiInstance = fastify({ logger: true });
     await apiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
-    await gameApiInstance.decorate("mail", createTransport({
+    await apiInstance.decorate("mail", createTransport({
         host: apiInstance.config.SMTP_HOST,
         port: apiInstance.config.SMTP_PORT,
         secure: apiInstance.config.SMTP_PORT == 465,
