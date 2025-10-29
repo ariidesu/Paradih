@@ -148,6 +148,15 @@ async function main() {
 
     const apiInstance = fastify({ logger: true });
     await apiInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+    await gameApiInstance.decorate("mail", createTransport({
+        host: apiInstance.config.SMTP_HOST,
+        port: apiInstance.config.SMTP_PORT,
+        secure: apiInstance.config.SMTP_PORT == 465,
+        auth: {
+            user: apiInstance.config.SMTP_USERNAME,
+            pass: apiInstance.config.SMTP_PASSWORD,
+        }
+    }));
     await apiInstance.register(mongoosePlugin, { uri: apiInstance.config.MONGODB_URI });
     await apiInstance.register(modelsPlugin);
     await apiInstance.register(servicesPlugin);

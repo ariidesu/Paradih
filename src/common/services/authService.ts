@@ -10,7 +10,8 @@ declare module "fastify" {
     }
 }
 
-const actionCodes = new Map<string, { code: string; expiresAt: number }>();;
+const actionCodes = new Map<string, { code: string; expiresAt: number }>();
+const apiActionCodes = new Map<string, { code: string; expiresAt: number }>();
 
 export function buildAuthService(app: FastifyInstance) {
     const { User, Verify } = app.models;
@@ -179,6 +180,33 @@ export function buildAuthService(app: FastifyInstance) {
                     return [false, true];
                 }
                 actionCodes.delete(email);
+                return [true, false];
+            }
+            return [false, false];
+        },
+
+        // API action code is only used for API authentication
+        createApiActionCode(email: string): string {
+            if (apiActionCodes.has(email)) {
+                throw new Error(`Email ${email} already has an action code.`);
+            }
+
+            const code = randomInt(100000, 1000000).toString();
+            apiActionCodes.set(email, { code, expiresAt: Date.now() + 5 * 60 * 1000 });
+            return code;
+        },
+
+        verifyApiActionCode(email: string, code: string): [boolean, boolean] { // success, expired
+            const foundActionCodeData = apiActionCodes.get(email);
+            if (foundActionCodeData) {
+                if (foundActionCodeData.code != code) {
+                    return [false, false];
+                }
+                if (foundActionCodeData.expiresAt < Date.now()) {
+                    apiActionCodes.delete(email);
+                    return [false, true];
+                }
+                apiActionCodes.delete(email);
                 return [true, false];
             }
             return [false, false];

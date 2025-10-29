@@ -234,6 +234,57 @@ const usersRoutes: FastifyPluginAsync = async (app) => {
     );
 
     app.post(
+        "/auth/email/send_code",
+        async (request, reply) => {
+            const { email } = request.body as { email: string };
+            if (!email) {
+                reply.statusCode = 400;
+                return { code: "INVALID_REQUEST", message: "Email is required." };
+            }
+
+            const newCode = app.authService.createApiActionCode(email);
+
+            try {
+                await app.mail.sendMail({
+                    from: app.config.SMTP_FROM,
+                    to: email,
+                    subject: "Account action - Verification Code",
+                    text: `An application is requesting access to your account. Your verification code is: ${newCode}`
+                });
+
+            } catch (error: any) {
+                return { code: "INVALID_REQUEST", message: `Failed to send verification code email: ${error.message ?? "Unknown error"}` };
+            }
+
+            return { code: "OK" };
+        }
+    );
+
+    app.post(
+        "/auth/email/confirm",
+        async (request, reply) => {
+            const { email, code } = request.body as { email: string, code: string };
+            if (!email || !code) {
+                reply.statusCode = 400;
+                return { code: "INVALID_REQUEST", message: "Email and code are required." };
+            }
+            const [success, expired] = app.authService.verifyApiActionCode(email, code);
+            if (!success) {
+                reply.statusCode = 401;
+                return { code: expired ? "CODE_EXPIRED" : "INVALID_CODE", message: expired ? "The code has expired." : "The code is invalid." };
+            }
+            const user = await app.userService.findByEmail(email);
+            if (!user) {
+                reply.statusCode = 404;
+                return { code: "USER_NOT_FOUND", message: "User not found." };
+            }
+
+            const token = app.authService.issueApiToken(user._id as string, user.email);
+            return { code: "OK", data: { token, userId: user._id } };
+        }
+    );
+
+    app.post(
         "/auth/api_key",
         { preHandler: app.authService.verifyApiKey },
         async (request, reply) => {
