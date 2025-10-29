@@ -383,6 +383,49 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
     );
 
     app.post(
+        "/get_mail_item",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { mail_id } = request.body as { mail_id: string };
+
+            const items = await app.mailService.getMailItems(
+                request.user,
+                mail_id
+            );
+            if (items) {
+                for (const item of items) {
+                    if (item.type == "background" || item.type == "title") {
+                        const actualType = item.type == "background" ? "backgrounds" : "titles";
+                        if (!request.user.owned[actualType].find((i) => i.id == item.id)) {
+                            await app.userService.addOwnedItem(
+                                request.user,
+                                item.type == "background" ? "backgrounds" : "titles",
+                                item.id
+                            );
+                        }
+                    } else {
+                        await app.userService.addEconomy(
+                            request.user,
+                            // Is this right?
+                            item.type as "ac" | "dp" | "navi",
+                            item.count
+                        );
+                    }
+                }
+            }
+
+            return { status: "OK" };
+        }
+    );
+
+    app.post(
         "/update_save",
         {
             preHandler: app.authService.verifyAuthToken,

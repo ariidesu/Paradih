@@ -32,6 +32,14 @@ export function buildMailService(app: FastifyInstance) {
             return mails.filter(mail => !user.mailsRead.includes(mail.id));
         },
 
+        async getMailItems(user: UserDoc, mailId: string): Promise<{ type: string, count: number, id: string }[] | null> {
+            const mail = await Mail.findById(mailId);
+            if (!mail) {
+                return null;
+            }
+            return mail.items;
+        },
+
         async sendMail(sender: string, title: string, content: string, broadcast: boolean, receipents: string[], expireAt: Date, items: [{ type: string, count: number, id: string }] | [], links: [{ addr: string, text: string }] | []): Promise<MailDoc> {
             const result = await Mail.insertOne({
                 sender,
