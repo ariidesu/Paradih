@@ -100,7 +100,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                         (item) => item.id
                     ),
 
-                    has_unread_mail: false, // TODO: Implement this
+                    has_unread_mail: (await app.mailService.getUnreadMails(request.user)).length > 0,
                     is_fool_sp: 0,
                     max_clear_common_challenge: request.user.maxClearedCommonChallenge,
                 },
@@ -189,7 +189,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     (item) => item.id
                 ),
 
-                has_unread_mail: false, // TODO: Implement this
+                has_unread_mail: (await app.mailService.getUnreadMails(request.user)).length > 0,
                 is_fool_sp: 0,
                 max_clear_common_challenge: request.user.maxClearedCommonChallenge,
                 

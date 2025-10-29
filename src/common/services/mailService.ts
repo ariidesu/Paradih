@@ -27,6 +27,11 @@ export function buildMailService(app: FastifyInstance) {
             return mails;
         },
 
+        async getUnreadMails(user: UserDoc): Promise<MailDoc[]> {
+            const mails = await this.getMails(user);
+            return mails.filter(mail => !user.mailsRead.includes(mail.id));
+        },
+
         async sendMail(sender: string, title: string, content: string, broadcast: boolean, receipents: string[], expireAt: Date, items: [{ type: string, count: number, id: string }] | [], links: [{ addr: string, text: string }] | []): Promise<MailDoc> {
             const result = await Mail.insertOne({
                 sender,
