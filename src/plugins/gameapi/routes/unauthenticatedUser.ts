@@ -47,7 +47,6 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             }
 
             const user = await app.userService.createUser(email, password);
-            await app.userService.addOwnedItem(user, "backgrounds", "BGDefault");
             return { status: "success", code: "OK", data: {} };
         }
     );
