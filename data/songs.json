@@ -558,6 +558,186 @@
         }
     },
     {
+        "songId": "s/dreamaway",
+        "title": "Dream Away feat. Yukacco",
+        "bpm": "180",
+        "genre": "J-Core",
+        "composer": "DJ Noriken & DJ Genki",
+        "illustrator": "みずは",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/alive",
+        "title": "ALiVE",
+        "bpm": "170",
+        "genre": "HARDCORE",
+        "composer": "REDALiCE",
+        "illustrator": "KEI",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/blackbird",
+        "title": "Blackbird",
+        "bpm": "174-348",
+        "genre": "Speedcore",
+        "composer": "Kobaryo",
+        "illustrator": "あきま",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/soclose",
+        "title": "So Close",
+        "bpm": "210",
+        "genre": "Frenchcore",
+        "composer": "USAO",
+        "illustrator": "炸裂蛋 + M.Ghost",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/ultimatehyperlv100",
+        "title": "Ultimate Hyper Lv.100",
+        "bpm": "230",
+        "genre": "Ultimate Happy Overdrive Core",
+        "composer": "DJ Genki",
+        "illustrator": "山千迁 + M.Ghost",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/bluemoment",
+        "title": "ブルーモーメント (feat. 松永依織)",
+        "bpm": "170",
+        "genre": "J-Core",
+        "composer": "Getty",
+        "illustrator": "イセ川ヤスタカ",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/strangebar",
+        "title": "Strange Bar",
+        "bpm": "110",
+        "genre": "Glitch Hop",
+        "composer": "Laur",
+        "illustrator": "イセ川ヤスタカ",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/bigdaddy",
+        "title": "Big Daddy",
+        "bpm": "190",
+        "genre": "HARDCORE",
+        "composer": "USAO",
+        "illustrator": "知るかバカうどん",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/luminousbullet",
+        "title": "LUMINOUS★BULLET",
+        "bpm": "130-260",
+        "genre": "HAPPY SPEEDCORE",
+        "composer": "P*Light & Kobaryo",
+        "illustrator": "FromGod Jungle + M.Ghost",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/weird",
+        "title": "W.E.I.R.D. (WARNING: Extremely Insane Rave Detected!!!!!)",
+        "bpm": "170",
+        "genre": "UK HARDCORE",
+        "composer": "Normal1zer vs. DJ Noriken",
+        "illustrator": "蛋蛋蛋蛋蛋包饭 + M.Ghost",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
         "songId": "s/grandluxoblivio",
         "title": "GRANDLUX::OBLIVIO",
         "bpm": "153",
@@ -723,9 +903,9 @@
         "songId": "s/invertedparadise",
         "title": "Inverted Paradise",
         "bpm": "200",
-        "genre": "Heavencore",
+        "genre": "DEVILCORE",
         "composer": "Essbee",
-        "illustrator": "素苒",
+        "illustrator": "DFRA",
         "version": {
             "x": 3,
             "y": 15,
@@ -741,9 +921,9 @@
         "songId": "s/takeontheheat",
         "title": "Take On The H.E.A.T.!!!",
         "bpm": "147",
-        "genre": "Speed House",
+        "genre": "Alternative Utopia",
         "composer": "Supa7onyz",
-        "illustrator": "咸鱼烧菜",
+        "illustrator": "おのこ",
         "version": {
             "x": 3,
             "y": 14,
@@ -759,9 +939,9 @@
         "songId": "s/fieldtransistoreffect",
         "title": "Field Transistor Effect",
         "bpm": "210",
-        "genre": "Military Splash",
+        "genre": "席替えPOP",
         "composer": "Sephid",
-        "illustrator": "松本摸摸餐",
+        "illustrator": "おゆざき",
         "version": {
             "x": 3,
             "y": 14,
@@ -903,9 +1083,9 @@
         "songId": "s/keigannozettaireido",
         "title": "炯眼の絶対零度",
         "bpm": "175",
-        "genre": "DEVILCORE",
+        "genre": "Trancecore",
         "composer": "polysha",
-        "illustrator": "DFRA",
+        "illustrator": "C4Cat",
         "version": {
             "x": 3,
             "y": 13,
@@ -921,9 +1101,9 @@
         "songId": "s/antler",
         "title": "Antler",
         "bpm": "180",
-        "genre": "Alternative Utopia",
+        "genre": "Future Bass / Botanica",
         "composer": "Juggernaut.",
-        "illustrator": "おのこ",
+        "illustrator": "Sin:cK",
         "version": {
             "x": 3,
             "y": 12,
@@ -939,9 +1119,9 @@
         "songId": "s/diva",
         "title": "Diva",
         "bpm": "200",
-        "genre": "席替えPOP",
+        "genre": "Artcore",
         "composer": "Juggernaut.",
-        "illustrator": "おゆざき",
+        "illustrator": "Cube",
         "version": {
             "x": 3,
             "y": 12,
@@ -1332,39 +1512,39 @@
         }
     },
     {
-        "songId": "s/findmydream",
-        "title": "Find my dream",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
         "bpm": "174",
-        "genre": "Vocal Pop",
-        "composer": "rejection & Mameyudoufu × 棗いつき",
-        "illustrator": "ぽよし & 内山ユニコ",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
+            "x": 1,
             "y": 9,
-            "z": -1
+            "z": 3
         },
         "charts": {
             "detected": 3,
             "invaded": 9.5,
-            "massive": 14
+            "massive": 15.7
         }
     },
     {
-        "songId": "s/astronomicalopt",
-        "title": "Astronomical Optical Interferometry",
+        "songId": "s/reboot",
+        "title": "RE; Boot",
         "bpm": "150",
-        "genre": "TranceStep",
-        "composer": "poplavor & Zekk",
-        "illustrator": "ぽよし & 内山ユニコ",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
         "version": {
-            "x": 3,
-            "y": 9,
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
-            "detected": 4,
-            "invaded": 10.5,
-            "massive": 15.4
+            "detected": 5,
+            "invaded": 11.5,
+            "massive": 15.8
         }
     },
     {
@@ -1512,39 +1692,39 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
-        "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "songId": "s/galdr",
+        "title": "GALDЯ",
+        "bpm": "195",
+        "genre": "Archaic Seal",
+        "composer": "Nego_tiator",
+        "illustrator": "M1aky",
         "version": {
-            "x": 1,
-            "y": 9,
-            "z": 3
-        },
-        "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 15.7
-        }
-    },
-    {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
-        "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
-        "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 7,
             "z": -1
         },
         "charts": {
-            "detected": 5,
-            "invaded": 11.5,
-            "massive": 15.8
+            "detected": 6,
+            "invaded": 12,
+            "massive": 16.4
+        }
+    },
+    {
+        "songId": "s/senseofwonder",
+        "title": "sense of wonder",
+        "bpm": "178",
+        "genre": "ATONEMENT",
+        "composer": "Yu_Asahina",
+        "illustrator": "Wrist",
+        "version": {
+            "x": 3,
+            "y": 7,
+            "z": -1
+        },
+        "charts": {
+            "detected": 8,
+            "invaded": 13.9,
+            "massive": 16.8
         }
     },
     {
@@ -4623,6 +4803,24 @@
             "detected": 2,
             "invaded": 9,
             "massive": 14.8
+        }
+    },
+    {
+        "songId": "s/battleno1",
+        "title": "BATTLE NO.1",
+        "bpm": "200",
+        "genre": "BATTLE CORE",
+        "composer": "TANO*C Sound Team",
+        "illustrator": "HARDCORE TANO*C",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
         }
     },
     {

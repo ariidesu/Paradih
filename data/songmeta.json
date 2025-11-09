@@ -48,5 +48,41 @@
     },
     "s/datteerror": {
         "comment": "a.k.a. data error"
+    },
+    "s/dreamaway": {
+        "chart": {
+            "massive": {
+                "level": "14",
+                "isPlus": "true"
+            }
+        }
+    },
+    "s/alive": {
+        "chart": {
+            "detected": {
+                "level": "5"
+            },
+            "invaded": {
+                "level": "10"
+            }
+        }
+    },
+    "s/ultimatehyperlv100": {
+        "chart": {
+            "detected": {
+                "level": "7"
+            },
+            "invaded": {
+                "level": "13",
+                "isPlus": "true"
+            }
+        }
+    },
+    "s/bluemoment": {
+        "chart": {
+            "invaded": {
+                "level": "10"
+            }
+        }
     }
 }
