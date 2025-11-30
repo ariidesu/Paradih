@@ -54,7 +54,11 @@ export class LinkerClient {
     private scoreIntervals = new Map<string, NodeJS.Timeout>();
 
     private heartbeatInterval: NodeJS.Timeout | null = null;
+    private reconnectTimeout: NodeJS.Timeout | null = null;
+    private isReconnecting = false;
+
     private static readonly HEARTBEAT_INTERVAL = 30000; // 30 seconds
+    private static readonly RECONNECT_DELAY = 5000; // 5 seconds
 
     constructor(app: FastifyInstance) {
         this.app = app;
@@ -98,6 +102,11 @@ export class LinkerClient {
 
     public setLinkerSocket(socket: WebSocket): void {
         this.linkerSocket = socket;
+        this.isReconnecting = false;
+        if (this.reconnectTimeout) {
+            clearTimeout(this.reconnectTimeout);
+            this.reconnectTimeout = null;
+        }
         console.log("Linker connected");
         this.startHeartbeat();
     }
@@ -131,6 +140,31 @@ export class LinkerClient {
         this.userSockets.clear();
         this.userInfo.clear();
         this.linkerSocket = null;
+
+        this.scheduleReconnect();
+    }
+
+    private scheduleReconnect(): void {
+        if (this.isReconnecting || this.reconnectTimeout || this.isConnected()) {
+            return;
+        }
+
+        console.log(`Scheduling reconnect to linker in ${LinkerClient.RECONNECT_DELAY / 1000} seconds`);
+        this.reconnectTimeout = setTimeout(async () => {
+            this.reconnectTimeout = null;
+            this.isReconnecting = true;
+
+            try {
+                if (!this.isConnected()) {
+                    await this.register();
+                    console.log("Re-registered with linker, waiting for connection...");
+                }
+            } catch (err) {
+                console.error("Failed to re-register with linker:", err);
+                this.isReconnecting = false;
+                this.scheduleReconnect();
+            }
+        }, LinkerClient.RECONNECT_DELAY);
     }
 
     public isConnected(): boolean {
