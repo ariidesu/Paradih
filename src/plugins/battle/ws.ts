@@ -83,7 +83,6 @@ const battleWs: FastifyPluginAsync = async (app) => {
                 const message: ClientMessage = JSON.parse(app.decryptPara(Buffer.from(msg.toString(), "base64")));
 
                 if (!initialized) {
-                    initialized = true;
                     const userSave = (await app.userSaveService.getSave(request.user!)).data;
                     const activeCharacter = (userSave.get("/dict/currentCharacter") as string) ?? "para";
                     const activeSkin = (userSave.get(`/dict/skin/active/${activeCharacter}`) as string) ?? "para/default";
@@ -104,7 +103,6 @@ const battleWs: FastifyPluginAsync = async (app) => {
                                 title: request.user!.style.title
                             }
                         };
-                        linkerClient.addUser(playerId, socket, linkerPlayerInfo);
                     } else {
                         player = new Player(
                             socket,
@@ -120,11 +118,13 @@ const battleWs: FastifyPluginAsync = async (app) => {
                             app
                         );
                     }
+                    initialized = true;
                 }
 
                 if (app.config.CROSS_DECODE_USE_LINKER) {
                     if (message.action === "startMatch") {
                         linkerPlayerInfo.level = message.data.playerLevel;
+                        linkerClient.addUser(playerId, socket, linkerPlayerInfo);
                     }
                     if (message.action === "cancelGame" || message.action === "gameIsOver") {
                         await linkerClient.forwardToLinker(playerId, message);
