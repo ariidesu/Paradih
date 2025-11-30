@@ -53,6 +53,9 @@ export class LinkerClient {
     private lastScoreData = new Map<string, UpdateScoreData>();
     private scoreIntervals = new Map<string, NodeJS.Timeout>();
 
+    private heartbeatInterval: NodeJS.Timeout | null = null;
+    private static readonly HEARTBEAT_INTERVAL = 30000; // 30 seconds
+
     constructor(app: FastifyInstance) {
         this.app = app;
     }
@@ -96,10 +99,28 @@ export class LinkerClient {
     public setLinkerSocket(socket: WebSocket): void {
         this.linkerSocket = socket;
         console.log("Linker connected");
+        this.startHeartbeat();
+    }
+
+    private startHeartbeat(): void {
+        this.stopHeartbeat();
+        this.heartbeatInterval = setInterval(() => {
+            if (this.linkerSocket?.readyState === 1) {
+                this.linkerSocket.ping();
+            }
+        }, LinkerClient.HEARTBEAT_INTERVAL);
+    }
+
+    private stopHeartbeat(): void {
+        if (this.heartbeatInterval) {
+            clearInterval(this.heartbeatInterval);
+            this.heartbeatInterval = null;
+        }
     }
 
     public clearLinkerSocket(): void {
         console.log("Linker disconnected, closing all user connections");
+        this.stopHeartbeat();
         
         for (const [playerId, socket] of this.userSockets) {
             if (socket.readyState == 1) {

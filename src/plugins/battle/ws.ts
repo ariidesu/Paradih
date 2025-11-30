@@ -40,6 +40,9 @@ const battleWs: FastifyPluginAsync = async (app) => {
                 }
             });
 
+            socket.on("pong", () => {
+            });
+
             socket.on("close", () => {
                 if (authenticated) {
                     linkerClient.clearLinkerSocket();
