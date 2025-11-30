@@ -90,7 +90,7 @@ const ENV_SCHEMA = {
     CROSS_DECODE_LINKER_TOKEN: {
       type: "string"
     },
-    CROSS_DECODE_SERVER_URL: {
+    CROSS_DECODE_LINKER_CONNECT_URL: {
       type: "string"
     },
     
