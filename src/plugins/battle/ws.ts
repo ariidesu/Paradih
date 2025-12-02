@@ -33,7 +33,6 @@ const battleWs: FastifyPluginAsync = async (app) => {
 
         let player: Player;
         let linkerPlayerInfo: PlayerInfo;
-        let playerId: string;
         let initialized = false;
 
         socket.on("message", async (msg) => {
@@ -41,11 +40,10 @@ const battleWs: FastifyPluginAsync = async (app) => {
                 const message: ClientMessage = JSON.parse(app.decryptPara(Buffer.from(msg.toString(), "base64")));
 
                 if (!initialized) {
+                    const playerId = (request.user!._id as any).toString();
                     const userSave = (await app.userSaveService.getSave(request.user!)).data;
                     const activeCharacter = (userSave.get("/dict/currentCharacter") as string) ?? "para";
-                    const activeSkin = (userSave.get(`/dict/skin/active/${activeCharacter}`) as string) ?? "para/default";
-                    
-                    playerId = (request.user!._id as any).toString();
+                    const activeSkin = (userSave.get(`/dict/skin/active/${activeCharacter}`) as string) ?? "para/default"
 
                     if (app.config.CROSS_DECODE_USE_LINKER) {
                         linkerPlayerInfo = {
@@ -82,14 +80,14 @@ const battleWs: FastifyPluginAsync = async (app) => {
                 if (app.config.CROSS_DECODE_USE_LINKER) {
                     if (message.action === "startMatch") {
                         linkerPlayerInfo.level = message.data.playerLevel;
-                        linkerClient.addUser(playerId, socket, linkerPlayerInfo);
+                        linkerClient.addUser(linkerPlayerInfo, socket);
                     }
                     if (message.action === "cancelGame" || message.action === "gameIsOver") {
-                        await linkerClient.forwardToLinker(playerId, message);
-                        linkerClient.removeUser(playerId);
+                        await linkerClient.forwardToLinker(linkerPlayerInfo, message);
+                        linkerClient.removeUser(linkerPlayerInfo.id);
                         socket.close();
                     } else if (message.action !== "heartbeat") {
-                        await linkerClient.forwardToLinker(playerId, message);
+                        await linkerClient.forwardToLinker(linkerPlayerInfo, message);
                     }
                 } else {
                     const room = manager.getRoomByPlayerId(player.id);
@@ -134,7 +132,7 @@ const battleWs: FastifyPluginAsync = async (app) => {
 
         socket.on("close", () => {
             if (app.config.CROSS_DECODE_USE_LINKER) {
-                linkerClient.removeUser(playerId);
+                linkerClient.removeUser(linkerPlayerInfo.id);
             } else {
                 manager.removePlayer(player);
             }
@@ -142,7 +140,7 @@ const battleWs: FastifyPluginAsync = async (app) => {
         
         socket.on("error", () => {
             if (app.config.CROSS_DECODE_USE_LINKER) {
-                linkerClient.removeUser(playerId);
+                linkerClient.removeUser(linkerPlayerInfo.id);
             } else {
                 manager.removePlayer(player);
             }

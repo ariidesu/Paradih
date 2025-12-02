@@ -28,8 +28,7 @@ export interface LinkerPlayResultData {
 
 export type LinkerForwardMessage = {
     linker: true;
-    playerId: string;
-    playerInfo?: PlayerInfo;
+    playerInfo: PlayerInfo;
     playResult?: LinkerPlayResultData;
     message: ClientMessage;
 }
@@ -180,25 +179,23 @@ export class LinkerClient {
         targetSocket.send(this.app.encryptPara(JSON.stringify(userMessage)).toString("base64"));
     }
 
-    public addUser(playerId: string, socket: WebSocket, playerInfo: PlayerInfo): void {
-        this.userSockets.set(playerId, socket);
-        this.userInfo.set(playerId, playerInfo);
+    public addUser(playerInfo: PlayerInfo, socket: WebSocket): void {
+        this.userSockets.set(playerInfo.id, socket);
+        this.userInfo.set(playerInfo.id, playerInfo);
     }
 
     public removeUser(playerId: string): void {
+        const playerInfo = this.userInfo.get(playerId)!;
+
         this.userSockets.delete(playerId);
         this.userInfo.delete(playerId);
         this.cleanupPlayer(playerId);
 
         if (this.isConnected()) {
-            this.sendToLinker({
-                linker: true,
-                playerId,
-                message: {
-                    action: "cancelGame",
-                    timestamp: Date.now(),
-                    data: {}
-                }
+            this.forwardToLinker(playerInfo, {
+                action: "cancelGame",
+                timestamp: Date.now(),
+                data: {}
             });
         }
     }
@@ -212,26 +209,22 @@ export class LinkerClient {
         this.lastScoreData.delete(playerId);
     }
 
-    public async forwardToLinker(playerId: string, message: ClientMessage): Promise<void> {
+    public async forwardToLinker(playerInfo: PlayerInfo, message: ClientMessage): Promise<void> {
         if (!this.isConnected()) {
             console.log("Cannot forward to linker: not connected");
             return;
         }
 
         if (message.action == "updateScore") {
-            this.handleScoreUpdate(playerId, message.data as UpdateScoreData);
+            this.handleScoreUpdate(playerInfo, message.data as UpdateScoreData);
             return;
         }
 
         const forwardMessage = {
             message,
             linker: true,
-            playerId,
+            playerInfo,
         } as LinkerForwardMessage;
-
-        if (message.action == "startMatch") {
-            forwardMessage.playerInfo = this.userInfo.get(playerId);
-        }
 
         if (message.action == "donePlaying") {
             const playResult = await this.app.playService.getChartPlayByOnlyId(message.data.resultId);
@@ -254,16 +247,16 @@ export class LinkerClient {
         this.sendToLinker(forwardMessage);
     }
 
-    private handleScoreUpdate(playerId: string, scoreData: UpdateScoreData): void {
-        this.lastScoreData.set(playerId, scoreData);
+    private handleScoreUpdate(playerInfo: PlayerInfo, scoreData: UpdateScoreData): void {
+        this.lastScoreData.set(playerInfo.id, scoreData);
 
-        if (!this.scoreIntervals.has(playerId)) {
+        if (!this.scoreIntervals.has(playerInfo.id)) {
             const interval = setInterval(() => {
-                const lastScore = this.lastScoreData.get(playerId);
+                const lastScore = this.lastScoreData.get(playerInfo.id);
                 if (lastScore && this.isConnected()) {
                     this.sendToLinker({
                         linker: true,
-                        playerId,
+                        playerInfo,
                         message: {
                             action: "updateScore",
                             timestamp: Date.now(),
@@ -273,7 +266,7 @@ export class LinkerClient {
                 }
             }, 300);
 
-            this.scoreIntervals.set(playerId, interval);
+            this.scoreIntervals.set(playerInfo.id, interval);
         }
     }
 
