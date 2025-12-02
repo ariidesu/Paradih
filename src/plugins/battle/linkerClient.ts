@@ -184,12 +184,10 @@ export class LinkerClient {
         this.userInfo.set(playerInfo.id, playerInfo);
     }
 
-    public removeUser(playerId: string): void {
-        const playerInfo = this.userInfo.get(playerId)!;
-
-        this.userSockets.delete(playerId);
-        this.userInfo.delete(playerId);
-        this.cleanupPlayer(playerId);
+    public removeUser(playerInfo: PlayerInfo): void {
+        this.userSockets.delete(playerInfo.id);
+        this.userInfo.delete(playerInfo.id);
+        this.cleanupPlayer(playerInfo.id);
 
         if (this.isConnected()) {
             this.forwardToLinker(playerInfo, {

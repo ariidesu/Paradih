@@ -84,7 +84,7 @@ const battleWs: FastifyPluginAsync = async (app) => {
                     }
                     if (message.action === "cancelGame" || message.action === "gameIsOver") {
                         await linkerClient.forwardToLinker(linkerPlayerInfo, message);
-                        linkerClient.removeUser(linkerPlayerInfo.id);
+                        linkerClient.removeUser(linkerPlayerInfo);
                         socket.close();
                     } else if (message.action !== "heartbeat") {
                         await linkerClient.forwardToLinker(linkerPlayerInfo, message);
@@ -132,7 +132,7 @@ const battleWs: FastifyPluginAsync = async (app) => {
 
         socket.on("close", () => {
             if (app.config.CROSS_DECODE_USE_LINKER) {
-                linkerClient.removeUser(linkerPlayerInfo.id);
+                linkerClient.removeUser(linkerPlayerInfo);
             } else {
                 manager.removePlayer(player);
             }
@@ -140,7 +140,7 @@ const battleWs: FastifyPluginAsync = async (app) => {
         
         socket.on("error", () => {
             if (app.config.CROSS_DECODE_USE_LINKER) {
-                linkerClient.removeUser(linkerPlayerInfo.id);
+                linkerClient.removeUser(linkerPlayerInfo);
             } else {
                 manager.removePlayer(player);
             }
