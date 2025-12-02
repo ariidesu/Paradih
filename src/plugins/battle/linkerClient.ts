@@ -31,12 +31,14 @@ export type LinkerForwardMessage = {
     playerId: string;
     playerInfo?: PlayerInfo;
     playResult?: LinkerPlayResultData;
-} & ClientMessage;
+    message: ClientMessage;
+}
 
 export type LinkerToUserMessage = {
     linker: true;
     targetPlayerId: string;
-} & ServerMessage;
+    message: ServerMessage;
+}
 
 export class LinkerClient {
     private app: FastifyInstance;
@@ -171,11 +173,8 @@ export class LinkerClient {
             console.log(`Target player ${message.targetPlayerId} not connected`);
             return;
         }
-
-        const userMessage: ServerMessage = { ...message };
-        delete (userMessage as any).linker;
-        delete (userMessage as any).targetPlayerId;
-
+        
+        const userMessage = message.message;
         userMessage.status = "ok";
         userMessage.nonce = randomUUID();
         targetSocket.send(this.app.encryptPara(JSON.stringify(userMessage)).toString("base64"));
@@ -195,9 +194,11 @@ export class LinkerClient {
             this.sendToLinker({
                 linker: true,
                 playerId,
-                action: "cancelGame",
-                timestamp: Date.now(),
-                data: {}
+                message: {
+                    action: "cancelGame",
+                    timestamp: Date.now(),
+                    data: {}
+                }
             });
         }
     }
@@ -223,7 +224,7 @@ export class LinkerClient {
         }
 
         const forwardMessage = {
-            ...message,
+            message,
             linker: true,
             playerId,
         } as LinkerForwardMessage;
@@ -263,9 +264,11 @@ export class LinkerClient {
                     this.sendToLinker({
                         linker: true,
                         playerId,
-                        action: "updateScore",
-                        timestamp: Date.now(),
-                        data: lastScore
+                        message: {
+                            action: "updateScore",
+                            timestamp: Date.now(),
+                            data: lastScore
+                        }
                     });
                 }
             }, 300);

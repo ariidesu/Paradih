@@ -148,10 +148,10 @@ export type ClientGameOverMessage = ClientBaseMessage & {
 export type ClientMessage = ClientHeartbeatMessage | ClientStartMatchMessage | ClientCancelGameMessage | ClientBanChartMessage | ClientReadyMessage | ClientUpdateScoreMessage | ClientDonePlayingMessage | ClientGameOverMessage;
 
 // Linker messages
-export type LinkerMatchConfirmMessage = { linker: true } & ServerMatchConfirmMessage;
-export type LinkerMatchSuccessMessage = { linker: true } & ServerMatchSuccessMessage;
-export type LinkerAnnounceFinalMessage = { linker: true } & ServerAnnounceFinalMessage;
-export type LinkerAllPlayerReadyMessage = { linker: true } & ServerAllPlayerReadyMessage;
-export type LinkerOpponentScoreUpdateMessage = { linker: true } & ServerOpponentScoreUpdateMessage;
-export type LinkerGameOverMessage = { linker: true } & ServerGameOverMessage;
+export type LinkerMatchConfirmMessage = { linker: true, message: ServerMatchConfirmMessage };
+export type LinkerMatchSuccessMessage = { linker: true, message: ServerMatchSuccessMessage };
+export type LinkerAnnounceFinalMessage = { linker: true, message: ServerAnnounceFinalMessage };
+export type LinkerAllPlayerReadyMessage = { linker: true, message: ServerAllPlayerReadyMessage };
+export type LinkerOpponentScoreUpdateMessage = { linker: true, message: ServerOpponentScoreUpdateMessage };
+export type LinkerGameOverMessage = { linker: true, message: ServerGameOverMessage };
 export type LinkerServerMessage = LinkerMatchConfirmMessage | LinkerMatchSuccessMessage | LinkerAnnounceFinalMessage | LinkerAllPlayerReadyMessage | LinkerOpponentScoreUpdateMessage | LinkerGameOverMessage;
