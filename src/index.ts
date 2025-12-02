@@ -29,7 +29,6 @@ declare module 'fastify' {
       CROSS_DECODE_USE_LINKER: boolean,
       CROSS_DECODE_LINKER_URL: string,
       CROSS_DECODE_LINKER_TOKEN: string,
-      CROSS_DECODE_LINKER_CONNECT_URL: string, // The /linker_ws
 
       CONFIG_DEFAULT_AC: number,
       CONFIG_DEFAULT_DP: number,
@@ -88,9 +87,6 @@ const ENV_SCHEMA = {
       type: "string"
     },
     CROSS_DECODE_LINKER_TOKEN: {
-      type: "string"
-    },
-    CROSS_DECODE_LINKER_CONNECT_URL: {
       type: "string"
     },
     
@@ -189,8 +185,8 @@ async function main() {
     const battleInstance = fastify({ logger: true });
     await battleInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
     if (battleInstance.config.CROSS_DECODE_USE_LINKER) {
-        if (!battleInstance.config.CROSS_DECODE_LINKER_URL || !battleInstance.config.CROSS_DECODE_LINKER_TOKEN || !battleInstance.config.CROSS_DECODE_LINKER_CONNECT_URL) {
-            throw new Error("CROSS_DECODE_LINKER_URL, CROSS_DECODE_LINKER_TOKEN, and CROSS_DECODE_LINKER_CONNECT_URL must be set when CROSS_DECODE_USE_LINKER is true");
+        if (!battleInstance.config.CROSS_DECODE_LINKER_URL || !battleInstance.config.CROSS_DECODE_LINKER_TOKEN) {
+            throw new Error("CROSS_DECODE_LINKER_URL and CROSS_DECODE_LINKER_TOKEN must be set when CROSS_DECODE_USE_LINKER is true");
         }
     }
 

@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { WebSocket } from "@fastify/websocket";
+import WebSocket from "ws";
 import { randomUUID } from "crypto";
 import { ClientMessage, ServerMessage, UpdateScoreData } from "./types";
 
@@ -38,12 +38,6 @@ export type LinkerToUserMessage = {
     targetPlayerId: string;
 } & ServerMessage;
 
-export type LinkerIdentifyMessage = {
-    linker: true;
-    action: "identify";
-    token: string;
-};
-
 export class LinkerClient {
     private app: FastifyInstance;
     private linkerSocket: WebSocket | null = null;
@@ -64,51 +58,50 @@ export class LinkerClient {
         this.app = app;
     }
 
-    public async register(): Promise<void> {
+    public async connect(): Promise<void> {
         const linkerUrl = this.app.config.CROSS_DECODE_LINKER_URL;
-        const battleSocketUrl = this.app.config.CROSS_DECODE_LINKER_CONNECT_URL;
         const token = this.app.config.CROSS_DECODE_LINKER_TOKEN;
         
-        console.log(`Registering with linker at ${linkerUrl}...`);
+        console.log(`Connecting to linker at ${linkerUrl}...`);
 
-        const response = await fetch(linkerUrl, {
-            method: "POST",
+        const socket = new WebSocket(linkerUrl, {
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({ battleSocketUrl })
+                "auth-token": token
+            }
         });
 
-        if (!response.ok) {
-            const error = await response.json().catch(() => ({ error: "Unknown error" }));
-            throw new Error(`Failed to register with linker: ${response.status} ${error.error}`);
-        }
+        socket.on("open", () => {
+            console.log("Connected to linker");
+            this.linkerSocket = socket;
+            this.isReconnecting = false;
+            if (this.reconnectTimeout) {
+                clearTimeout(this.reconnectTimeout);
+                this.reconnectTimeout = null;
+            }
+            this.startHeartbeat();
+        });
 
-        console.log("Registered with linker, waiting for connection...");
-    }
+        socket.on("message", (data) => {
+            try {
+                const message = JSON.parse(data.toString());
+                if (message.linker && message.targetPlayerId) {
+                    this.handleLinkerMessage(message as LinkerToUserMessage);
+                }
+            } catch (error) {
+                console.error("Error processing linker message:", error);
+            }
+        });
 
-    public verifyLinkerToken(token: string): boolean {
-        return token == this.app.config.CROSS_DECODE_LINKER_TOKEN;
-    }
+        socket.on("close", () => {
+            this.clearLinkerSocket();
+        });
 
-    public isLinkerMessage(message: any): message is LinkerIdentifyMessage | LinkerToUserMessage {
-        return message && message.linker == true;
-    }
+        socket.on("error", (err) => {
+            console.error("Linker socket error:", err);
+            this.clearLinkerSocket();
+        });
 
-    public isLinkerIdentify(message: any): message is LinkerIdentifyMessage {
-        return message && message.linker == true && message.action == "identify";
-    }
-
-    public setLinkerSocket(socket: WebSocket): void {
-        this.linkerSocket = socket;
-        this.isReconnecting = false;
-        if (this.reconnectTimeout) {
-            clearTimeout(this.reconnectTimeout);
-            this.reconnectTimeout = null;
-        }
-        console.log("Linker connected");
-        this.startHeartbeat();
+        socket.on("pong", () => {});
     }
 
     private startHeartbeat(): void {
@@ -128,6 +121,8 @@ export class LinkerClient {
     }
 
     public clearLinkerSocket(): void {
+        if (!this.linkerSocket) return;
+        
         console.log("Linker disconnected, closing all user connections");
         this.stopHeartbeat();
         
@@ -156,11 +151,10 @@ export class LinkerClient {
 
             try {
                 if (!this.isConnected()) {
-                    await this.register();
-                    console.log("Re-registered with linker, waiting for connection...");
+                    await this.connect();
                 }
             } catch (err) {
-                console.error("Failed to re-register with linker:", err);
+                console.error("Failed to connect to linker:", err);
                 this.isReconnecting = false;
                 this.scheduleReconnect();
             }

@@ -2,7 +2,7 @@ import { FastifyPluginAsync } from "fastify";
 import fastifyWebsocket from "@fastify/websocket";
 import { ClientMessage } from "./types";
 import { Player, RoomsManager } from "./manager";
-import { LinkerClient, LinkerToUserMessage, PlayerInfo } from "./linkerClient";
+import { LinkerClient, PlayerInfo } from "./linkerClient";
 
 const battleWs: FastifyPluginAsync = async (app) => {
     await app.register(fastifyWebsocket);
@@ -11,53 +11,8 @@ const battleWs: FastifyPluginAsync = async (app) => {
     const linkerClient = new LinkerClient(app);
 
     if (app.config.CROSS_DECODE_USE_LINKER) {
-        app.get("/linker_ws", { websocket: true }, async (socket, request) => {
-            let authenticated = false;
-
-            socket.on("message", async (msg) => {
-                try {
-                    const message = JSON.parse(msg.toString());
-                    if (!authenticated) {
-                        if (linkerClient.isLinkerIdentify(message)) {
-                            if (linkerClient.verifyLinkerToken(message.token)) {
-                                authenticated = true;
-                                linkerClient.setLinkerSocket(socket);
-                                socket.send(JSON.stringify({ status: "ok", action: "identified" }));
-                            } else {
-                                socket.close();
-                            }
-                        } else {
-                            socket.close();
-                        }
-                        return;
-                    }
-
-                    if (message.linker && message.targetPlayerId) {
-                        linkerClient.handleLinkerMessage(message as LinkerToUserMessage);
-                    }
-                } catch (error) {
-                    console.error("Error processing linker message:", error);
-                }
-            });
-
-            socket.on("pong", () => {
-            });
-
-            socket.on("close", () => {
-                if (authenticated) {
-                    linkerClient.clearLinkerSocket();
-                }
-            });
-
-            socket.on("error", () => {
-                if (authenticated) {
-                    linkerClient.clearLinkerSocket();
-                }
-            });
-        });
-
-        linkerClient.register().catch(err => {
-            console.error("Failed to register with linker:", err);
+        linkerClient.connect().catch(err => {
+            console.error("Failed to connect to linker:", err);
         });
     }
 
