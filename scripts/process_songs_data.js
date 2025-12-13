@@ -25,6 +25,7 @@ const data = JSON.parse(fs.readFileSync(rawDataPath, "utf8"));
         0: "detected",
         1: "invaded",
         2: "massive",
+        3: "reboot"
     };
     const songs = data.map((song) => {
         const sanitizedTitle = song.title

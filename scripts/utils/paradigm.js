@@ -31,9 +31,9 @@ const HEADERS = {
     "User-Agent":
         "UnityPlayer/2021.3.40f1c1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)",
     "X-Language": "en",
-    "X-game-version": "3.16",
+    "X-game-version": "4.0",
     "X-game-build": "b5546a309dd637543a4a8f5535c78583",
-    "X-api-version": "78",
+    "X-api-version": "80",
     "X-Device-Id": settings.deviceId,
     "X-Session": settings.token,
     "X-Unity-Version": "2021.3.40f1c1",

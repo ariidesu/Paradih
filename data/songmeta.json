@@ -1,53 +1,49 @@
 {
-    "s/grandluxoblivio": {
+    "s/crystalmining": {
         "chart": {
             "invaded": {
-                "level": "9"
+                "level": "12"
             }
         }
     },
-    "s/pixeloverflow": {
+    "s/gigantomachina": {
         "chart": {
-            "invaded": {
+            "detected": {
                 "level": "8"
+            },
+            "reboot": {
+                "noter": "ENF-90"
             }
         }
     },
-    "s/mermaidinbinary": {
+    "s/gameboy": {
         "chart": {
             "detected": {
-                "level": "5"
-            }
-        }
-    },
-    "s/zankyou404ddd": {
-        "comment": "a.k.a. The Highway No.404 [DDD]",
-        "chart": {
-            "detected": {
+                "level": "2"
+            },
+            "invaded": {
                 "level": "7"
             }
         }
     },
-    "s/kiokukairo": {
-        "comment": "a.k.a. MEMORY Circuit",
+    "s/nulctrl": {
         "chart": {
-            "detected": {
-                "level": "3"
-            }
-        }
-    },
-    "s/guiling": {
-        "chart": {
-            "detected": {
-                "level": "4"
-            },
             "invaded": {
-                "level": "9"
+                "level": "11"
+            },
+            "massive": {
+                "level": "14",
+                "isPlus": "true"
             }
         }
     },
-    "s/datteerror": {
-        "comment": "a.k.a. data error"
+    "s/9876734123": {
+        "chart": {
+            "massive": {
+                "level": "15",
+                "isPlus": "false"
+            }
+        }
     },
     "s/dreamaway": {
         "chart": {

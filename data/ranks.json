@@ -1,6 +1,6 @@
 [
     {
-        "id": "common_season03_01",
+        "id": "common_season04_01",
         "level": 1,
         "type": 0,
         "borders": [
@@ -13,12 +13,12 @@
         ],
         "untilTime": 0,
         "playCostType": "dp",
-        "cost": 100,
+        "cost": 1000,
         "charts": [
             "s/awakeninruins/invaded",
-            "s/selenotaxis/invaded",
             "s/anokumene/invaded",
-            "s/orfevre/invaded"
+            "s/blmf/invaded",
+            "s/everything/invaded"
         ],
         "rewards": [
             {
@@ -27,7 +27,7 @@
                     "type": "title",
                     "value": "NChallengeD01"
                 },
-                "id": "common_season03_01_r01"
+                "id": "common_season04_01_r01"
             },
             {
                 "star": 2,
@@ -35,7 +35,7 @@
                     "type": "dp",
                     "value": 25000
                 },
-                "id": "common_season03_01_r02"
+                "id": "common_season04_01_r02"
             },
             {
                 "star": 3,
@@ -43,7 +43,7 @@
                     "type": "dp",
                     "value": 25000
                 },
-                "id": "common_season03_01_r03"
+                "id": "common_season04_01_r03"
             },
             {
                 "star": 3,
@@ -51,7 +51,7 @@
                     "type": "background",
                     "value": "BGChallengeD01"
                 },
-                "id": "common_season03_01_r04"
+                "id": "common_season04_01_r04"
             }
         ],
         "gauge": {
@@ -65,7 +65,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_02",
+        "id": "common_season04_02",
         "level": 2,
         "type": 0,
         "borders": [
@@ -80,10 +80,10 @@
         "playCostType": "dp",
         "cost": 1000,
         "charts": [
-            "s/cantitbetrue/invaded",
+            "s/elegante/invaded",
             "s/worldcall/invaded",
             "s/akasagarbhareincarnate/invaded",
-            "s/n00/invaded"
+            "s/pupa/invaded"
         ],
         "rewards": [
             {
@@ -92,7 +92,7 @@
                     "type": "title",
                     "value": "NChallengeD02"
                 },
-                "id": "common_season03_02_r01"
+                "id": "common_season04_02_r01"
             },
             {
                 "star": 2,
@@ -100,7 +100,7 @@
                     "type": "dp",
                     "value": 25000
                 },
-                "id": "common_season03_02_r02"
+                "id": "common_season04_02_r02"
             },
             {
                 "star": 3,
@@ -108,7 +108,7 @@
                     "type": "dp",
                     "value": 25000
                 },
-                "id": "common_season03_02_r03"
+                "id": "common_season04_02_r03"
             },
             {
                 "star": 3,
@@ -116,7 +116,7 @@
                     "type": "background",
                     "value": "BGChallengeD02"
                 },
-                "id": "common_season03_02_r04"
+                "id": "common_season04_02_r04"
             }
         ],
         "gauge": {
@@ -130,7 +130,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_03",
+        "id": "common_season04_03",
         "level": 3,
         "type": 0,
         "borders": [
@@ -147,8 +147,8 @@
         "charts": [
             "s/karappononfiction/invaded",
             "s/drasticgenerate/invaded",
-            "s/halcyon/invaded",
-            "s/mintchoco/massive"
+            "s/mrmidnight/invaded",
+            "s/cantitbetrue/massive"
         ],
         "rewards": [
             {
@@ -157,7 +157,7 @@
                     "type": "title",
                     "value": "NChallengeD03"
                 },
-                "id": "common_season03_03_r01"
+                "id": "common_season04_03_r01"
             },
             {
                 "star": 2,
@@ -165,7 +165,7 @@
                     "type": "dp",
                     "value": 25000
                 },
-                "id": "common_season03_03_r02"
+                "id": "common_season04_03_r02"
             },
             {
                 "star": 3,
@@ -173,7 +173,7 @@
                     "type": "dp",
                     "value": 25000
                 },
-                "id": "common_season03_03_r03"
+                "id": "common_season04_03_r03"
             },
             {
                 "star": 3,
@@ -181,7 +181,7 @@
                     "type": "background",
                     "value": "BGChallengeD03"
                 },
-                "id": "common_season03_03_r04"
+                "id": "common_season04_03_r04"
             }
         ],
         "gauge": {
@@ -195,7 +195,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_04",
+        "id": "common_season04_04",
         "level": 4,
         "type": 0,
         "borders": [
@@ -210,9 +210,9 @@
         "playCostType": "dp",
         "cost": 2000,
         "charts": [
-            "s/encore/massive",
+            "s/spellofchaos/invaded",
             "s/press/massive",
-            "s/thepromisedland/massive",
+            "s/orfevre/massive",
             "s/vezzelix/massive"
         ],
         "rewards": [
@@ -222,7 +222,7 @@
                     "type": "title",
                     "value": "NChallengeD04"
                 },
-                "id": "common_season03_04_r01"
+                "id": "common_season04_04_r01"
             },
             {
                 "star": 2,
@@ -230,7 +230,7 @@
                     "type": "dp",
                     "value": 25000
                 },
-                "id": "common_season03_04_r02"
+                "id": "common_season04_04_r02"
             },
             {
                 "star": 3,
@@ -238,7 +238,7 @@
                     "type": "dp",
                     "value": 25000
                 },
-                "id": "common_season03_04_r03"
+                "id": "common_season04_04_r03"
             },
             {
                 "star": 3,
@@ -246,7 +246,7 @@
                     "type": "background",
                     "value": "BGChallengeD04"
                 },
-                "id": "common_season03_04_r04"
+                "id": "common_season04_04_r04"
             }
         ],
         "gauge": {
@@ -260,7 +260,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_05",
+        "id": "common_season04_05",
         "level": 5,
         "type": 0,
         "borders": [
@@ -277,7 +277,7 @@
         "charts": [
             "s/immyhero/massive",
             "s/actbeloved/massive",
-            "s/paradigmshift/massive",
+            "s/kiunoayame/massive",
             "s/untroddenmorn/massive"
         ],
         "rewards": [
@@ -287,7 +287,7 @@
                     "type": "title",
                     "value": "BChallengeD05"
                 },
-                "id": "common_season03_05_r01"
+                "id": "common_season04_05_r01"
             },
             {
                 "star": 2,
@@ -295,7 +295,7 @@
                     "type": "dp",
                     "value": 50000
                 },
-                "id": "common_season03_05_r02"
+                "id": "common_season04_05_r02"
             },
             {
                 "star": 3,
@@ -303,7 +303,7 @@
                     "type": "dp",
                     "value": 100000
                 },
-                "id": "common_season03_05_r03"
+                "id": "common_season04_05_r03"
             },
             {
                 "star": 3,
@@ -311,7 +311,7 @@
                     "type": "background",
                     "value": "BGChallengeD05"
                 },
-                "id": "common_season03_05_r04"
+                "id": "common_season04_05_r04"
             }
         ],
         "gauge": {
@@ -325,7 +325,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_06",
+        "id": "common_season04_06",
         "level": 6,
         "type": 0,
         "borders": [
@@ -340,9 +340,9 @@
         "playCostType": "dp",
         "cost": 5000,
         "charts": [
-            "s/fadingstar/massive",
-            "s/whirlwind/massive",
-            "s/protection/massive",
+            "s/turningpoint/massive",
+            "s/luminescence/massive",
+            "s/retimeleap/massive",
             "s/lhcl/massive"
         ],
         "rewards": [
@@ -352,7 +352,7 @@
                     "type": "title",
                     "value": "BChallengeD06"
                 },
-                "id": "common_season03_06_r01"
+                "id": "common_season04_06_r01"
             },
             {
                 "star": 2,
@@ -360,7 +360,7 @@
                     "type": "dp",
                     "value": 50000
                 },
-                "id": "common_season03_06_r02"
+                "id": "common_season04_06_r02"
             },
             {
                 "star": 3,
@@ -368,7 +368,7 @@
                     "type": "dp",
                     "value": 100000
                 },
-                "id": "common_season03_06_r03"
+                "id": "common_season04_06_r03"
             },
             {
                 "star": 3,
@@ -376,7 +376,7 @@
                     "type": "background",
                     "value": "BGChallengeD06"
                 },
-                "id": "common_season03_06_r04"
+                "id": "common_season04_06_r04"
             }
         ],
         "gauge": {
@@ -390,7 +390,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_07",
+        "id": "common_season04_07",
         "level": 7,
         "type": 0,
         "borders": [
@@ -405,10 +405,10 @@
         "playCostType": "dp",
         "cost": 5000,
         "charts": [
-            "s/bluesphere/massive",
+            "s/whiterevolve/massive",
             "s/crossray/massive",
             "s/innernorm/massive",
-            "s/pupa/massive"
+            "s/echoesoftheforest/massive"
         ],
         "rewards": [
             {
@@ -417,7 +417,7 @@
                     "type": "title",
                     "value": "BChallengeD07"
                 },
-                "id": "common_season03_07_r01"
+                "id": "common_season04_07_r01"
             },
             {
                 "star": 2,
@@ -425,7 +425,7 @@
                     "type": "dp",
                     "value": 50000
                 },
-                "id": "common_season03_07_r02"
+                "id": "common_season04_07_r02"
             },
             {
                 "star": 3,
@@ -433,7 +433,7 @@
                     "type": "dp",
                     "value": 100000
                 },
-                "id": "common_season03_07_r03"
+                "id": "common_season04_07_r03"
             },
             {
                 "star": 3,
@@ -441,7 +441,7 @@
                     "type": "background",
                     "value": "BGChallengeD07"
                 },
-                "id": "common_season03_07_r04"
+                "id": "common_season04_07_r04"
             }
         ],
         "gauge": {
@@ -455,7 +455,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_08",
+        "id": "common_season04_08",
         "level": 8,
         "type": 0,
         "borders": [
@@ -470,9 +470,9 @@
         "playCostType": "dp",
         "cost": 10000,
         "charts": [
-            "s/yuurei/massive",
+            "s/permutation/massive",
             "s/forgottenasteroid/massive",
-            "s/equalityofequites/massive",
+            "s/artemis/massive",
             "s/sakurathunder/massive"
         ],
         "rewards": [
@@ -482,7 +482,7 @@
                     "type": "title",
                     "value": "SChallengeD08"
                 },
-                "id": "common_season03_08_r01"
+                "id": "common_season04_08_r01"
             },
             {
                 "star": 2,
@@ -490,7 +490,7 @@
                     "type": "dp",
                     "value": 100000
                 },
-                "id": "common_season03_08_r02"
+                "id": "common_season04_08_r02"
             },
             {
                 "star": 3,
@@ -498,7 +498,7 @@
                     "type": "dp",
                     "value": 200000
                 },
-                "id": "common_season03_08_r03"
+                "id": "common_season04_08_r03"
             },
             {
                 "star": 3,
@@ -506,7 +506,7 @@
                     "type": "background",
                     "value": "BGChallengeD08"
                 },
-                "id": "common_season03_08_r04"
+                "id": "common_season04_08_r04"
             }
         ],
         "gauge": {
@@ -520,7 +520,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_09",
+        "id": "common_season04_09",
         "level": 9,
         "type": 0,
         "borders": [
@@ -535,9 +535,9 @@
         "playCostType": "dp",
         "cost": 10000,
         "charts": [
-            "s/blmf/massive",
+            "s/reboot/massive",
             "s/zangsongge/massive",
-            "s/complexmind/massive",
+            "s/reendofadream/massive",
             "s/viyellasmelancholy/massive"
         ],
         "rewards": [
@@ -547,7 +547,7 @@
                     "type": "title",
                     "value": "GChallengeD09"
                 },
-                "id": "common_season03_09_r01"
+                "id": "common_season04_09_r01"
             },
             {
                 "star": 2,
@@ -555,7 +555,7 @@
                     "type": "dp",
                     "value": 100000
                 },
-                "id": "common_season03_09_r02"
+                "id": "common_season04_09_r02"
             },
             {
                 "star": 3,
@@ -563,7 +563,7 @@
                     "type": "dp",
                     "value": 200000
                 },
-                "id": "common_season03_09_r03"
+                "id": "common_season04_09_r03"
             },
             {
                 "star": 3,
@@ -571,7 +571,7 @@
                     "type": "background",
                     "value": "BGChallengeD09"
                 },
-                "id": "common_season03_09_r04"
+                "id": "common_season04_09_r04"
             }
         ],
         "gauge": {
@@ -585,7 +585,7 @@
         "unlockTag": {}
     },
     {
-        "id": "common_season03_10",
+        "id": "common_season04_10",
         "level": 10,
         "type": 0,
         "borders": [
@@ -601,8 +601,8 @@
         "cost": 10000,
         "charts": [
             "s/secretmaneuvers/massive",
-            "s/spellofchaos/massive",
-            "s/travelerstandaloof/massive",
+            "s/radialraylights/massive",
+            "s/incyde/massive",
             "s/meteoritelotus/massive"
         ],
         "rewards": [
@@ -612,7 +612,7 @@
                     "type": "title",
                     "value": "RChallengeD10"
                 },
-                "id": "common_season03_10_r01"
+                "id": "common_season04_10_r01"
             },
             {
                 "star": 2,
@@ -620,7 +620,7 @@
                     "type": "dp",
                     "value": 100000
                 },
-                "id": "common_season03_10_r02"
+                "id": "common_season04_10_r02"
             },
             {
                 "star": 3,
@@ -628,7 +628,7 @@
                     "type": "dp",
                     "value": 200000
                 },
-                "id": "common_season03_10_r03"
+                "id": "common_season04_10_r03"
             },
             {
                 "star": 3,
@@ -636,7 +636,7 @@
                     "type": "background",
                     "value": "BGChallengeD10"
                 },
-                "id": "common_season03_10_r04"
+                "id": "common_season04_10_r04"
             }
         ],
         "gauge": {
