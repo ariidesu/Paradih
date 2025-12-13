@@ -26,6 +26,10 @@ declare module 'fastify' {
       MONGODB_URI: string,
       JWT_SECRET: string,
 
+      CROSS_DECODE_USE_LINKER: boolean,
+      CROSS_DECODE_LINKER_URL: string,
+      CROSS_DECODE_LINKER_TOKEN: string,
+
       CONFIG_DEFAULT_AC: number,
       CONFIG_DEFAULT_DP: number,
       CONFIG_DEFAULT_NAVI: number,
@@ -72,6 +76,17 @@ const ENV_SCHEMA = {
       type: "string"
     },
     JWT_SECRET: {
+      type: "string"
+    },
+
+    CROSS_DECODE_USE_LINKER: {
+      type: "boolean",
+      default: false
+    },
+    CROSS_DECODE_LINKER_URL: {
+      type: "string"
+    },
+    CROSS_DECODE_LINKER_TOKEN: {
       type: "string"
     },
     
@@ -169,6 +184,12 @@ async function main() {
 
     const battleInstance = fastify({ logger: true });
     await battleInstance.register(fastifyEnv, { dotenv: true, schema: ENV_SCHEMA });
+    if (battleInstance.config.CROSS_DECODE_USE_LINKER) {
+        if (!battleInstance.config.CROSS_DECODE_LINKER_URL || !battleInstance.config.CROSS_DECODE_LINKER_TOKEN) {
+            throw new Error("CROSS_DECODE_LINKER_URL and CROSS_DECODE_LINKER_TOKEN must be set when CROSS_DECODE_USE_LINKER is true");
+        }
+    }
+
     await battleInstance.register(mongoosePlugin, { uri: battleInstance.config.MONGODB_URI });
     await battleInstance.register(modelsPlugin);
     await battleInstance.register(servicesPlugin);

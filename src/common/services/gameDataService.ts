@@ -38,6 +38,7 @@ interface SongData {
         detected: number;
         invaded: number;
         massive: number;
+        reboot: number;
     };
 }
 

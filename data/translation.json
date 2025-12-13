@@ -1,5 +1,66 @@
 {
+    "zh": {
+        "chap_mm05a_title_tight": "融冰（上）",
+        "sec_5B_5A_title": "你是？",
+        "sec_5B_6A_title": "买一送一",
+        "sec_5B_5A_intro": "谁和谁和谁？",
+        "sec_5B_6A_intro": "螳螂捕蝉，黄雀在后。",
+        "web_current_player_dmg": "自身造成伤害总量: {0}",
+        "web_phase1_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 难度中达成 AD",
+        "web_phase2_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 难度中达成 INF+",
+        "web_phase3_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 难度中达成 INF",
+        "web_phase4_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 难度中达成 INF",
+        "web_phase5_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 难度中达成 AAA",
+        "web_phase6_condition": "GIGANTO MACHINA\n<color=#ff6b6b>IVD</color> 难度中达成 AAA",
+        "web_phase7_condition": "GIGANTO MACHINA\n任意 难度中达成 AAA",
+        "web_phase8_condition": "GIGANTO MACHINA\n任意 难度中达成 AAA"
+    },
+    "tc": {
+        "chap_mm05a_title_tight": "融冰（上）",
+        "sec_5B_5A_title": "你是？",
+        "sec_5B_6A_title": "買一送一",
+        "sec_5B_5A_intro": "誰和誰和誰？",
+        "sec_5B_6A_intro": "螳螂捕蟬，黃雀在後。",
+        "web_current_player_dmg": "自身造成傷害總量: {0}",
+        "web_phase1_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 難度中達成 AD",
+        "web_phase2_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 難度中達成 INF+",
+        "web_phase3_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 難度中達成 INF",
+        "web_phase4_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 難度中達成 INF",
+        "web_phase5_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 難度中達成 AAA",
+        "web_phase6_condition": "GIGANTO MACHINA\n<color=#ff6b6b>IVD</color> 難度中達成 AAA",
+        "web_phase7_condition": "GIGANTO MACHINA\n任意 難度中達成 AAA",
+        "web_phase8_condition": "GIGANTO MACHINA\n任意 難度中達成 AAA"
+    },
+    "en": {
+        "chap_mm05a_title_tight": "Thaw: Part 1",
+        "sec_5B_5A_title": "Who Are You?",
+        "sec_5B_6A_title": "Buy One Get One",
+        "sec_5B_5A_intro": "Who, whom, and whose?",
+        "sec_5B_6A_intro": "Always watch for the one behind the one.",
+        "web_current_player_dmg": "Total Damage Dealt: {0}",
+        "web_phase1_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> difficulty AD",
+        "web_phase2_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> difficulty Rank INF+",
+        "web_phase3_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> difficulty Rank INF",
+        "web_phase4_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> difficulty Rank INF",
+        "web_phase5_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> difficulty Rank AAA",
+        "web_phase6_condition": "GIGANTO MACHINA\n<color=#ff6b6b>IVD</color> difficulty Rank AAA",
+        "web_phase7_condition": "GIGANTO MACHINA\nAny difficulty Rank AAA",
+        "web_phase8_condition": "GIGANTO MACHINA\nAny difficulty Rank AAA"
+    },
     "jp": {
-        "achv_title_way__Blogsetup": "[ログ] を携帯して Install me をプレイし、Full Combo を取得する"
+        "chap_mm05a_title_tight": "氷解・前編",
+        "sec_5B_5A_title": "君は？",
+        "sec_5B_6A_title": "ワンフォーワン",
+        "sec_5B_5A_intro": "誰と誰と誰？",
+        "sec_5B_6A_intro": "出し抜いたと思ったら、大間違いだ。",
+        "web_current_player_dmg": "自身の合計ダメージ: {0}",
+        "web_phase1_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> 難易度で AD",
+        "web_phase2_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> Rank INF+",
+        "web_phase3_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> Rank INF",
+        "web_phase4_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> Rank INF",
+        "web_phase5_condition": "GIGANTO MACHINA\n<color=#eb88ff>MSV</color> Rank AAA",
+        "web_phase6_condition": "GIGANTO MACHINA\n<color=#ff6b6b>IVD</color> Rank AAA",
+        "web_phase7_condition": "GIGANTO MACHINA\n任意 難易度で Rank AAA",
+        "web_phase8_condition": "GIGANTO MACHINA\n任意 難易度で Rank AAA"
     }
 }

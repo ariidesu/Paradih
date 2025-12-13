@@ -558,6 +558,259 @@
         }
     },
     {
+        "songId": "s/worldofnomads",
+        "title": "World of Nomads",
+        "bpm": "128",
+        "genre": "Electro House",
+        "composer": "litmus*",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 2,
+            "invaded": 8,
+            "massive": 13.6
+        }
+    },
+    {
+        "songId": "s/colorsafterrain",
+        "title": "Colors After Rain",
+        "bpm": "195",
+        "genre": "HARDCORE",
+        "composer": "Mono. & Reku Mochizuki",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 10,
+            "massive": 14.8
+        }
+    },
+    {
+        "songId": "s/noscope",
+        "title": "(no)scope",
+        "bpm": "135",
+        "genre": "complextro",
+        "composer": "ariiol",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 12.5,
+            "massive": 15.6
+        }
+    },
+    {
+        "songId": "s/arcofharvest",
+        "title": "Arc of Harvest",
+        "bpm": "129",
+        "genre": "Story Pop",
+        "composer": "Yu-dachi",
+        "illustrator": "2Al4wU4",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 10.5,
+            "massive": 14.3
+        }
+    },
+    {
+        "songId": "s/badveedha",
+        "title": "BAD: VEEDHA",
+        "bpm": "161",
+        "genre": "#狂った民族",
+        "composer": "DJ Raisei",
+        "illustrator": "2Al4wU4",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 11,
+            "massive": 15.3
+        }
+    },
+    {
+        "songId": "s/crystalmining",
+        "title": "CRYSTAL MINING",
+        "bpm": "180",
+        "genre": "J-Hitech / Colour Bass / Speedcore / Botanica",
+        "composer": "Salty Salt",
+        "illustrator": "炸裂蛋",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 12,
+            "massive": 15.5
+        }
+    },
+    {
+        "songId": "s/counterattack",
+        "title": "Counter Attack",
+        "bpm": "174",
+        "genre": "Drum and Bass",
+        "composer": "MAYA AKAI",
+        "illustrator": "炸裂蛋",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 12.5,
+            "massive": 15.8
+        }
+    },
+    {
+        "songId": "s/bisquitdunq",
+        "title": "Bisquit Dunq",
+        "bpm": "162",
+        "genre": "Electro Jazz",
+        "composer": "owl*tree",
+        "illustrator": "Aaaa3A",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 13.5,
+            "massive": 16.3
+        }
+    },
+    {
+        "songId": "s/gigantomachina",
+        "title": "GIGANTO MACHINA",
+        "bpm": "77.7-155.4",
+        "genre": "Magnatech",
+        "composer": "Supa7onyz vs. Sound piercer",
+        "illustrator": "人間蛋",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 8,
+            "invaded": 14,
+            "massive": 16.6,
+            "reboot": 17.1
+        }
+    },
+    {
+        "songId": "s/gameboy",
+        "title": "GAMEBOY",
+        "bpm": "105",
+        "genre": "Electro Downtempo",
+        "composer": "Silentroom",
+        "illustrator": "Jizici",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 2,
+            "invaded": 7,
+            "massive": 13.8
+        }
+    },
+    {
+        "songId": "s/nulctrl",
+        "title": "NULCTRL",
+        "bpm": "100",
+        "genre": "BASS MUSIC",
+        "composer": "Silentroom",
+        "illustrator": "Silentroom",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 11,
+            "massive": 14.9
+        }
+    },
+    {
+        "songId": "s/tomoshibi",
+        "title": "Tomoshibi",
+        "bpm": "144",
+        "genre": "PROGRESSIVE TRANCE",
+        "composer": "Silentroom",
+        "illustrator": "Jizici",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 10.5,
+            "massive": 15.6
+        }
+    },
+    {
+        "songId": "s/9876734123",
+        "title": "9876734123",
+        "bpm": "157",
+        "genre": "FULL-ON DANCE",
+        "composer": "Silentroom",
+        "illustrator": "Silentroom",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 12,
+            "massive": 15.3
+        }
+    },
+    {
+        "songId": "s/nhelv",
+        "title": "Nhelv",
+        "bpm": "174.59",
+        "genre": "NEUROFUNK",
+        "composer": "Silentroom",
+        "illustrator": "Frothylg",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 13.2,
+            "massive": 16.4
+        }
+    },
+    {
         "songId": "s/dreamaway",
         "title": "Dream Away feat. Yukacco",
         "bpm": "180",
@@ -570,9 +823,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 4,
+            "invaded": 9.5,
+            "massive": 14.8
         }
     },
     {
@@ -588,9 +841,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 5,
+            "invaded": 10,
+            "massive": 15.2
         }
     },
     {
@@ -606,9 +859,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 5,
+            "invaded": 12.5,
+            "massive": 15.7
         }
     },
     {
@@ -624,9 +877,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 6,
+            "invaded": 13,
+            "massive": 16.2
         }
     },
     {
@@ -642,63 +895,63 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 7,
+            "invaded": 13.9,
+            "massive": 16.8
         }
     },
     {
         "songId": "s/bluemoment",
         "title": "ブルーモーメント (feat. 松永依織)",
         "bpm": "170",
-        "genre": "J-Core",
+        "genre": "DEVILCORE",
         "composer": "Getty",
-        "illustrator": "イセ川ヤスタカ",
+        "illustrator": "DFRA",
         "version": {
             "x": 3,
             "y": 16,
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 4,
+            "invaded": 10.5,
+            "massive": 14.7
         }
     },
     {
         "songId": "s/strangebar",
         "title": "Strange Bar",
         "bpm": "110",
-        "genre": "Glitch Hop",
+        "genre": "Alternative Utopia",
         "composer": "Laur",
-        "illustrator": "イセ川ヤスタカ",
+        "illustrator": "おのこ",
         "version": {
             "x": 3,
             "y": 16,
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 4,
+            "invaded": 11.5,
+            "massive": 15.4
         }
     },
     {
         "songId": "s/bigdaddy",
         "title": "Big Daddy",
         "bpm": "190",
-        "genre": "HARDCORE",
+        "genre": "席替えPOP",
         "composer": "USAO",
-        "illustrator": "知るかバカうどん",
+        "illustrator": "おゆざき",
         "version": {
             "x": 3,
             "y": 16,
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 5,
+            "invaded": 12,
+            "massive": 15.8
         }
     },
     {
@@ -714,9 +967,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 6,
+            "invaded": 13.3,
+            "massive": 16.4
         }
     },
     {
@@ -732,9 +985,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 7,
+            "invaded": 13.7,
+            "massive": 16.6
         }
     },
     {
@@ -903,9 +1156,9 @@
         "songId": "s/invertedparadise",
         "title": "Inverted Paradise",
         "bpm": "200",
-        "genre": "DEVILCORE",
+        "genre": "Heavencore",
         "composer": "Essbee",
-        "illustrator": "DFRA",
+        "illustrator": "素苒",
         "version": {
             "x": 3,
             "y": 15,
@@ -921,9 +1174,9 @@
         "songId": "s/takeontheheat",
         "title": "Take On The H.E.A.T.!!!",
         "bpm": "147",
-        "genre": "Alternative Utopia",
+        "genre": "Speed House",
         "composer": "Supa7onyz",
-        "illustrator": "おのこ",
+        "illustrator": "咸鱼烧菜",
         "version": {
             "x": 3,
             "y": 14,
@@ -939,9 +1192,9 @@
         "songId": "s/fieldtransistoreffect",
         "title": "Field Transistor Effect",
         "bpm": "210",
-        "genre": "席替えPOP",
+        "genre": "Military Splash",
         "composer": "Sephid",
-        "illustrator": "おゆざき",
+        "illustrator": "松本摸摸餐",
         "version": {
             "x": 3,
             "y": 14,
@@ -1260,39 +1513,39 @@
         }
     },
     {
-        "songId": "s/nue",
-        "title": "鵺",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
         "bpm": "174",
-        "genre": "Oriental Artcore",
-        "composer": "仇",
-        "illustrator": "無想りんね",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
-            "y": 10,
-            "z": -1
+            "x": 1,
+            "y": 9,
+            "z": 3
         },
         "charts": {
-            "detected": 5,
-            "invaded": 10.5,
-            "massive": 15.5
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 15.7
         }
     },
     {
-        "songId": "s/meikyorekka",
-        "title": "明鏡烈火",
-        "bpm": "200",
-        "genre": "ORIENTAL ARCADE CORE",
-        "composer": "M-UE vs. Reku Mochizuki",
-        "illustrator": "中本ひょうり",
+        "songId": "s/reboot",
+        "title": "RE; Boot",
+        "bpm": "150",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
         "version": {
-            "x": 3,
-            "y": 10,
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
             "detected": 5,
-            "invaded": 12,
-            "massive": 15.9
+            "invaded": 11.5,
+            "massive": 15.8
         }
     },
     {
@@ -1512,39 +1765,39 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
+        "songId": "s/findmydream",
+        "title": "Find my dream",
         "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "genre": "Vocal Pop",
+        "composer": "rejection & Mameyudoufu × 棗いつき",
+        "illustrator": "ぽよし & 内山ユニコ",
         "version": {
-            "x": 1,
+            "x": 3,
             "y": 9,
-            "z": 3
+            "z": -1
         },
         "charts": {
             "detected": 3,
             "invaded": 9.5,
-            "massive": 15.7
+            "massive": 14
         }
     },
     {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
+        "songId": "s/astronomicalopt",
+        "title": "Astronomical Optical Interferometry",
         "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
+        "genre": "TranceStep",
+        "composer": "poplavor & Zekk",
+        "illustrator": "ぽよし & 内山ユニコ",
         "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 9,
             "z": -1
         },
         "charts": {
-            "detected": 5,
-            "invaded": 11.5,
-            "massive": 15.8
+            "detected": 4,
+            "invaded": 10.5,
+            "massive": 15.4
         }
     },
     {
@@ -3722,7 +3975,8 @@
         "charts": {
             "detected": 5,
             "invaded": 10,
-            "massive": 15.1
+            "massive": 15.1,
+            "reboot": 15.5
         }
     },
     {
@@ -4818,9 +5072,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 6,
+            "invaded": 13.4,
+            "massive": 16.5
         }
     },
     {
@@ -4838,7 +5092,8 @@
         "charts": {
             "detected": 5,
             "invaded": 10,
-            "massive": 15.5
+            "massive": 15.5,
+            "reboot": 15.8
         }
     },
     {
@@ -4892,7 +5147,8 @@
         "charts": {
             "detected": 5,
             "invaded": 9,
-            "massive": 14.2
+            "massive": 14.2,
+            "reboot": 15.7
         }
     },
     {
@@ -5346,6 +5602,24 @@
         }
     },
     {
+        "songId": "s/tsuzuriawasenostory",
+        "title": "綴リ合ワセノ物語",
+        "bpm": "169",
+        "genre": "Memory-telling Rock",
+        "composer": "TAKU1175 feat. かなたん",
+        "illustrator": "该盖被被了",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 10,
+            "massive": 15.2
+        }
+    },
+    {
         "songId": "s/classmemories",
         "title": "Class Memories",
         "bpm": "145",
@@ -5594,7 +5868,8 @@
         "charts": {
             "detected": 5,
             "invaded": 12,
-            "massive": 16.2
+            "massive": 16.2,
+            "reboot": 16.4
         }
     },
     {
@@ -5666,7 +5941,8 @@
         "charts": {
             "detected": 5,
             "invaded": 11.5,
-            "massive": 14
+            "massive": 14,
+            "reboot": 14.8
         }
     },
     {
