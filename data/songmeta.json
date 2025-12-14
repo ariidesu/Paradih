@@ -14,7 +14,8 @@
             "reboot": {
                 "noter": "ENF-90"
             }
-        }
+        },
+        "RbtIsHideBeforeUnlocked": false
     },
     "s/gameboy": {
         "chart": {
