@@ -721,6 +721,168 @@
         }
     },
     {
+        "songId": "s/fallinfallin",
+        "title": "fallin' fallin' (prod. INFX, Ella Jung, Limpid)",
+        "bpm": "126",
+        "genre": "House Pop",
+        "composer": "kradness",
+        "illustrator": "©QueseraGames Co., Ltd.",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/rebirth",
+        "title": "Re：birth",
+        "bpm": "196",
+        "genre": "Hard Renaissance",
+        "composer": "ああああ",
+        "illustrator": "©QueseraGames Co., Ltd.",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/flutterecho",
+        "title": "Flutter Echo",
+        "bpm": "219-292",
+        "genre": "Electronic Waltz",
+        "composer": "Cansol",
+        "illustrator": "Taurell",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/twilightconcerto",
+        "title": "Twilight Concerto",
+        "bpm": "194",
+        "genre": "Artcore Concerto",
+        "composer": "Scarlette",
+        "illustrator": "©QueseraGames Co., Ltd.",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/lynn",
+        "title": "L.Y.N.N.",
+        "bpm": "120-196",
+        "genre": "Artcore",
+        "composer": "Scarlette",
+        "illustrator": "©QueseraGames Co., Ltd.",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/milkinaori",
+        "title": "MilK (InaoriNostalgicRemix)",
+        "bpm": "42-152",
+        "genre": "fantasia",
+        "composer": "モリモリあつし Remixed by Inaori",
+        "illustrator": "???",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/milkgrg",
+        "title": "MilK (GRG REMIX)",
+        "bpm": "174",
+        "genre": "Liquid Future Bass",
+        "composer": "モリモリあつし Remixed by ガリガリさむし feat. 小城夜みるく",
+        "illustrator": "???",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/milkzekk",
+        "title": "MilK (Zekk Remix)",
+        "bpm": "180",
+        "genre": "Future Core",
+        "composer": "モリモリあつし Remixed by Zekk",
+        "illustrator": "???",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/milkhidraxjeil",
+        "title": "牛乳flip ～覆水盆に返らず～",
+        "bpm": "210",
+        "genre": "MilKflip",
+        "composer": "モリモリあつし Remixed by Hidra-Xjeil",
+        "illustrator": "???",
+        "version": {
+            "x": 4,
+            "y": 1,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
         "songId": "s/gameboy",
         "title": "GAMEBOY",
         "bpm": "105",
@@ -742,9 +904,9 @@
         "songId": "s/nulctrl",
         "title": "NULCTRL",
         "bpm": "100",
-        "genre": "BASS MUSIC",
+        "genre": "DEVILCORE",
         "composer": "Silentroom",
-        "illustrator": "Silentroom",
+        "illustrator": "DFRA",
         "version": {
             "x": 4,
             "y": 0,
@@ -757,30 +919,12 @@
         }
     },
     {
-        "songId": "s/tomoshibi",
-        "title": "Tomoshibi",
-        "bpm": "144",
-        "genre": "PROGRESSIVE TRANCE",
-        "composer": "Silentroom",
-        "illustrator": "Jizici",
-        "version": {
-            "x": 4,
-            "y": 0,
-            "z": -1
-        },
-        "charts": {
-            "detected": 5,
-            "invaded": 10.5,
-            "massive": 15.6
-        }
-    },
-    {
         "songId": "s/9876734123",
         "title": "9876734123",
         "bpm": "157",
-        "genre": "FULL-ON DANCE",
+        "genre": "Alternative Utopia",
         "composer": "Silentroom",
-        "illustrator": "Silentroom",
+        "illustrator": "おのこ",
         "version": {
             "x": 4,
             "y": 0,
@@ -790,6 +934,24 @@
             "detected": 4,
             "invaded": 12,
             "massive": 15.3
+        }
+    },
+    {
+        "songId": "s/tomoshibi",
+        "title": "Tomoshibi",
+        "bpm": "144",
+        "genre": "席替えPOP",
+        "composer": "Silentroom",
+        "illustrator": "おゆざき",
+        "version": {
+            "x": 4,
+            "y": 0,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 10.5,
+            "massive": 15.6
         }
     },
     {
@@ -904,9 +1066,9 @@
         "songId": "s/bluemoment",
         "title": "ブルーモーメント (feat. 松永依織)",
         "bpm": "170",
-        "genre": "DEVILCORE",
+        "genre": "J-Core",
         "composer": "Getty",
-        "illustrator": "DFRA",
+        "illustrator": "イセ川ヤスタカ",
         "version": {
             "x": 3,
             "y": 16,
@@ -922,9 +1084,9 @@
         "songId": "s/strangebar",
         "title": "Strange Bar",
         "bpm": "110",
-        "genre": "Alternative Utopia",
+        "genre": "Glitch Hop",
         "composer": "Laur",
-        "illustrator": "おのこ",
+        "illustrator": "イセ川ヤスタカ",
         "version": {
             "x": 3,
             "y": 16,
@@ -940,9 +1102,9 @@
         "songId": "s/bigdaddy",
         "title": "Big Daddy",
         "bpm": "190",
-        "genre": "席替えPOP",
+        "genre": "HARDCORE",
         "composer": "USAO",
-        "illustrator": "おゆざき",
+        "illustrator": "知るかバカうどん",
         "version": {
             "x": 3,
             "y": 16,
@@ -1059,7 +1221,7 @@
         "charts": {
             "detected": 5,
             "invaded": 13.4,
-            "massive": 16.1
+            "massive": 16
         }
     },
     {
@@ -1183,9 +1345,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 5,
+            "invaded": 11,
+            "massive": 15
         }
     },
     {
@@ -1221,7 +1383,7 @@
         "charts": {
             "detected": 7,
             "invaded": 13.3,
-            "massive": 16.5
+            "massive": 16.4
         }
     },
     {
@@ -1329,7 +1491,7 @@
         "charts": {
             "detected": 5,
             "invaded": 12,
-            "massive": 15.8
+            "massive": 15.7
         }
     },
     {
@@ -1351,39 +1513,39 @@
         }
     },
     {
-        "songId": "s/antler",
-        "title": "Antler",
-        "bpm": "180",
-        "genre": "Future Bass / Botanica",
-        "composer": "Juggernaut.",
-        "illustrator": "Sin:cK",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
+        "bpm": "174",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
-            "y": 12,
-            "z": -1
+            "x": 1,
+            "y": 9,
+            "z": 3
         },
         "charts": {
             "detected": 3,
-            "invaded": 9,
-            "massive": 14.6
+            "invaded": 9.5,
+            "massive": 15.6
         }
     },
     {
-        "songId": "s/diva",
-        "title": "Diva",
-        "bpm": "200",
-        "genre": "Artcore",
-        "composer": "Juggernaut.",
-        "illustrator": "Cube",
+        "songId": "s/reboot",
+        "title": "RE; Boot",
+        "bpm": "150",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
         "version": {
-            "x": 3,
-            "y": 12,
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
-            "detected": 4,
-            "invaded": 11,
-            "massive": 15.3
+            "detected": 5,
+            "invaded": 11.5,
+            "massive": 15.8
         }
     },
     {
@@ -1513,39 +1675,39 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
+        "songId": "s/nue",
+        "title": "鵺",
         "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "genre": "Oriental Artcore",
+        "composer": "仇",
+        "illustrator": "無想りんね",
         "version": {
-            "x": 1,
-            "y": 9,
-            "z": 3
-        },
-        "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 15.7
-        }
-    },
-    {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
-        "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
-        "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 10,
             "z": -1
         },
         "charts": {
             "detected": 5,
-            "invaded": 11.5,
-            "massive": 15.8
+            "invaded": 10.5,
+            "massive": 15.5
+        }
+    },
+    {
+        "songId": "s/meikyorekka",
+        "title": "明鏡烈火",
+        "bpm": "200",
+        "genre": "ORIENTAL ARCADE CORE",
+        "composer": "M-UE vs. Reku Mochizuki",
+        "illustrator": "中本ひょうり",
+        "version": {
+            "x": 3,
+            "y": 10,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 12,
+            "massive": 15.9
         }
     },
     {
@@ -1563,7 +1725,7 @@
         "charts": {
             "detected": 6,
             "invaded": 13.4,
-            "massive": 16.2
+            "massive": 16.3
         }
     },
     {
@@ -1635,7 +1797,7 @@
         "charts": {
             "detected": 6,
             "invaded": 13.2,
-            "massive": 16.4
+            "massive": 16.3
         }
     },
     {
@@ -1725,7 +1887,7 @@
         "charts": {
             "detected": 5,
             "invaded": 12.5,
-            "massive": 15.9
+            "massive": 15.8
         }
     },
     {
@@ -1778,7 +1940,7 @@
         },
         "charts": {
             "detected": 3,
-            "invaded": 9.5,
+            "invaded": 9,
             "massive": 14
         }
     },
@@ -1869,7 +2031,7 @@
         "charts": {
             "detected": 5,
             "invaded": 10,
-            "massive": 15.2
+            "massive": 15.1
         }
     },
     {
@@ -1905,7 +2067,7 @@
         "charts": {
             "detected": 7,
             "invaded": 13.1,
-            "massive": 16.6
+            "massive": 16.7
         }
     },
     {
@@ -2102,7 +2264,7 @@
         },
         "charts": {
             "detected": 6,
-            "invaded": 13.4,
+            "invaded": 13.1,
             "massive": 16.3
         }
     },
@@ -2120,7 +2282,7 @@
         },
         "charts": {
             "detected": 7,
-            "invaded": 13.7,
+            "invaded": 13.8,
             "massive": 16.8
         }
     },
@@ -2210,7 +2372,7 @@
         },
         "charts": {
             "detected": 2,
-            "invaded": 8.5,
+            "invaded": 8,
             "massive": 13.1
         }
     },
@@ -2228,7 +2390,7 @@
         },
         "charts": {
             "detected": 4,
-            "invaded": 10.5,
+            "invaded": 10,
             "massive": 14.6
         }
     },
@@ -2246,7 +2408,7 @@
         },
         "charts": {
             "detected": 3,
-            "invaded": 9.5,
+            "invaded": 9,
             "massive": 15.1
         }
     },
@@ -2264,7 +2426,7 @@
         },
         "charts": {
             "detected": 5,
-            "invaded": 11.5,
+            "invaded": 11,
             "massive": 15.9
         }
     },
@@ -2517,7 +2679,7 @@
         "charts": {
             "detected": 6,
             "invaded": 11,
-            "massive": 15.8
+            "massive": 15.7
         }
     },
     {
@@ -2661,7 +2823,7 @@
         "charts": {
             "detected": 5,
             "invaded": 10,
-            "massive": 15.8
+            "massive": 15.9
         }
     },
     {
@@ -2697,7 +2859,7 @@
         "charts": {
             "detected": 7,
             "invaded": 13.8,
-            "massive": 16.7
+            "massive": 16.6
         }
     },
     {
@@ -2733,7 +2895,7 @@
         "charts": {
             "detected": 4,
             "invaded": 10.5,
-            "massive": 15
+            "massive": 15.1
         }
     },
     {
@@ -3561,7 +3723,7 @@
         "charts": {
             "detected": 6,
             "invaded": 12,
-            "massive": 16.4
+            "massive": 16.3
         }
     },
     {
@@ -4192,7 +4354,7 @@
         "charts": {
             "detected": 5,
             "invaded": 11,
-            "massive": 16
+            "massive": 16.1
         }
     },
     {
@@ -4947,7 +5109,7 @@
         },
         "charts": {
             "detected": 3,
-            "invaded": 8.5,
+            "invaded": 8,
             "massive": 13.5
         }
     },
@@ -5074,7 +5236,7 @@
         "charts": {
             "detected": 6,
             "invaded": 13.4,
-            "massive": 16.5
+            "massive": 16.4
         }
     },
     {
@@ -5382,7 +5544,7 @@
         "charts": {
             "detected": 3,
             "invaded": 9.5,
-            "massive": 15.7
+            "massive": 15.6
         }
     },
     {
@@ -6194,7 +6356,7 @@
         "charts": {
             "detected": 4,
             "invaded": 9.5,
-            "massive": 15.5
+            "massive": 15.4
         }
     },
     {
@@ -6230,7 +6392,7 @@
         "charts": {
             "detected": 6,
             "invaded": 12,
-            "massive": 16.5
+            "massive": 16.4
         }
     },
     {

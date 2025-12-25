@@ -14,8 +14,7 @@
             "reboot": {
                 "noter": "ENF-90"
             }
-        },
-        "RbtIsHideBeforeUnlocked": false
+        }
     },
     "s/gameboy": {
         "chart": {
@@ -46,39 +45,118 @@
             }
         }
     },
-    "s/dreamaway": {
+    "s/fallinfallin": {
         "chart": {
+            "detected": {
+                "noter": "lino"
+            },
+            "invaded": {
+                "noter": "lino"
+            },
+            "massive": {
+                "noter": "lino"
+            }
+        }
+    },
+    "s/rebirth": {
+        "chart": {
+            "detected": {
+                "noter": "TangScend"
+            },
+            "invaded": {
+                "noter": "TangScend"
+            },
+            "massive": {
+                "noter": "TangScend"
+            }
+        }
+    },
+    "s/flutterecho": {
+        "chart": {
+            "detected": {
+                "level": "5",
+                "noter": "明日"
+            },
+            "invaded": {
+                "level": "10",
+                "noter": "明日"
+            },
+            "massive": {
+                "level": "15",
+                "noter": "明日+SR"
+            }
+        }
+    },
+    "s/lynn": {
+        "chart": {
+            "detected": {
+                "noter": "3.R.E.Z.",
+                "level": "7"
+            },
+            "invaded": {
+                "noter": "3.R.E.Z.",
+                "level": "13",
+                "isPlus": "true"
+            },
+            "massive": {
+                "noter": "3.R.E.Z."
+            }
+        }
+    },
+    "s/milkinaori": {
+        "illustrator": "Jizici",
+        "chart": {
+            "detected": {
+                "level": "4"
+            },
+            "invaded": {
+                "level": "10",
+                "isPlus": "false"
+            },
             "massive": {
                 "level": "14",
                 "isPlus": "true"
             }
         }
     },
-    "s/alive": {
-        "chart": {
-            "detected": {
-                "level": "5"
-            },
-            "invaded": {
-                "level": "10"
-            }
-        }
+    "s/milkgrg": {
+        "illustrator": "Jizici"
     },
-    "s/ultimatehyperlv100": {
+    "s/milkzekk": {
+        "illustrator": "Jizici",
         "chart": {
             "detected": {
-                "level": "7"
+                "noter": "Lactea ScendWhite",
+                "level": "6"
             },
             "invaded": {
-                "level": "13",
+                "noter": "Lactea ScendRez",
+                "level": "12",
+                "isPlus": "false"
+            },
+            "massive": {
+                "noter": "Lactea ScendWhite",
+                "level": "15",
                 "isPlus": "true"
             }
         }
     },
-    "s/bluemoment": {
+    "s/milkhidraxjeil": {
+        "illustrator": "Jizici",
         "chart": {
+            "detected": {
+                "noter": "TPRT Wen",
+                "level": "7"
+            },
             "invaded": {
-                "level": "10"
+                "noter": "TPRT Wen",
+                "level": "13",
+                "isPlus": "false"
+            },
+            "massive": {
+                "noter": "TPRT Wen+SR",
+                "level": "16",
+                "isPlus": "false"
             }
         }
     }
