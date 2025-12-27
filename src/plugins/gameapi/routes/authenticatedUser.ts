@@ -79,6 +79,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 await app.mailService.gameplaySendStormyRageMail(request.user);
             }
 
+            // Force unlock GIGANTOMACHINA RBT chart
+            const gigantomachinaTrackUnlockFlag = userSave.data.get("/trackunlock/s/gigantomachina");
+            if (gigantomachinaTrackUnlockFlag != 1039) {
+                await app.userSaveService.setSave(request.user, "/trackunlock/s/gigantomachina", 1039);
+                userSave.data.set("/trackunlock/s/gigantomachina", 1039);
+            }
+
             return {
                 status: "OK",
 
