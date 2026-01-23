@@ -83,7 +83,22 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                 },
             }
         }
-    )
+    );
+
+    app.get(
+        "/maimaipass_event/status",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            return { status: 'OK', amount: 200, is_purchased: false };
+        }
+    );
 };
 
 export default serverRoutes;
