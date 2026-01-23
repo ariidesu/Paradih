@@ -1,162 +1,35 @@
 {
-    "s/crystalmining": {
-        "chart": {
-            "invaded": {
-                "level": "12"
-            }
-        }
-    },
-    "s/gigantomachina": {
-        "chart": {
-            "detected": {
-                "level": "8"
-            },
-            "reboot": {
-                "noter": "ENF-90"
-            }
-        }
-    },
-    "s/gameboy": {
-        "chart": {
-            "detected": {
-                "level": "2"
-            },
-            "invaded": {
-                "level": "7"
-            }
-        }
-    },
-    "s/nulctrl": {
-        "chart": {
-            "invaded": {
-                "level": "11"
-            },
-            "massive": {
-                "level": "14",
-                "isPlus": "true"
-            }
-        }
-    },
-    "s/9876734123": {
-        "chart": {
-            "massive": {
-                "level": "15",
-                "isPlus": "false"
-            }
-        }
-    },
     "s/fallinfallin": {
-        "chart": {
-            "detected": {
-                "noter": "lino"
-            },
-            "invaded": {
-                "noter": "lino"
-            },
-            "massive": {
-                "noter": "lino"
-            }
-        }
+        "isNewlyUpdated": false
     },
     "s/rebirth": {
-        "chart": {
-            "detected": {
-                "noter": "TangScend"
-            },
-            "invaded": {
-                "noter": "TangScend"
-            },
-            "massive": {
-                "noter": "TangScend"
-            }
-        }
+        "isNewlyUpdated": false
     },
     "s/flutterecho": {
-        "chart": {
-            "detected": {
-                "level": "5",
-                "noter": "明日"
-            },
-            "invaded": {
-                "level": "10",
-                "noter": "明日"
-            },
-            "massive": {
-                "level": "15",
-                "noter": "明日+SR"
-            }
-        }
+        "isNewlyUpdated": false
+    },
+    "s/twilightconcerto": {
+        "isNewlyUpdated": false
     },
     "s/lynn": {
-        "chart": {
-            "detected": {
-                "noter": "3.R.E.Z.",
-                "level": "7"
-            },
-            "invaded": {
-                "noter": "3.R.E.Z.",
-                "level": "13",
-                "isPlus": "true"
-            },
-            "massive": {
-                "noter": "3.R.E.Z."
-            }
-        }
+        "isNewlyUpdated": false
     },
     "s/milkinaori": {
-        "illustrator": "Jizici",
-        "chart": {
-            "detected": {
-                "level": "4"
-            },
-            "invaded": {
-                "level": "10",
-                "isPlus": "false"
-            },
-            "massive": {
-                "level": "14",
-                "isPlus": "true"
-            }
-        }
+        "isNewlyUpdated": false
     },
     "s/milkgrg": {
-        "illustrator": "Jizici"
+        "isNewlyUpdated": false
     },
     "s/milkzekk": {
-        "illustrator": "Jizici",
-        "chart": {
-            "detected": {
-                "noter": "Lactea ScendWhite",
-                "level": "6"
-            },
-            "invaded": {
-                "noter": "Lactea ScendRez",
-                "level": "12",
-                "isPlus": "false"
-            },
-            "massive": {
-                "noter": "Lactea ScendWhite",
-                "level": "15",
-                "isPlus": "true"
-            }
-        }
+        "isNewlyUpdated": false
     },
     "s/milkhidraxjeil": {
-        "illustrator": "Jizici",
+        "isNewlyUpdated": false
+    },
+    "s/shukuseishinpan": {
         "chart": {
-            "detected": {
-                "noter": "TPRT Wen",
-                "level": "7"
-            },
-            "invaded": {
-                "noter": "TPRT Wen",
-                "level": "13",
-                "isPlus": "false"
-            },
             "massive": {
-                "noter": "TPRT Wen+SR",
-                "level": "16",
-                "isPlus": "false"
+                "noter": "Syarcheun vs. Rhezobar「Astral Epic」"
             }
         }
     }

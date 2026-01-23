@@ -721,6 +721,150 @@
         }
     },
     {
+        "songId": "s/yoinotori",
+        "title": "宵の鳥",
+        "bpm": "145",
+        "genre": "Game Music",
+        "composer": "n.k feat.影縫英",
+        "illustrator": "SEGA",
+        "version": {
+            "x": 4,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/yorugao",
+        "title": "Yorugao",
+        "bpm": "182",
+        "genre": "Game Music",
+        "composer": "An & Ryunosuke Kudo",
+        "illustrator": "SEGA",
+        "version": {
+            "x": 4,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/shukuseishinpan",
+        "title": "宿星審判",
+        "bpm": "189",
+        "genre": "Game Music",
+        "composer": "suzu",
+        "illustrator": "SEGA",
+        "version": {
+            "x": 4,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/straightintothelights",
+        "title": "Straight into the lights",
+        "bpm": "180",
+        "genre": "Game Music",
+        "composer": "Cosmograph",
+        "illustrator": "SEGA",
+        "version": {
+            "x": 4,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/schwarzschild",
+        "title": "Schwarzschild",
+        "bpm": "188",
+        "genre": "Game Music",
+        "composer": "Tsukasa",
+        "illustrator": "SEGA",
+        "version": {
+            "x": 4,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/rondeauxofragnaroq",
+        "title": "RondeauX of RagnaroQ",
+        "bpm": "185",
+        "genre": "Game Music",
+        "composer": "Morrigan feat.Lily and 結城碧",
+        "illustrator": "SEGA",
+        "version": {
+            "x": 4,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/noutenchokugeki",
+        "title": "脳天直撃",
+        "bpm": "145",
+        "genre": "Game Music",
+        "composer": "黒沢ダイスケ VS 穴山大輔",
+        "illustrator": "SEGA",
+        "version": {
+            "x": 4,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/mystiqueasiris",
+        "title": "mystique as iris",
+        "bpm": "172",
+        "genre": "Game Music",
+        "composer": "かねこちはる",
+        "illustrator": "SEGA",
+        "version": {
+            "x": 4,
+            "y": 2,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
         "songId": "s/fallinfallin",
         "title": "fallin' fallin' (prod. INFX, Ella Jung, Limpid)",
         "bpm": "126",
@@ -761,9 +905,9 @@
         "songId": "s/flutterecho",
         "title": "Flutter Echo",
         "bpm": "219-292",
-        "genre": "Electronic Waltz",
+        "genre": "DEVILCORE",
         "composer": "Cansol",
-        "illustrator": "Taurell",
+        "illustrator": "DFRA",
         "version": {
             "x": 4,
             "y": 1,
@@ -779,9 +923,9 @@
         "songId": "s/twilightconcerto",
         "title": "Twilight Concerto",
         "bpm": "194",
-        "genre": "Artcore Concerto",
+        "genre": "Alternative Utopia",
         "composer": "Scarlette",
-        "illustrator": "©QueseraGames Co., Ltd.",
+        "illustrator": "おのこ",
         "version": {
             "x": 4,
             "y": 1,
@@ -797,9 +941,9 @@
         "songId": "s/lynn",
         "title": "L.Y.N.N.",
         "bpm": "120-196",
-        "genre": "Artcore",
+        "genre": "席替えPOP",
         "composer": "Scarlette",
-        "illustrator": "©QueseraGames Co., Ltd.",
+        "illustrator": "おゆざき",
         "version": {
             "x": 4,
             "y": 1,
@@ -817,7 +961,7 @@
         "bpm": "42-152",
         "genre": "fantasia",
         "composer": "モリモリあつし Remixed by Inaori",
-        "illustrator": "???",
+        "illustrator": "Jizici",
         "version": {
             "x": 4,
             "y": 1,
@@ -853,7 +997,7 @@
         "bpm": "180",
         "genre": "Future Core",
         "composer": "モリモリあつし Remixed by Zekk",
-        "illustrator": "???",
+        "illustrator": "Jizici",
         "version": {
             "x": 4,
             "y": 1,
@@ -871,7 +1015,7 @@
         "bpm": "210",
         "genre": "MilKflip",
         "composer": "モリモリあつし Remixed by Hidra-Xjeil",
-        "illustrator": "???",
+        "illustrator": "Jizici",
         "version": {
             "x": 4,
             "y": 1,
@@ -905,9 +1049,9 @@
         "songId": "s/nulctrl",
         "title": "NULCTRL",
         "bpm": "100",
-        "genre": "DEVILCORE",
+        "genre": "BASS MUSIC",
         "composer": "Silentroom",
-        "illustrator": "DFRA",
+        "illustrator": "Silentroom",
         "version": {
             "x": 4,
             "y": 0,
@@ -923,9 +1067,9 @@
         "songId": "s/9876734123",
         "title": "9876734123",
         "bpm": "157",
-        "genre": "Alternative Utopia",
+        "genre": "FULL-ON DANCE",
         "composer": "Silentroom",
-        "illustrator": "おのこ",
+        "illustrator": "Silentroom",
         "version": {
             "x": 4,
             "y": 0,
@@ -941,9 +1085,9 @@
         "songId": "s/tomoshibi",
         "title": "Tomoshibi",
         "bpm": "144",
-        "genre": "席替えPOP",
+        "genre": "PROGRESSIVE TRANCE",
         "composer": "Silentroom",
-        "illustrator": "おゆざき",
+        "illustrator": "Jizici",
         "version": {
             "x": 4,
             "y": 0,
@@ -1370,39 +1514,39 @@
         }
     },
     {
-        "songId": "s/argonovice",
-        "title": "Argonovice",
-        "bpm": "210",
-        "genre": "Frenchcore",
-        "composer": "Knighthood",
-        "illustrator": "U11",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
+        "bpm": "174",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
-            "y": 14,
-            "z": -1
+            "x": 1,
+            "y": 9,
+            "z": 3
         },
         "charts": {
-            "detected": 7,
-            "invaded": 13.3,
-            "massive": 16.4
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 15.6
         }
     },
     {
-        "songId": "s/anova",
-        "title": "ANOVA",
-        "bpm": "182",
-        "genre": "Ultrafunk",
-        "composer": "cybermiso",
-        "illustrator": "Kanvien_",
+        "songId": "s/reboot",
+        "title": "RE; Boot",
+        "bpm": "150",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
         "version": {
-            "x": 3,
-            "y": 14,
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
-            "detected": 8,
-            "invaded": 13.8,
-            "massive": 16.8
+            "detected": 5,
+            "invaded": 11.5,
+            "massive": 15.8
         }
     },
     {
@@ -1514,39 +1658,39 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
-        "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "songId": "s/antler",
+        "title": "Antler",
+        "bpm": "180",
+        "genre": "Future Bass / Botanica",
+        "composer": "Juggernaut.",
+        "illustrator": "Sin:cK",
         "version": {
-            "x": 1,
-            "y": 9,
-            "z": 3
-        },
-        "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 15.6
-        }
-    },
-    {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
-        "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
-        "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 12,
             "z": -1
         },
         "charts": {
-            "detected": 5,
-            "invaded": 11.5,
-            "massive": 15.8
+            "detected": 3,
+            "invaded": 9,
+            "massive": 14.6
+        }
+    },
+    {
+        "songId": "s/diva",
+        "title": "Diva",
+        "bpm": "200",
+        "genre": "Artcore",
+        "composer": "Juggernaut.",
+        "illustrator": "Cube",
+        "version": {
+            "x": 3,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 11,
+            "massive": 15.3
         }
     },
     {
