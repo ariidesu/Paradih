@@ -63,6 +63,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                         before_discount: item.discount.beforeDiscount,
                         discount_time: item.discount.discountTime,
                         enable: item.discount.enable,
+                        discount_in_web: false
                     },
                     limited_time: item.limitedTime,
                     money_count: item.cost,
