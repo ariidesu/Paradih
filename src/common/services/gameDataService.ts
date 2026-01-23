@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply } from "fastify";
+import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { readFileSync, createReadStream, existsSync, statSync } from "fs";
 import path from "path";
 
@@ -221,7 +221,7 @@ export function buildGameDataService(app: FastifyInstance) {
             return existsSync(fullPath);
         },
 
-        createAssetBinaryStreaming(reply: FastifyReply, platform: "ios" | "android", assetPath: string) {
+        createAssetBinaryStreaming(request: FastifyRequest, reply: FastifyReply, platform: "ios" | "android", assetPath: string) {
             const basePath = path.join(__dirname, `../../../assets/${platform}/`);
             const fullPath = path.join(basePath, assetPath);
 
@@ -230,8 +230,29 @@ export function buildGameDataService(app: FastifyInstance) {
             }
 
             const stat = statSync(fullPath);
-            reply.header("Content-Length", stat.size.toString());
+            const size = stat.size;
+            reply.header("Accept-Ranges", "bytes");
 
+            if (request.headers["range"]) {
+                reply.status(206);
+                const range = request.headers["range"] as string;
+                const parts = range.replace(/bytes=/, "").split("-");
+                const start = parseInt(parts[0], 10);
+                const end = parts[1] ? parseInt(parts[1], 10) : size - 1;
+                const chunkSize = (end - start) + 1;
+
+                if (isNaN(start) || isNaN(end) || start < 0 || end >= size || start > end) {
+                    reply.status(416);
+                    reply.header("Content-Range", `bytes */${size}`);
+                    throw new Error("Invalid range");
+                }
+
+                reply.header("Content-Range", `bytes ${start}-${end}/${size}`);
+                reply.header("Content-Length", chunkSize.toString());
+                return createReadStream(fullPath, { start, end });
+            }
+
+            reply.header("Content-Length", size.toString());
             return createReadStream(fullPath);
         }
     };
