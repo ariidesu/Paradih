@@ -11,11 +11,10 @@ Paradih is an implementation of Paradigm: Reboot's server, aiming to replicate a
 
 It currently supports:
 - **User**: registration, login
-- **Gameplay**: play submission, rating calculation, shop purchase, etc.
+- **Gameplay**: play submission, rating calculation, shop purchase, cross decode, etc.
 
 ## Work in Progress
 - Ranking
-- Cross Decode
 - ...
 
 ## Setup
