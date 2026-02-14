@@ -721,6 +721,96 @@
         }
     },
     {
+        "songId": "s/zaiyebujiannatiandexue",
+        "title": "再也不见，那天的雪",
+        "bpm": "72",
+        "genre": "华语流行",
+        "composer": "Supa7onyz",
+        "illustrator": "2Al4wU4",
+        "version": {
+            "x": 4,
+            "y": 3,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 8.5,
+            "massive": 12.5
+        }
+    },
+    {
+        "songId": "s/donnerschnee",
+        "title": "Donnerschnee",
+        "bpm": "148",
+        "genre": "Alternative House",
+        "composer": "void (Mournfinale)",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 3,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 11,
+            "massive": 14.9
+        }
+    },
+    {
+        "songId": "s/sapphirecelestialglobe",
+        "title": "Sapphire Celestial Globe",
+        "bpm": "273",
+        "genre": "Art Core",
+        "composer": "yuichi NAGAO",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 3,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 12,
+            "massive": 15.7
+        }
+    },
+    {
+        "songId": "s/cyberfimbul",
+        "title": "Cyberfimbul",
+        "bpm": "170",
+        "genre": "ArtCore",
+        "composer": "ぺのれり",
+        "illustrator": "笼茸",
+        "version": {
+            "x": 4,
+            "y": 3,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 12.5,
+            "massive": 16.3
+        }
+    },
+    {
+        "songId": "s/colorlesscoldness",
+        "title": "Colorless Coldness",
+        "bpm": "212",
+        "genre": "Artcore",
+        "composer": "かねこちはる",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 3,
+            "z": -1
+        },
+        "charts": {
+            "detected": 7,
+            "invaded": 13.7,
+            "massive": 16.5
+        }
+    },
+    {
         "songId": "s/yoinotori",
         "title": "宵の鳥",
         "bpm": "145",
@@ -733,9 +823,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 4,
+            "invaded": 10.5,
+            "massive": 14.7
         }
     },
     {
@@ -751,9 +841,10 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 5,
+            "invaded": 12.5,
+            "massive": 15.5,
+            "reboot": 16.4
         }
     },
     {
@@ -769,9 +860,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 6,
+            "invaded": 13.5,
+            "massive": 15.9
         }
     },
     {
@@ -787,9 +878,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 7,
+            "invaded": 13.6,
+            "massive": 16.7
         }
     },
     {
@@ -805,63 +896,64 @@
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 4,
+            "invaded": 10,
+            "massive": 14.8
         }
     },
     {
         "songId": "s/rondeauxofragnaroq",
         "title": "RondeauX of RagnaroQ",
         "bpm": "185",
-        "genre": "Game Music",
+        "genre": "DEVILCORE",
         "composer": "Morrigan feat.Lily and 結城碧",
-        "illustrator": "SEGA",
+        "illustrator": "DFRA",
         "version": {
             "x": 4,
             "y": 2,
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 5,
+            "invaded": 11.5,
+            "massive": 15.9
         }
     },
     {
         "songId": "s/noutenchokugeki",
         "title": "脳天直撃",
         "bpm": "145",
-        "genre": "Game Music",
+        "genre": "Alternative Utopia",
         "composer": "黒沢ダイスケ VS 穴山大輔",
-        "illustrator": "SEGA",
+        "illustrator": "おのこ",
         "version": {
             "x": 4,
             "y": 2,
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 6,
+            "invaded": 12,
+            "massive": 15.4,
+            "reboot": 16.5
         }
     },
     {
         "songId": "s/mystiqueasiris",
         "title": "mystique as iris",
         "bpm": "172",
-        "genre": "Game Music",
+        "genre": "席替えPOP",
         "composer": "かねこちはる",
-        "illustrator": "SEGA",
+        "illustrator": "おゆざき",
         "version": {
             "x": 4,
             "y": 2,
             "z": -1
         },
         "charts": {
-            "detected": 0,
-            "invaded": 0,
-            "massive": 0
+            "detected": 7,
+            "invaded": 13.8,
+            "massive": 16.7
         }
     },
     {
@@ -905,9 +997,9 @@
         "songId": "s/flutterecho",
         "title": "Flutter Echo",
         "bpm": "219-292",
-        "genre": "DEVILCORE",
+        "genre": "Electronic Waltz",
         "composer": "Cansol",
-        "illustrator": "DFRA",
+        "illustrator": "Taurell",
         "version": {
             "x": 4,
             "y": 1,
@@ -923,9 +1015,9 @@
         "songId": "s/twilightconcerto",
         "title": "Twilight Concerto",
         "bpm": "194",
-        "genre": "Alternative Utopia",
+        "genre": "Artcore Concerto",
         "composer": "Scarlette",
-        "illustrator": "おのこ",
+        "illustrator": "©QueseraGames Co., Ltd.",
         "version": {
             "x": 4,
             "y": 1,
@@ -941,9 +1033,9 @@
         "songId": "s/lynn",
         "title": "L.Y.N.N.",
         "bpm": "120-196",
-        "genre": "席替えPOP",
+        "genre": "Artcore",
         "composer": "Scarlette",
-        "illustrator": "おゆざき",
+        "illustrator": "©QueseraGames Co., Ltd.",
         "version": {
             "x": 4,
             "y": 1,
@@ -979,7 +1071,7 @@
         "bpm": "174",
         "genre": "Liquid Future Bass",
         "composer": "モリモリあつし Remixed by ガリガリさむし feat. 小城夜みるく",
-        "illustrator": "???",
+        "illustrator": "Jizici",
         "version": {
             "x": 4,
             "y": 1,
@@ -1424,39 +1516,39 @@
         }
     },
     {
-        "songId": "s/installme",
-        "title": "Install me",
-        "bpm": "180",
-        "genre": "Breakcore / Hi-Tech / Hardcore",
-        "composer": "CHRYSAD",
-        "illustrator": "白羊姐姐",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
+        "bpm": "174",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
-            "y": 15,
+            "x": 1,
+            "y": 9,
+            "z": 3
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 15.6
+        }
+    },
+    {
+        "songId": "s/reboot",
+        "title": "RE; Boot",
+        "bpm": "150",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
+        "version": {
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
             "detected": 5,
             "invaded": 11.5,
-            "massive": 15.2
-        }
-    },
-    {
-        "songId": "s/datteerror",
-        "title": "だってerror",
-        "bpm": "124",
-        "genre": "pops",
-        "composer": "Alice. feat. 記憶に残る",
-        "illustrator": "松本摸摸餐",
-        "version": {
-            "x": 3,
-            "y": 15,
-            "z": -1
-        },
-        "charts": {
-            "detected": 6,
-            "invaded": 12,
-            "massive": 15.9
+            "massive": 15.8
         }
     },
     {
@@ -1514,39 +1606,39 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
-        "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "songId": "s/argonovice",
+        "title": "Argonovice",
+        "bpm": "210",
+        "genre": "Frenchcore",
+        "composer": "Knighthood",
+        "illustrator": "U11",
         "version": {
-            "x": 1,
-            "y": 9,
-            "z": 3
-        },
-        "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 15.6
-        }
-    },
-    {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
-        "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
-        "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 14,
             "z": -1
         },
         "charts": {
-            "detected": 5,
-            "invaded": 11.5,
-            "massive": 15.8
+            "detected": 7,
+            "invaded": 13.3,
+            "massive": 16.4
+        }
+    },
+    {
+        "songId": "s/anova",
+        "title": "ANOVA",
+        "bpm": "182",
+        "genre": "Ultrafunk",
+        "composer": "cybermiso",
+        "illustrator": "Kanvien_",
+        "version": {
+            "x": 3,
+            "y": 14,
+            "z": -1
+        },
+        "charts": {
+            "detected": 8,
+            "invaded": 13.8,
+            "massive": 16.8
         }
     },
     {
@@ -5382,6 +5474,24 @@
             "detected": 6,
             "invaded": 13.4,
             "massive": 16.4
+        }
+    },
+    {
+        "songId": "s/prayerfrom",
+        "title": "Prayer from the Crystallized World",
+        "bpm": "90",
+        "genre": "Chaos Fantasia",
+        "composer": "Halv",
+        "illustrator": "Rostel",
+        "version": {
+            "x": 4,
+            "y": 3,
+            "z": -1
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 9,
+            "massive": 14.7
         }
     },
     {

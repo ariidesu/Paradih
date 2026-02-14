@@ -1020,5 +1020,129 @@
                 "side21"
             ]
         }
+    },
+    {
+        "id": "special_maimaidx_02",
+        "level": 0,
+        "type": 1,
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
+        "untilTime": 1771819200,
+        "playCostType": "dp",
+        "cost": 1000,
+        "charts": [
+            "s/yoinotori/invaded",
+            "s/yorugao/invaded",
+            "s/rondeauxofragnaroq/invaded",
+            "s/straightintothelights/invaded"
+        ],
+        "rewards": [
+            {
+                "star": 1,
+                "reward": {
+                    "type": "dp",
+                    "value": 50000
+                },
+                "id": "special_maimaidx_01_r01"
+            },
+            {
+                "star": 2,
+                "reward": {
+                    "type": "dp",
+                    "value": 100000
+                },
+                "id": "special_maimaidx_01_r02"
+            },
+            {
+                "star": 3,
+                "reward": {
+                    "type": "background",
+                    "value": "BGChallengemaimaiDX"
+                },
+                "id": "special_maimaidx_01_r03"
+            }
+        ],
+        "gauge": {
+            "type": 1,
+            "values": {
+                "decrypted": 1000,
+                "received": -10000,
+                "lost": -100000
+            }
+        },
+        "unlockTag": {
+            "package": [
+                "side48",
+                "side49"
+            ]
+        }
+    },
+    {
+        "id": "special_maimaidx_01",
+        "level": 0,
+        "type": 1,
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
+        "untilTime": 1771819200,
+        "playCostType": "dp",
+        "cost": 1000,
+        "charts": [
+            "s/yoinotori/massive",
+            "s/yorugao/massive",
+            "s/rondeauxofragnaroq/massive",
+            "s/straightintothelights/massive"
+        ],
+        "rewards": [
+            {
+                "star": 1,
+                "reward": {
+                    "type": "dp",
+                    "value": 50000
+                },
+                "id": "special_maimaidx_01_r01"
+            },
+            {
+                "star": 2,
+                "reward": {
+                    "type": "dp",
+                    "value": 100000
+                },
+                "id": "special_maimaidx_01_r02"
+            },
+            {
+                "star": 3,
+                "reward": {
+                    "type": "background",
+                    "value": "BGChallengemaimaiDX"
+                },
+                "id": "special_maimaidx_01_r03"
+            }
+        ],
+        "gauge": {
+            "type": 1,
+            "values": {
+                "decrypted": 1000,
+                "received": -10000,
+                "lost": -100000
+            }
+        },
+        "unlockTag": {
+            "package": [
+                "side48",
+                "side49"
+            ]
+        }
     }
 ]

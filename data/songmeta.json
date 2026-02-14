@@ -1,35 +1,69 @@
 {
-    "s/fallinfallin": {
-        "isNewlyUpdated": false
+    "s/yoinotori": {
+        "isNewlyUpdated": true
     },
-    "s/rebirth": {
-        "isNewlyUpdated": false
-    },
-    "s/flutterecho": {
-        "isNewlyUpdated": false
-    },
-    "s/twilightconcerto": {
-        "isNewlyUpdated": false
-    },
-    "s/lynn": {
-        "isNewlyUpdated": false
-    },
-    "s/milkinaori": {
-        "isNewlyUpdated": false
-    },
-    "s/milkgrg": {
-        "isNewlyUpdated": false
-    },
-    "s/milkzekk": {
-        "isNewlyUpdated": false
-    },
-    "s/milkhidraxjeil": {
-        "isNewlyUpdated": false
+    "s/yorugao": {
+        "isNewlyUpdated": true
     },
     "s/shukuseishinpan": {
+        "isNewlyUpdated": true,
         "chart": {
             "massive": {
                 "noter": "Syarcheun vs. Rhezobar「Astral Epic」"
+            }
+        }
+    },
+    "s/straightintothelights": {
+        "isNewlyUpdated": true
+    },
+    "s/schwarzschild": {
+        "isNewlyUpdated": true
+    },
+    "s/rondeauxofragnaroq": {
+        "isNewlyUpdated": true
+    },
+    "s/noutenchokugeki": {
+        "isNewlyUpdated": true
+    },
+    "s/mystiqueasiris": {
+        "isNewlyUpdated": true
+    },
+    "s/prayerfrom": {
+        "chart": {
+            "detected": {
+                "noter": "Snorkel",
+                "level": "3",
+                "isPlus": "false"
+            },
+            "invaded": {
+                "noter": "Snorkel"
+            },
+            "massive": {
+                "noter": "Snorkel+SR",
+                "level": "14",
+                "isPlus": "true"
+            }
+        }
+    },
+    "s/zaiyebujiannatiandexue": {
+        "chart": {
+            "invaded": {
+                "level": "8"
+            },
+            "massive": {
+                "level": "12",
+                "isPlus": "false"
+            }
+        }
+    },
+    "s/colorlesscoldness": {
+        "chart": {
+            "invaded": {
+                "level": "13",
+                "isPlus": "true"
+            },
+            "massive": {
+                "noter": "SRAX \"White Transparency\""
             }
         }
     }
