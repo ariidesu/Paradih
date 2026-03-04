@@ -314,10 +314,10 @@ const usersRoutes: FastifyPluginAsync = async (app) => {
     );
 
     app.get(
-        "/token/me/:authToken",
+        "/token/me",
         { preHandler: app.authService.verifyApiKey },
         async (request, reply) => {
-            const { authToken } = request.params as { authToken: string };
+            const { authToken } = request.query as { authToken: string };
             if (!authToken) {
                 reply.statusCode = 400;
                 return { code: "INVALID_REQUEST", message: "Auth token is required." };
