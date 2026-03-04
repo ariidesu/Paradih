@@ -312,6 +312,46 @@ const usersRoutes: FastifyPluginAsync = async (app) => {
             return { code: "OK", data: { token, userId: user._id } };
         }
     );
+
+    app.get(
+        "/token/me",
+        { preHandler: app.authService.verifyApiKey },
+        async (request, reply) => {
+            const { authToken } = request.body as { authToken: string };
+            if (!authToken) {
+                reply.statusCode = 400;
+                return { code: "INVALID_REQUEST", message: "Auth token is required." };
+            }
+
+            const payload = app.jwt.verify<{
+                userId: string;
+                email: string;
+                type: "auth" | "battle_auth" | "api";
+            }>(authToken, { ignoreExpiration: true });
+            if (payload.type != "auth") {
+                reply.statusCode = 400;
+                return { code: "INVALID_REQUEST", message: "Invalid token." };
+            }
+
+            const user = await app.userService.findById(payload.userId);
+            if (!user) {
+                reply.statusCode = 404;
+                return { code: "USER_NOT_FOUND", message: "User not found." };
+            }
+
+            return { code: "OK", data: {
+                _id: user._id,
+                username: user.username,
+                usernameCode: user.usernameCode,
+                rating: user.rating,
+                eco: user.eco,
+                style: user.style,
+                owned: user.owned,
+                createdAt: user.createdAt.getTime(),
+                updatedAt: user.updatedAt.getTime()
+            } };
+        }
+    );
 }
 
 export default usersRoutes;
