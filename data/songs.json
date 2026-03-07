@@ -721,12 +721,102 @@
         }
     },
     {
+        "songId": "s/vertexion",
+        "title": "VERTEXION",
+        "bpm": "155",
+        "genre": "Hi-Tech Full on / Trance",
+        "composer": "Kinetix",
+        "illustrator": "Kinetix",
+        "version": {
+            "x": 4,
+            "y": 4,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/asymmetryhologram",
+        "title": "Asymmetry Hologram",
+        "bpm": "168",
+        "genre": "Fullon / Hypertrance",
+        "composer": "Shino",
+        "illustrator": "Shino",
+        "version": {
+            "x": 4,
+            "y": 4,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/glassage",
+        "title": "Glassage",
+        "bpm": "168",
+        "genre": "Artcore",
+        "composer": "7mai",
+        "illustrator": "C4Cat",
+        "version": {
+            "x": 4,
+            "y": 4,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/alteredreality",
+        "title": "Altered Reality",
+        "bpm": "175",
+        "genre": "Electronica",
+        "composer": "Neutral Moon",
+        "illustrator": "C4Cat",
+        "version": {
+            "x": 4,
+            "y": 4,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/tablear",
+        "title": "Tablear",
+        "bpm": "194",
+        "genre": "Artcore",
+        "composer": "kuro feat. niui（にぅい）",
+        "illustrator": "C4Cat",
+        "version": {
+            "x": 4,
+            "y": 4,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
         "songId": "s/zaiyebujiannatiandexue",
         "title": "再也不见，那天的雪",
         "bpm": "72",
         "genre": "华语流行",
         "composer": "Supa7onyz",
-        "illustrator": "2Al4wU4",
+        "illustrator": "U11",
         "version": {
             "x": 4,
             "y": 3,
@@ -798,7 +888,7 @@
         "bpm": "212",
         "genre": "Artcore",
         "composer": "かねこちはる",
-        "illustrator": "U11",
+        "illustrator": "微菌",
         "version": {
             "x": 4,
             "y": 3,
@@ -814,9 +904,9 @@
         "songId": "s/yoinotori",
         "title": "宵の鳥",
         "bpm": "145",
-        "genre": "Game Music",
+        "genre": "DEVILCORE",
         "composer": "n.k feat.影縫英",
-        "illustrator": "SEGA",
+        "illustrator": "DFRA",
         "version": {
             "x": 4,
             "y": 2,
@@ -832,9 +922,9 @@
         "songId": "s/yorugao",
         "title": "Yorugao",
         "bpm": "182",
-        "genre": "Game Music",
+        "genre": "Alternative Utopia",
         "composer": "An & Ryunosuke Kudo",
-        "illustrator": "SEGA",
+        "illustrator": "おのこ",
         "version": {
             "x": 4,
             "y": 2,
@@ -851,9 +941,9 @@
         "songId": "s/shukuseishinpan",
         "title": "宿星審判",
         "bpm": "189",
-        "genre": "Game Music",
+        "genre": "席替えPOP",
         "composer": "suzu",
-        "illustrator": "SEGA",
+        "illustrator": "おゆざき",
         "version": {
             "x": 4,
             "y": 2,
@@ -905,9 +995,9 @@
         "songId": "s/rondeauxofragnaroq",
         "title": "RondeauX of RagnaroQ",
         "bpm": "185",
-        "genre": "DEVILCORE",
+        "genre": "Game Music",
         "composer": "Morrigan feat.Lily and 結城碧",
-        "illustrator": "DFRA",
+        "illustrator": "SEGA",
         "version": {
             "x": 4,
             "y": 2,
@@ -923,9 +1013,9 @@
         "songId": "s/noutenchokugeki",
         "title": "脳天直撃",
         "bpm": "145",
-        "genre": "Alternative Utopia",
+        "genre": "Game Music",
         "composer": "黒沢ダイスケ VS 穴山大輔",
-        "illustrator": "おのこ",
+        "illustrator": "SEGA",
         "version": {
             "x": 4,
             "y": 2,
@@ -942,9 +1032,9 @@
         "songId": "s/mystiqueasiris",
         "title": "mystique as iris",
         "bpm": "172",
-        "genre": "席替えPOP",
+        "genre": "Game Music",
         "composer": "かねこちはる",
-        "illustrator": "おゆざき",
+        "illustrator": "SEGA",
         "version": {
             "x": 4,
             "y": 2,
@@ -1426,39 +1516,39 @@
         }
     },
     {
-        "songId": "s/memorialtimecapsule",
-        "title": "Memorial Time Capsule",
-        "bpm": "190",
-        "genre": "Dramatic Hardcore",
-        "composer": "yuudo",
-        "illustrator": "fog",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
+        "bpm": "174",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
-            "y": 15,
-            "z": -1
+            "x": 1,
+            "y": 9,
+            "z": 3
         },
         "charts": {
-            "detected": 4,
-            "invaded": 11.5,
-            "massive": 15.3
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 15.6
         }
     },
     {
-        "songId": "s/mermaidinbinary",
-        "title": "Mermaid in binary",
-        "bpm": "212",
-        "genre": "Future Core",
-        "composer": "みーに feat. はらもりよしな",
-        "illustrator": "U11",
+        "songId": "s/reboot",
+        "title": "RE; Boot",
+        "bpm": "150",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
         "version": {
-            "x": 3,
-            "y": 15,
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
             "detected": 5,
-            "invaded": 13.4,
-            "massive": 16
+            "invaded": 11.5,
+            "massive": 15.8
         }
     },
     {
@@ -1516,39 +1606,39 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
-        "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "songId": "s/installme",
+        "title": "Install me",
+        "bpm": "180",
+        "genre": "Breakcore / Hi-Tech / Hardcore",
+        "composer": "CHRYSAD",
+        "illustrator": "白羊姐姐",
         "version": {
-            "x": 1,
-            "y": 9,
-            "z": 3
-        },
-        "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 15.6
-        }
-    },
-    {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
-        "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
-        "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 15,
             "z": -1
         },
         "charts": {
             "detected": 5,
             "invaded": 11.5,
-            "massive": 15.8
+            "massive": 15.2
+        }
+    },
+    {
+        "songId": "s/datteerror",
+        "title": "だってerror",
+        "bpm": "124",
+        "genre": "pops",
+        "composer": "Alice. feat. 記憶に残る",
+        "illustrator": "松本摸摸餐",
+        "version": {
+            "x": 3,
+            "y": 15,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 12,
+            "massive": 15.9
         }
     },
     {
