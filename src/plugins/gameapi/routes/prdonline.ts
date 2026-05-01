@@ -33,7 +33,7 @@ const prdonlineRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const { season: latestSeasonPlays, nonSeason: otherPlays } = await app.playService.getPlaysBySeason(request.user);
+            const { season: latestSeasonPlays, nonSeason: otherPlays } = await app.playService.getBestPlaysBySeason(request.user);
             latestSeasonPlays.sort((a, b) => b.rating - a.rating);
             otherPlays.sort((a, b) => b.rating - a.rating);
 

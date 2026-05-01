@@ -10,34 +10,6 @@ export function buildPlayService(app: FastifyInstance) {
             return await PlayResult.find({ userId: user._id }).lean();
         },
 
-        async getPlaysBySeason(user: UserDoc): Promise<{ season: PlayResultLean[], nonSeason: PlayResultLean[] }> {
-            const plays = await PlayResult.find({ userId: user._id }).lean();
-
-            const season: PlayResultLean[] = [];
-            const nonSeason: PlayResultLean[] = [];
-
-            for (const play of plays) {
-                const slashIndex = play.chartId.indexOf("/");
-                if (slashIndex === -1) {
-                    nonSeason.push(play);
-                    continue;
-                }
-                const [prefix, songName] = play.chartId.split("/");
-                const songId = `${prefix}/${songName}`;
-                const songData = app.gameDataService.getSongData(songId);
-
-                if (songData) {
-                    if (songData.version.x >= 4) {
-                        season.push(play);
-                    } else {
-                        nonSeason.push(play);
-                    }
-                }
-            }
-
-            return { season, nonSeason };
-        },
-
         async getChartPlayById(
             user: UserDoc,
             playId: string,
@@ -89,7 +61,7 @@ export function buildPlayService(app: FastifyInstance) {
         async getBestPlays(user: UserDoc): Promise<PlayResultLean[] | null> {
             return await PlayResult.aggregate<PlayResultLean>([
                 { $match: { userId: user._id } },
-                { $sort: { score: -1 } },
+                { $sort: { score: -1, createdAt: -1 } },
                 {
                     $group: {
                         _id: "$chartId",
@@ -98,6 +70,37 @@ export function buildPlayService(app: FastifyInstance) {
                 },
                 { $replaceRoot: { newRoot: "$doc" } },
             ]);
+        },
+
+        async getBestPlaysBySeason(user: UserDoc): Promise<{ season: PlayResultLean[], nonSeason: PlayResultLean[] }> {
+            const plays = await this.getBestPlays(user);
+            if (!plays) {
+                return { season: [], nonSeason: [] };
+            }
+
+            const season: PlayResultLean[] = [];
+            const nonSeason: PlayResultLean[] = [];
+
+            for (const play of plays) {
+                const slashIndex = play.chartId.indexOf("/");
+                if (slashIndex === -1) {
+                    nonSeason.push(play);
+                    continue;
+                }
+                const [prefix, songName] = play.chartId.split("/");
+                const songId = `${prefix}/${songName}`;
+                const songData = app.gameDataService.getSongData(songId);
+
+                if (songData) {
+                    if (songData.version.x >= 4) {
+                        season.push(play);
+                    } else {
+                        nonSeason.push(play);
+                    }
+                }
+            }
+
+            return { season, nonSeason };
         },
 
         async getChartBestPlay(
@@ -199,7 +202,7 @@ export function buildPlayService(app: FastifyInstance) {
                 return;
             }
 
-            const { season: latestSeasonPlays, nonSeason: otherPlays } = await this.getPlaysBySeason(user);
+            const { season: latestSeasonPlays, nonSeason: otherPlays } = await this.getBestPlaysBySeason(user);
             latestSeasonPlays.sort((a, b) => b.rating - a.rating);
             otherPlays.sort((a, b) => b.rating - a.rating);
 
