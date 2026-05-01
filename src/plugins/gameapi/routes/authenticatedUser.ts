@@ -170,7 +170,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 },
 
                 best_result:
-                    bestPlays?.map(
+                    bestPlays ? await Promise.all(bestPlays.map(
                         async (play) => {
                             const stats = statsMap[play.chartId] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0, maxRating: 0 };
 
@@ -199,7 +199,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                                 }
                             };
                         }
-                    ) ?? [],
+                    )) : [],
                 style_list: {
                     title: request.user.owned.titles.map((item) => {
                         return {
