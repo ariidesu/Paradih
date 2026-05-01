@@ -134,7 +134,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 status: "OK",
 
                 user_info: {
-                    timestamp: Date.now(),
+                    timestamp: Math.floor(Date.now() / 1000),
 
                     username: request.user.username,
                     username_id: request.user.usernameCode.toString(),
@@ -165,7 +165,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 },
 
                 save: {
-                    save_time: userSave.updatedAt,
+                    save_time: Math.floor(userSave.updatedAt.getTime() / 1000),
                     data: userSave.data,
                 },
 
