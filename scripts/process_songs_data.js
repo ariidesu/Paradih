@@ -8,15 +8,15 @@ const rawDataPath = process.argv[2];
 const data = JSON.parse(fs.readFileSync(rawDataPath, "utf8"));
 
 (async () => {
-    const proberData = await (await fetch("https://api.prp.icel.site/songs")).json();
+    const proberData = await (await fetch("https://api.prp.icel.site/api/v2/songs")).json();
     // we modify the prober data to only include what we need
     let filteredData = {};
     for (const songData of proberData) {
-        if (!filteredData[songData.title]) {
-            filteredData[songData.title] = { title: songData.title.replace(/[\s-]/g, "").toLowerCase(), charts: {} };
+        if (!filteredData[songData.wiki_id]) {
+            filteredData[songData.wiki_id] = { title: songData.title.replace(/[\s-]/g, "").toLowerCase(), wikiId: songData.wiki_id, charts: {} };
         }
 
-        filteredData[songData.title].charts[songData.difficulty_id] = { const: songData.level };
+        filteredData[songData.wiki_id].charts[songData.difficulty] = { const: songData.level };
     }
     // We turn it to array because... I don't need dict?
     filteredData = Object.values(filteredData);
@@ -28,16 +28,16 @@ const data = JSON.parse(fs.readFileSync(rawDataPath, "utf8"));
         3: "reboot"
     };
     const songs = data.map((song) => {
+        const [_, dataSongId] = song.address.split("/");
         const sanitizedTitle = song.title
             .replace(/[\s-]/g, "")
             .toLowerCase();
-        const foundSongData = filteredData.find((entry) => entry.title == sanitizedTitle);
+        const foundSongData = filteredData.find((entry) => entry.title == sanitizedTitle || entry.wikiId == sanitizedTitle || entry.wikiId == dataSongId);
         const charts = { detected: 0, invaded: 0, massive: 0 };
         if (foundSongData) {
             song.charts.forEach((chart) => {
-                const difficulty = (chart.difficulty + 1).toString();
-                if (foundSongData.charts[difficulty]) {
-                    charts[difficultyMapping[chart.difficulty]] = foundSongData.charts[difficulty].const;
+                if (foundSongData.charts[difficultyMapping[chart.difficulty]]) {
+                    charts[difficultyMapping[chart.difficulty]] = foundSongData.charts[difficultyMapping[chart.difficulty]].const;
                 }
             });
         }

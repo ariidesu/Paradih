@@ -34,6 +34,9 @@ declare module 'fastify' {
       CONFIG_DEFAULT_DP: number,
       CONFIG_DEFAULT_NAVI: number,
 
+      PARADIGM_ONLINE_ENABLED: boolean,
+      PARADIGM_ONLINE_FORCE_ACTIVE: boolean,
+
       SMTP_HOST: string,
       SMTP_PORT: number,
       SMTP_USERNAME: string,
@@ -102,7 +105,16 @@ const ENV_SCHEMA = {
       type: "number",
       default: 0
     },
-    
+
+    PARADIGM_ONLINE_ENABLED: {
+      type: "boolean",
+      default: true
+    },
+    PARADIGM_ONLINE_FORCE_ACTIVE: {
+      type: "boolean",
+      default: false
+    },
+
     SMTP_HOST: {
       type: "string"
     },

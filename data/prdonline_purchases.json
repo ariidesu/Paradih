@@ -1,0 +1,14 @@
+[
+    {
+        "price": 10,
+        "days": 30,
+        "rewardPoint": 100,
+        "gear": 0
+    },
+    {
+        "price": 100,
+        "days": 365,
+        "rewardPoint": 1200,
+        "gear": 1
+    }
+]

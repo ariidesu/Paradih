@@ -1,25 +1,9 @@
 {
-    "s/dataaggregation": {
+    "s/byakurendefaultwinge": {
         "chart": {
-            "massive": {
-                "isPlus": "true",
-                "level": "15"
-            }
-        }
-    },
-    "s/quasipartycle": {
-        "chart": {
-            "detected": {
-                "level": "5",
-                "noter": "PureWhite"
-            },
             "invaded": {
-                "noter": "PureWhite"
-            },
-            "massive": {
-                "isPlus": "true",
-                "level": "15",
-                "noter": "Tinwhite-lattice Waltz"
+                "isPlus": "false",
+                "level": "12"
             }
         }
     }

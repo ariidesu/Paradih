@@ -1,1 +1,22 @@
-{}
+{
+    "en": {
+        "achv_title__GPhantomRageAD": "\"Rage, endless like a phantom\"",
+        "delete": "Delete",
+        "skin_name_override_amara_awaken": "Amara *AWAKEN"
+    },
+    "jp": {
+        "achv_title__GPhantomRageAD": "「幻影のように無限な怒り」",
+        "delete": "削除",
+        "skin_name_override_amara_awaken": "アマラ *AWAKEN"
+    },
+    "tc": {
+        "achv_title__GPhantomRageAD": "“如幻魅般無盡的怒火”",
+        "delete": "刪除",
+        "skin_name_override_amara_awaken": "阿瑪菈 *AWAKEN"
+    },
+    "zh": {
+        "achv_title__GPhantomRageAD": "“如幻魅般无尽的怒火”",
+        "delete": "删除",
+        "skin_name_override_amara_awaken": "阿玛菈 *AWAKEN"
+    }
+}

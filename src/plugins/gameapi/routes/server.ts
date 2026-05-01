@@ -53,16 +53,18 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
 
             const bestResult = await app.playService.getChartBestPlay(request.user, chart_id);
             const is_best = bestResult!.score == score;
-            
+            const statsMap = await app.playService.getChartPlayStatsForCharts(request.user, [chart_id]);
+            const stats = statsMap[chart_id] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0 };
+
             return {
                 status: "OK",
 
                 result_id: newResultEntry._id,
                 play_statistic: {
-                    decrypted: decrypted_plus_count + decrypted_count,
-                    received: received_count,
-                    lost: lost_count,
-                    play_times: 1
+                    decrypted: stats.totalDecrypted,
+                    received: stats.totalReceived,
+                    lost: stats.totalLost,
+                    play_times: stats.playTimes
                 },
                 rating: request.user.rating,
                 
@@ -97,6 +99,58 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
             }
 
             return { status: 'OK', amount: 200, is_purchased: false };
+        }
+    );
+
+    app.get(
+        "/play/get_best",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const bestPlays = await app.playService.getBestPlays(request.user);
+            if (!bestPlays || bestPlays.length === 0) {
+                return { status: "OK", data: [] };
+            }
+
+            const chartIds = bestPlays.map(p => p.chartId);
+            const statsMap = await app.playService.getChartPlayStatsForCharts(request.user, chartIds);
+
+            const data = bestPlays.map(play => {
+                const stats = statsMap[play.chartId] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0 };
+
+                return {
+                    create_time: play.createdAt.getTime() / 1000,
+
+                    chart_id: play.chartId,
+
+                    score: play.score,
+                    grade: play.grade,
+                    rating: play.rating,
+                    max_rating: stats.maxRating,
+
+                    combo: play.combo,
+                    max_combo: play.maxCombo,
+                    decrypted_count: play.stats.decrypted,
+                    decrypted_plus_count: play.stats.decrypted_plus,
+                    received_count: play.stats.received,
+                    lost_count: play.stats.lost,
+                    
+                    play_statistic: {
+                        decrypted: stats.totalDecrypted,
+                        received: stats.totalReceived,
+                        lost: stats.totalLost,
+                        play_times: stats.playTimes
+                    },
+                };
+            });
+
+            return { status: "OK", data };
         }
     );
 };

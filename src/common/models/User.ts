@@ -74,6 +74,9 @@ const UserSchema = new Schema(
         currentRankSession: { type: String, default: "" },
         ranksResult: [RankResultSchema],
         maxClearedCommonChallenge: { type: Number, default: 0 },
+        
+        prdOnline: { type: Boolean, default: false },
+        prdOnlineTime: { type: Number, default: -1 },
     },
     { timestamps: true },
 );

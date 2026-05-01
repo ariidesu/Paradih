@@ -721,6 +721,96 @@
         }
     },
     {
+        "songId": "s/relayered",
+        "title": "Re:Layered",
+        "bpm": "145",
+        "genre": "Cinematic Ethnic",
+        "composer": "Kashiwade",
+        "illustrator": "打雷",
+        "version": {
+            "x": 4,
+            "y": 7,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/byakurendefaultwinge",
+        "title": "BYAKUREN∴DEFAULTWINGE",
+        "bpm": "222",
+        "genre": "Oriental Hardcore",
+        "composer": "DRIVE.",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 7,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/tomori",
+        "title": "灯守",
+        "bpm": "132",
+        "genre": "Celtic J-pop",
+        "composer": "テヅカ",
+        "illustrator": "RECKAH",
+        "version": {
+            "x": 4,
+            "y": 7,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/cantilenareperca",
+        "title": "Cantilena Reperca",
+        "bpm": "260",
+        "genre": "Hybrid Orchestral",
+        "composer": "Acotto",
+        "illustrator": "肆鸽momo",
+        "version": {
+            "x": 4,
+            "y": 7,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
+        "songId": "s/phantomrage",
+        "title": "Phantom Rage",
+        "bpm": "192",
+        "genre": "The End of History",
+        "composer": "Ayatsugu_Otowa",
+        "illustrator": "良016",
+        "version": {
+            "x": 4,
+            "y": 7,
+            "z": -1
+        },
+        "charts": {
+            "detected": 0,
+            "invaded": 0,
+            "massive": 0
+        }
+    },
+    {
         "songId": "s/prayfortherain",
         "title": "Pray for the rain",
         "bpm": "82",
@@ -815,9 +905,9 @@
         "songId": "s/vertexion",
         "title": "VERTEXION",
         "bpm": "155",
-        "genre": "Hi-Tech Full on / Trance",
+        "genre": "DEVILCORE",
         "composer": "Kinetix",
-        "illustrator": "Kinetix",
+        "illustrator": "DFRA",
         "version": {
             "x": 4,
             "y": 4,
@@ -833,9 +923,9 @@
         "songId": "s/asymmetryhologram",
         "title": "Asymmetry Hologram",
         "bpm": "168",
-        "genre": "Fullon / Hypertrance",
+        "genre": "Alternative Utopia",
         "composer": "Shino",
-        "illustrator": "Shino",
+        "illustrator": "おのこ",
         "version": {
             "x": 4,
             "y": 4,
@@ -851,9 +941,9 @@
         "songId": "s/glassage",
         "title": "Glassage",
         "bpm": "168",
-        "genre": "Artcore",
+        "genre": "席替えPOP",
         "composer": "7mai",
-        "illustrator": "C4Cat",
+        "illustrator": "おゆざき",
         "version": {
             "x": 4,
             "y": 4,
@@ -905,9 +995,9 @@
         "songId": "s/zaiyebujiannatiandexue",
         "title": "再也不见，那天的雪",
         "bpm": "72",
-        "genre": "DEVILCORE",
+        "genre": "华语流行",
         "composer": "Supa7onyz",
-        "illustrator": "DFRA",
+        "illustrator": "U11",
         "version": {
             "x": 4,
             "y": 3,
@@ -923,9 +1013,9 @@
         "songId": "s/donnerschnee",
         "title": "Donnerschnee",
         "bpm": "148",
-        "genre": "Alternative Utopia",
+        "genre": "Alternative House",
         "composer": "void (Mournfinale)",
-        "illustrator": "おのこ",
+        "illustrator": "U11",
         "version": {
             "x": 4,
             "y": 3,
@@ -941,9 +1031,9 @@
         "songId": "s/sapphirecelestialglobe",
         "title": "Sapphire Celestial Globe",
         "bpm": "273",
-        "genre": "席替えPOP",
+        "genre": "Art Core",
         "composer": "yuichi NAGAO",
-        "illustrator": "おゆざき",
+        "illustrator": "U11",
         "version": {
             "x": 4,
             "y": 3,
@@ -1427,39 +1517,39 @@
         }
     },
     {
-        "songId": "s/blackbird",
-        "title": "Blackbird",
-        "bpm": "174-348",
-        "genre": "Speedcore",
-        "composer": "Kobaryo",
-        "illustrator": "あきま",
+        "songId": "s/unpredictablenascentinvasion",
+        "title": "Unpredictable Nascent Invasion",
+        "bpm": "174",
+        "genre": "Drum'n'bass",
+        "composer": "硝酸生菜",
+        "illustrator": "2Al4wU4",
         "version": {
-            "x": 3,
-            "y": 16,
+            "x": 1,
+            "y": 9,
+            "z": 3
+        },
+        "charts": {
+            "detected": 3,
+            "invaded": 9.5,
+            "massive": 15.6
+        }
+    },
+    {
+        "songId": "s/reboot",
+        "title": "RE; Boot",
+        "bpm": "150",
+        "genre": "Hi-Tech Full on",
+        "composer": "溝口ゆうま feat. 柚木つばめ",
+        "illustrator": "染染",
+        "version": {
+            "x": 2,
+            "y": 0,
             "z": -1
         },
         "charts": {
             "detected": 5,
-            "invaded": 12.5,
-            "massive": 15.7
-        }
-    },
-    {
-        "songId": "s/soclose",
-        "title": "So Close",
-        "bpm": "210",
-        "genre": "Frenchcore",
-        "composer": "USAO",
-        "illustrator": "炸裂蛋 + M.Ghost",
-        "version": {
-            "x": 3,
-            "y": 16,
-            "z": -1
-        },
-        "charts": {
-            "detected": 6,
-            "invaded": 13,
-            "massive": 16.2
+            "invaded": 11.5,
+            "massive": 15.8
         }
     },
     {
@@ -1517,39 +1607,39 @@
         }
     },
     {
-        "songId": "s/unpredictablenascentinvasion",
-        "title": "Unpredictable Nascent Invasion",
-        "bpm": "174",
-        "genre": "Drum'n'bass",
-        "composer": "硝酸生菜",
-        "illustrator": "2Al4wU4",
+        "songId": "s/bigdaddy",
+        "title": "Big Daddy",
+        "bpm": "190",
+        "genre": "HARDCORE",
+        "composer": "USAO",
+        "illustrator": "知るかバカうどん",
         "version": {
-            "x": 1,
-            "y": 9,
-            "z": 3
-        },
-        "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 15.6
-        }
-    },
-    {
-        "songId": "s/reboot",
-        "title": "RE; Boot",
-        "bpm": "150",
-        "genre": "Hi-Tech Full on",
-        "composer": "溝口ゆうま feat. 柚木つばめ",
-        "illustrator": "染染",
-        "version": {
-            "x": 2,
-            "y": 0,
+            "x": 3,
+            "y": 16,
             "z": -1
         },
         "charts": {
             "detected": 5,
-            "invaded": 11.5,
+            "invaded": 12,
             "massive": 15.8
+        }
+    },
+    {
+        "songId": "s/luminousbullet",
+        "title": "LUMINOUS★BULLET",
+        "bpm": "130-260",
+        "genre": "HAPPY SPEEDCORE",
+        "composer": "P*Light & Kobaryo",
+        "illustrator": "FromGod Jungle + M.Ghost",
+        "version": {
+            "x": 3,
+            "y": 16,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 13.3,
+            "massive": 16.4
         }
     },
     {
@@ -2051,9 +2141,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 14.5
+            "detected": 5,
+            "invaded": 12,
+            "massive": 15.9
         }
     },
     {
@@ -2915,9 +3005,9 @@
             "z": -1
         },
         "charts": {
-            "detected": 4,
-            "invaded": 12,
-            "massive": 15.8
+            "detected": 5,
+            "invaded": 10,
+            "massive": 15.6
         }
     },
     {
@@ -4989,9 +5079,9 @@
             "z": 1
         },
         "charts": {
-            "detected": 3,
-            "invaded": 9.5,
-            "massive": 14.5
+            "detected": 5,
+            "invaded": 12,
+            "massive": 15.9
         }
     },
     {
@@ -6125,9 +6215,9 @@
             "z": 1
         },
         "charts": {
-            "detected": 4,
-            "invaded": 12,
-            "massive": 15.8
+            "detected": 5,
+            "invaded": 10,
+            "massive": 15.6
         }
     },
     {

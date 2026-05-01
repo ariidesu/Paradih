@@ -1020,5 +1020,253 @@
                 "side21"
             ]
         }
+    },
+    {
+        "id": "special_voez_02",
+        "level": 0,
+        "type": 1,
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
+        "untilTime": 0,
+        "playCostType": "dp",
+        "cost": 1000,
+        "charts": [
+            "s/flamedark/invaded",
+            "s/kimitomitasoranouta/invaded",
+            "s/praystation/invaded",
+            "s/owaritohajimarinooto/invaded"
+        ],
+        "rewards": [
+            {
+                "star": 1,
+                "reward": {
+                    "type": "dp",
+                    "value": 50000
+                },
+                "id": "special_voez_01_r01"
+            },
+            {
+                "star": 2,
+                "reward": {
+                    "type": "dp",
+                    "value": 100000
+                },
+                "id": "special_voez_01_r02"
+            },
+            {
+                "star": 3,
+                "reward": {
+                    "type": "background",
+                    "value": "BGChallengeVoice4U"
+                },
+                "id": "special_voez_01_r03"
+            }
+        ],
+        "gauge": {
+            "type": 1,
+            "values": {
+                "decrypted": 1000,
+                "received": -10000,
+                "lost": -100000
+            }
+        },
+        "unlockTag": {
+            "package": [
+                "side24",
+                "side26"
+            ]
+        }
+    },
+    {
+        "id": "special_voez_01",
+        "level": 0,
+        "type": 1,
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
+        "untilTime": 0,
+        "playCostType": "dp",
+        "cost": 1000,
+        "charts": [
+            "s/flamedark/massive",
+            "s/kimitomitasoranouta/massive",
+            "s/praystation/massive",
+            "s/owaritohajimarinooto/massive"
+        ],
+        "rewards": [
+            {
+                "star": 1,
+                "reward": {
+                    "type": "dp",
+                    "value": 50000
+                },
+                "id": "special_voez_01_r01"
+            },
+            {
+                "star": 2,
+                "reward": {
+                    "type": "dp",
+                    "value": 100000
+                },
+                "id": "special_voez_01_r02"
+            },
+            {
+                "star": 3,
+                "reward": {
+                    "type": "background",
+                    "value": "BGChallengeVoice4U"
+                },
+                "id": "special_voez_01_r03"
+            }
+        ],
+        "gauge": {
+            "type": 1,
+            "values": {
+                "decrypted": 1000,
+                "received": -10000,
+                "lost": -100000
+            }
+        },
+        "unlockTag": {
+            "package": [
+                "side24",
+                "side26"
+            ]
+        }
+    },
+    {
+        "id": "special_cytus2_02",
+        "level": 0,
+        "type": 1,
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
+        "untilTime": 0,
+        "playCostType": "dp",
+        "cost": 1000,
+        "charts": [
+            "s/thewholerest/invaded",
+            "s/hyouryuu/invaded",
+            "s/alexandriteonoken/invaded",
+            "s/hydra/invaded"
+        ],
+        "rewards": [
+            {
+                "star": 1,
+                "reward": {
+                    "type": "dp",
+                    "value": 50000
+                },
+                "id": "special_cytus2_01_r01"
+            },
+            {
+                "star": 2,
+                "reward": {
+                    "type": "dp",
+                    "value": 100000
+                },
+                "id": "special_cytus2_01_r02"
+            },
+            {
+                "star": 3,
+                "reward": {
+                    "type": "background",
+                    "value": "BGChallengeCYTUS"
+                },
+                "id": "special_cytus2_01_r03"
+            }
+        ],
+        "gauge": {
+            "type": 1,
+            "values": {
+                "decrypted": 1000,
+                "received": -10000,
+                "lost": -100000
+            }
+        },
+        "unlockTag": {
+            "package": [
+                "side23",
+                "side25"
+            ]
+        }
+    },
+    {
+        "id": "special_cytus2_01",
+        "level": 0,
+        "type": 1,
+        "borders": [
+            200000,
+            600000
+        ],
+        "starBorders": [
+            200000,
+            600000
+        ],
+        "untilTime": 0,
+        "playCostType": "dp",
+        "cost": 1000,
+        "charts": [
+            "s/thewholerest/massive",
+            "s/hyouryuu/massive",
+            "s/alexandriteonoken/massive",
+            "s/hydra/massive"
+        ],
+        "rewards": [
+            {
+                "star": 1,
+                "reward": {
+                    "type": "dp",
+                    "value": 50000
+                },
+                "id": "special_cytus2_01_r01"
+            },
+            {
+                "star": 2,
+                "reward": {
+                    "type": "dp",
+                    "value": 100000
+                },
+                "id": "special_cytus2_01_r02"
+            },
+            {
+                "star": 3,
+                "reward": {
+                    "type": "background",
+                    "value": "BGChallengeCYTUS"
+                },
+                "id": "special_cytus2_01_r03"
+            }
+        ],
+        "gauge": {
+            "type": 1,
+            "values": {
+                "decrypted": 1000,
+                "received": -10000,
+                "lost": -100000
+            }
+        },
+        "unlockTag": {
+            "package": [
+                "side23",
+                "side25"
+            ]
+        }
     }
 ]

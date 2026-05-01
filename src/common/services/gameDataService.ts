@@ -16,6 +16,13 @@ interface PurchaseItem {
     startTime: number;
 }
 
+interface PrdOnlinePurchase {
+    price: number;
+    days: number;
+    rewardPoint: number;
+    gear: number;
+}
+
 interface GearData {
     gear: number;
     cost: number;
@@ -108,6 +115,7 @@ export interface GameData {
     battleData: BattleData;
     songMeta: SongMetaData;
     translation: TranslationData;
+    prdOnlinePurchases: PrdOnlinePurchase[];
     catalog: {
         metadata: {
             version: string;
@@ -133,6 +141,7 @@ export function buildGameDataService(app: FastifyInstance) {
     const battlePath = path.join(__dirname, "../../../data/battle.json");
     const songMetaPath = path.join(__dirname, "../../../data/songmeta.json");
     const translationPath = path.join(__dirname, "../../../data/translation.json");
+    const prdOnlinePurchasesPath = path.join(__dirname, "../../../data/prdonline_purchases.json");
 
     const iosCatalogPath = path.join(__dirname, "../../../data/catalog/ios/catalog.json");
     const iosCatalogChecksumPath = path.join(__dirname, "../../../data/catalog/ios/catalog_checksum.json");
@@ -149,6 +158,7 @@ export function buildGameDataService(app: FastifyInstance) {
         battleData: JSON.parse(readFileSync(battlePath, "utf8")),
         songMeta: JSON.parse(readFileSync(songMetaPath, "utf8")),
         translation: JSON.parse(readFileSync(translationPath, "utf8")),
+        prdOnlinePurchases: JSON.parse(readFileSync(prdOnlinePurchasesPath, "utf8")),
         catalog: {
             metadata: JSON.parse(readFileSync(path.join(__dirname, "../../../data/catalog/metadata.json"), "utf8")),
             ios: {
@@ -162,13 +172,17 @@ export function buildGameDataService(app: FastifyInstance) {
         }
     };
 
-    return {
+     return {
         getPurchases(): Record<string, PurchaseItem> {
             return gameData.purchases;
         },
 
         getPurchaseById(id: string): PurchaseItem | undefined {
             return gameData.purchases[id];
+        },
+
+        getPrdOnlinePurchases(): PrdOnlinePurchase[] {
+            return gameData.prdOnlinePurchases;
         },
 
         getGearData(gearId: number): GearData | undefined {

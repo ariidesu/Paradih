@@ -21,9 +21,9 @@ RAW_ENV.split("\n")
     });
 
 const settings = {
-    token: "TxqRGhR/0tu0iyM5KeIBrGNtFhud+imrxK/u8tjYRkgqiV3+2k14y0q9UATCT6aEQCZkHfjWsM8D8MyJU1CoOVtoE4vmNrj5AJBSeYw4WNCAT8lDL0rL5zeUuguQ3dyfxWp0GXJRpP154oidDkECBWhYXgeEA5ziLGXKZmQ5coTh8eOJSsrwFaHrHMz43WA9WyxSWhNYndymDZSlR08xmA03kE7OO603F2flty8GZrbY2Wtj8vzCRPQty5o1jRPEpKLlgfCXa/cJfcE0WwGiwTs1RYiPxl7UOrgJsGR6xEz1Qu902CQYwaIq8p2JI812LsJdb0i6thAIYU2XZ2vJTg==",
+    token: "L3zjy80kYqcmPuH6LMtfYQBNaTtNYTkhgpci+Ymq9ZBQusFE1XSvmT38xfzgkMQ1IZD26BPRyeri5gbGzAuCbv7WQHcT1YXJg3Q2nrfmrnipIUsv18w+MEx89Uy2XnMMoVfeNMQeWnGmohYtuD6ilc9fNZj4SvDTiGO1JxoGTUAtrJwRWlzLmBCdpo9isI/KObpQW1Tc8GcHEpZBSWeAEX2TalLDFoBQuPKPb+IBuJFo1OnvcZwTvr1jWeinoq0E5C1ub0g+oeARFhBzO8wPC8JQUsr+FDURwWrk5drV6e3i1kcPcfx6zzIkFq//WAWbUXmTDQx38Gf5X7PmSMH5oQ==",
     printNewToken: false,
-    deviceId: "96f7aea7-d2cd-442e-9662-18509c861d3d",
+    deviceId: "c15c3f28-be62-4ede-a2ca-5937ea54f8bc",
 };
 
 const KEY = ENV["AES_KEY"];
@@ -33,7 +33,7 @@ const HEADERS = {
     "X-Language": "en",
     "X-game-version": "4.6",
     "X-game-build": "b5546a309dd637543a4a8f5535c78583",
-    "X-api-version": "88",
+    "X-api-version": "89",
     "X-Device-Id": settings.deviceId,
     "X-Session": settings.token,
     "X-Unity-Version": "2021.3.40f1c1",

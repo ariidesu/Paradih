@@ -5,6 +5,7 @@ import unauthenticatedUserRoutes from "./routes/unauthenticatedUser";
 import authenticatedUserRoutes from "./routes/authenticatedUser";
 import shopRoutes from "./routes/shop";
 import hotassetsRoutes from "./routes/hotassets";
+import prdonlineRoutes from "./routes/prdonline";
 
 const gameApiApp: FastifyPluginAsync = async (app) => {
     app.register(unauthenticatedUserRoutes, { prefix: "/user" });
@@ -13,6 +14,7 @@ const gameApiApp: FastifyPluginAsync = async (app) => {
     app.register(authenticatedUserRoutes, { prefix: "/server/user" });
     app.register(shopRoutes, { prefix: "/server/shop" });
     app.register(hotassetsRoutes, { prefix: "/server/hotassets" });
+    app.register(prdonlineRoutes, { prefix: "/server/prdonline" });
 };
 
 export default gameApiApp;

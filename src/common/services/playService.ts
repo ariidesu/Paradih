@@ -1,35 +1,93 @@
 import { FastifyInstance } from "fastify";
-import type { PlayResultDoc } from "../models/PlayResult";
+import type { PlayResultDoc, PlayResultLean } from "../models/PlayResult";
 import { UserDoc } from "../models/User";
 
 export function buildPlayService(app: FastifyInstance) {
     const { User, PlayResult } = app.models;
 
     return {
-        async getAllPlays(user: UserDoc): Promise<PlayResultDoc[] | null> {
-            return await PlayResult.find({ userId: user._id });
+        async getAllPlays(user: UserDoc): Promise<PlayResultLean[] | null> {
+            return await PlayResult.find({ userId: user._id }).lean();
+        },
+
+        async getPlaysBySeason(user: UserDoc): Promise<{ season: PlayResultLean[], nonSeason: PlayResultLean[] }> {
+            const plays = await PlayResult.find({ userId: user._id }).lean();
+
+            const season: PlayResultLean[] = [];
+            const nonSeason: PlayResultLean[] = [];
+
+            for (const play of plays) {
+                const slashIndex = play.chartId.indexOf("/");
+                if (slashIndex === -1) {
+                    nonSeason.push(play);
+                    continue;
+                }
+                const [prefix, songName] = play.chartId.split("/");
+                const songId = `${prefix}/${songName}`;
+                const songData = app.gameDataService.getSongData(songId);
+
+                if (songData) {
+                    if (songData.version.x >= 4) {
+                        season.push(play);
+                    } else {
+                        nonSeason.push(play);
+                    }
+                }
+            }
+
+            return { season, nonSeason };
         },
 
         async getChartPlayById(
             user: UserDoc,
             playId: string,
-        ): Promise<PlayResultDoc | null> {
-            return await PlayResult.findOne({ userId: user._id, _id: playId });
+        ): Promise<PlayResultLean | null> {
+            return await PlayResult.findOne({ userId: user._id, _id: playId }).lean();
         },
 
-        async getChartPlayByOnlyId(playId: string): Promise<PlayResultDoc | null> {
-            return await PlayResult.findOne({ _id: playId });
+        async getChartPlayByOnlyId(playId: string): Promise<PlayResultLean | null> {
+            return await PlayResult.findOne({ _id: playId }).lean();
         },
 
         async getChartPlays(
             user: UserDoc,
             chartId: string,
-        ): Promise<PlayResultDoc[] | null> {
-            return await PlayResult.find({ userId: user._id, chartId });
+        ): Promise<PlayResultLean[] | null> {
+            return await PlayResult.find({ userId: user._id, chartId }).lean();
         },
 
-        async getBestPlays(user: UserDoc): Promise<PlayResultDoc[] | null> {
-            return await PlayResult.aggregate<PlayResultDoc>([
+        async getChartPlayStatsForCharts(user: UserDoc, chartIds: string[]): Promise<Record<string, { playTimes: number; totalDecrypted: number; totalReceived: number; totalLost: number; maxRating: number }>> {
+            if (chartIds.length === 0) return {};
+
+            const stats = await PlayResult.aggregate([
+                { $match: { userId: user._id, chartId: { $in: chartIds } } },
+                {
+                    $group: {
+                        _id: "$chartId",
+                        playTimes: { $sum: 1 },
+                        totalDecrypted: { $sum: { $add: ["$stats.decrypted_plus", "$stats.decrypted"] } },
+                        totalReceived: { $sum: "$stats.received" },
+                        totalLost: { $sum: "$stats.lost" },
+                        maxRating: { $max: "$rating" },
+                    },
+                },
+            ]);
+
+            const result: Record<string, { playTimes: number; totalDecrypted: number; totalReceived: number; totalLost: number; maxRating: number }> = {};
+            for (const s of stats) {
+                result[s._id] = {
+                    playTimes: s.playTimes,
+                    totalDecrypted: s.totalDecrypted,
+                    totalReceived: s.totalReceived,
+                    totalLost: s.totalLost,
+                    maxRating: s.maxRating,
+                };
+            }
+            return result;
+        },
+
+        async getBestPlays(user: UserDoc): Promise<PlayResultLean[] | null> {
+            return await PlayResult.aggregate<PlayResultLean>([
                 { $match: { userId: user._id } },
                 { $sort: { score: -1 } },
                 {
@@ -45,10 +103,10 @@ export function buildPlayService(app: FastifyInstance) {
         async getChartBestPlay(
             user: UserDoc,
             chartId: string,
-        ): Promise<PlayResultDoc | null> {
+        ): Promise<PlayResultLean | null> {
             return await PlayResult.findOne({ userId: user._id, chartId }).sort(
                 { score: -1 },
-            );
+            ).lean();
         },
 
         async submitPlay(
@@ -141,23 +199,7 @@ export function buildPlayService(app: FastifyInstance) {
                 return;
             }
 
-            const latestSeasonPlays: PlayResultDoc[] = [];
-            const otherPlays: PlayResultDoc[] = [];
-
-            for (const play of allBestPlays) {
-                const [prefix, songName] = play.chartId.split("/");
-                const songId = `${prefix}/${songName}`;
-
-                const songData = app.gameDataService.getSongData(songId);
-                // Our current season is 04, which starts from 4.0.0 onwards.
-                // We need to check the x.y field of the song version.
-                if (songData && (songData.version.x >= 4)) {
-                    latestSeasonPlays.push(play);
-                } else {
-                    otherPlays.push(play);
-                }
-            }
-
+            const { season: latestSeasonPlays, nonSeason: otherPlays } = await this.getPlaysBySeason(user);
             latestSeasonPlays.sort((a, b) => b.rating - a.rating);
             otherPlays.sort((a, b) => b.rating - a.rating);
 

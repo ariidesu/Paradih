@@ -1,4 +1,4 @@
-import { Schema, model, InferSchemaType, Document } from "mongoose";
+import { Schema, model, InferSchemaType, Document, GetLeanResultType } from "mongoose";
 
 const PlayResultSchema = new Schema(
     {
@@ -28,5 +28,7 @@ const PlayResultSchema = new Schema(
 );
 PlayResultSchema.index({ userId: 1, chartId: 1 });
 
-export type PlayResultDoc = InferSchemaType<typeof PlayResultSchema> & Document;
+type PlayResult = InferSchemaType<typeof PlayResultSchema>;
+export type PlayResultDoc = PlayResult & Document;
+export type PlayResultLean = GetLeanResultType<PlayResult, PlayResult, unknown>;
 export default model("PlayResult", PlayResultSchema);

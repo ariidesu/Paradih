@@ -87,6 +87,49 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 userSave.data.set("/trackunlock/s/gigantomachina", 1039);
             }
 
+            const now = Math.floor(Date.now() / 1000);
+            let paradigmOnlineActive = false;
+            let paradigmOnlineExpireTime = -1;
+
+            if (app.config.PARADIGM_ONLINE_ENABLED) {
+                if (app.config.PARADIGM_ONLINE_FORCE_ACTIVE) {
+                    paradigmOnlineActive = true;
+                    paradigmOnlineExpireTime = request.user.prdOnlineTime || 4102444800;
+                } else {
+                    const isActive = request.user.prdOnline && request.user.prdOnlineTime > now;
+                    paradigmOnlineActive = isActive;
+                    paradigmOnlineExpireTime = isActive ? request.user.prdOnlineTime : -1;
+                }
+            }
+
+            const bestPlays = await app.playService.getBestPlays(request.user);
+            const chartIds = bestPlays?.map(p => p.chartId) || [];
+            const statsMap = await app.playService.getChartPlayStatsForCharts(request.user, chartIds);
+
+            const { season: latestSeasonPlays, nonSeason: otherPlays } = await app.playService.getPlaysBySeason(request.user);
+            latestSeasonPlays.sort((a, b) => b.rating - a.rating);
+            otherPlays.sort((a, b) => b.rating - a.rating);
+
+            latestSeasonPlays.sort((a, b) => b.rating - a.rating);
+            otherPlays.sort((a, b) => b.rating - a.rating);
+
+            const topLatestSeasonPlays = latestSeasonPlays.slice(0, 15).map((play, i) => {
+                const [prefix, songName, difficulty] = play.chartId.split("/");
+                const parsedDifficulty = parseInt(difficulty, 10) || 0;
+                const songId = `${prefix}/${songName}`;
+                return { index: i + 1, songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
+            });
+            const topOtherPlays = otherPlays.slice(0, 35).map((play, i) => {
+                const [prefix, songName, difficulty] = play.chartId.split("/");
+                const parsedDifficulty = parseInt(difficulty, 10) || 0;
+                const songId = `${prefix}/${songName}`;
+                return { index: i + 1, songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
+            });
+
+            const highestRating = bestPlays?.length
+                ? Math.max(...bestPlays.map(p => p.rating))
+                : 0;
+
             return {
                 status: "OK",
 
@@ -119,8 +162,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 },
 
                 best_result:
-                    (await app.playService.getBestPlays(request.user))?.map(
-                        (play) => {
+                    bestPlays?.map(
+                        async (play) => {
+                            const stats = statsMap[play.chartId] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0, maxRating: 0 };
+
                             return {
                                 create_time: play.createdAt.getTime() / 1000,
 
@@ -134,6 +179,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                                 decrypted_count: play.stats.decrypted,
                                 received_count: play.stats.received,
                                 lost_count: play.stats.lost,
+
+                                play_statistic: {
+                                    decrypted: stats.totalDecrypted,
+                                    received: stats.totalReceived,
+                                    lost: stats.totalLost,
+                                    play_times: stats.playTimes
+                                }
                             };
                         }
                     ) ?? [],
@@ -155,7 +207,15 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 },
                 purchase_list: purchasesList,
 
-                po_b50: {b35: [], b15: []}
+                po_b50: {
+                    past: topOtherPlays,
+                    now: topLatestSeasonPlays,
+                    highest_rating: highestRating
+                },
+
+                prd_online: paradigmOnlineActive,
+                prd_online_time: paradigmOnlineExpireTime,
+                prd_bind_account: true
             };
         }
     );
@@ -176,6 +236,21 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             // We reset it.
             if (request.user.currentRankSession != "") {
                 await app.userService.setRankSession(request.user, "");
+            }
+
+            const now = Math.floor(Date.now() / 1000);
+            let paradigmOnlineActive = false;
+            let paradigmOnlineExpireTime = -1;
+
+            if (app.config.PARADIGM_ONLINE_ENABLED) {
+                if (app.config.PARADIGM_ONLINE_FORCE_ACTIVE) {
+                    paradigmOnlineActive = true;
+                    paradigmOnlineExpireTime = request.user.prdOnlineTime || 4102444800;
+                } else {
+                    const isActive = request.user.prdOnline && request.user.prdOnlineTime > now;
+                    paradigmOnlineActive = isActive;
+                    paradigmOnlineExpireTime = isActive ? request.user.prdOnlineTime : -1;
+                }
             }
 
             return {
@@ -201,8 +276,8 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 is_fool_sp: 0,
                 max_clear_common_challenge: request.user.maxClearedCommonChallenge,
                 
-                prd_online: false,
-                prd_online_time: -1,
+                prd_online: paradigmOnlineActive,
+                prd_online_time: paradigmOnlineExpireTime,
                 prd_bind_account: true
             };
         }
