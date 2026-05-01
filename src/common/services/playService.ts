@@ -226,5 +226,31 @@ export function buildPlayService(app: FastifyInstance) {
                 user.rating = result.rating;
             }
         },
+        
+        async recalculateAllRatings() {
+            console.log("Starting rating recalculation");
+            
+            const playsCursor = PlayResult.find().cursor();
+            for await (const play of playsCursor) {
+                const [prefix, songName, difficulty] = play.chartId.split("/");
+                const songId = `${prefix}/${songName}`;
+                const songData = app.gameDataService.getSongData(songId);
+                
+                if (songData && difficulty in songData.charts) {
+                    const constant = songData.charts[difficulty as keyof typeof songData.charts];
+                    const newRating = this.calculatePlayRating(play.score, constant);
+                    
+                    if (play.rating !== newRating) {
+                        await PlayResult.updateOne({ _id: play._id }, { $set: { rating: newRating } });
+                    }
+                }
+            }
+
+            const usersCursor = User.find().cursor();
+            for await (const user of usersCursor) {
+                await this.updatePlayerRating(user);
+            }
+            console.log("Rating recalculation complete");
+        },
     };
 }

@@ -214,6 +214,8 @@ async function main() {
         port: battleInstance.config.BATTLE_PORT,
         host: "0.0.0.0",
     });
+
+    gameApiInstance.playService.recalculateAllRatings().catch(console.error);
 }
 
 main().catch(console.error);
