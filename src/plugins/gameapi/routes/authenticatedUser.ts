@@ -156,7 +156,9 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     has_unread_mail: (await app.mailService.getUnreadMails(request.user)).length > 0,
                     is_fool_sp: 0,
                     max_clear_common_challenge: request.user.maxClearedCommonChallenge,
-                    
+                    max_unread_anno_level: 0,
+                    shika: false,
+
                     prd_online: paradigmOnlineActive,
                     prd_online_time: paradigmOnlineExpireTime,
                     prd_bind_account: true
@@ -260,6 +262,9 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
             return {
                 status: "OK",
+                
+                timestamp: Date.now(),
+
                 username: request.user.username,
                 username_id: request.user.usernameCode.toString(),
 
@@ -280,11 +285,28 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 has_unread_mail: (await app.mailService.getUnreadMails(request.user)).length > 0,
                 is_fool_sp: 0,
                 max_clear_common_challenge: request.user.maxClearedCommonChallenge,
-                
+                max_unread_anno_level: 0,
+                shika: false,
+
                 prd_online: paradigmOnlineActive,
                 prd_online_time: paradigmOnlineExpireTime,
                 prd_bind_account: true
             };
+        }
+    );
+
+    app.get(
+        "/get_anno_list",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            return { status: "OK", data: [] };
         }
     );
 
