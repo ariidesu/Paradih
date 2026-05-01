@@ -115,15 +115,15 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
             const topLatestSeasonPlays = latestSeasonPlays.slice(0, 15).map((play, i) => {
                 const [prefix, songName, difficulty] = play.chartId.split("/");
-                const parsedDifficulty = parseInt(difficulty, 10) || 0;
+                const parsedDifficulty = app.gameDataService.difficultyStringToNumber(difficulty);
                 const songId = `${prefix}/${songName}`;
-                return { index: i + 1, songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
+                return { index: i + 1, id: songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
             });
             const topOtherPlays = otherPlays.slice(0, 35).map((play, i) => {
                 const [prefix, songName, difficulty] = play.chartId.split("/");
-                const parsedDifficulty = parseInt(difficulty, 10) || 0;
+                const parsedDifficulty = app.gameDataService.difficultyStringToNumber(difficulty);
                 const songId = `${prefix}/${songName}`;
-                return { index: i + 1, songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
+                return { index: i + 1, id: songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
             });
 
             const highestRating = bestPlays?.length
@@ -134,6 +134,8 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 status: "OK",
 
                 user_info: {
+                    timestamp: Date.now(),
+
                     username: request.user.username,
                     username_id: request.user.usernameCode.toString(),
 
@@ -154,6 +156,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     has_unread_mail: (await app.mailService.getUnreadMails(request.user)).length > 0,
                     is_fool_sp: 0,
                     max_clear_common_challenge: request.user.maxClearedCommonChallenge,
+                    
+                    prd_online: paradigmOnlineActive,
+                    prd_online_time: paradigmOnlineExpireTime,
+                    prd_bind_account: true
                 },
 
                 save: {
@@ -174,9 +180,12 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                                 score: play.score,
                                 grade: play.grade,
                                 rating: play.rating,
+                                max_rating: stats.maxRating,
 
-                                decrypted_plus_count: play.stats.decrypted_plus,
+                                combo: play.combo,
+                                max_combo: play.maxCombo,
                                 decrypted_count: play.stats.decrypted,
+                                decrypted_plus_count: play.stats.decrypted_plus,
                                 received_count: play.stats.received,
                                 lost_count: play.stats.lost,
 
@@ -211,11 +220,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     past: topOtherPlays,
                     now: topLatestSeasonPlays,
                     highest_rating: highestRating
-                },
-
-                prd_online: paradigmOnlineActive,
-                prd_online_time: paradigmOnlineExpireTime,
-                prd_bind_account: true
+                }
             };
         }
     );

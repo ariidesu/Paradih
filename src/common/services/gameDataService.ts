@@ -268,6 +268,21 @@ export function buildGameDataService(app: FastifyInstance) {
 
             reply.header("Content-Length", size.toString());
             return createReadStream(fullPath);
+        },
+
+        difficultyStringToNumber(difficulty: string): number {
+            switch (difficulty.toLowerCase()) {
+                case "detected":
+                    return 0;
+                case "invaded":
+                    return 1;
+                case "massive":
+                    return 2;
+                case "reboot":
+                    return 3;
+                default:
+                    throw new Error(`Unknown difficulty: ${difficulty}`);
+            }
         }
     };
 }

@@ -42,15 +42,15 @@ const prdonlineRoutes: FastifyPluginAsync = async (app) => {
 
             const topLatestSeasonPlays = latestSeasonPlays.slice(0, 15).map((play, i) => {
                 const [prefix, songName, difficulty] = play.chartId.split("/");
-                const parsedDifficulty = parseInt(difficulty, 10) || 0;
+                const parsedDifficulty = app.gameDataService.difficultyStringToNumber(difficulty);
                 const songId = `${prefix}/${songName}`;
-                return { index: i + 1, songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
+                return { index: i + 1, id: songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
             });
             const topOtherPlays = otherPlays.slice(0, 35).map((play, i) => {
                 const [prefix, songName, difficulty] = play.chartId.split("/");
-                const parsedDifficulty = parseInt(difficulty, 10) || 0;
+                const parsedDifficulty = app.gameDataService.difficultyStringToNumber(difficulty);
                 const songId = `${prefix}/${songName}`;
-                return { index: i + 1, songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
+                return { index: i + 1, id: songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
             });
 
             const bestPlays = [...topLatestSeasonPlays, ...topOtherPlays];
