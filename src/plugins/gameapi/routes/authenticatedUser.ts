@@ -263,7 +263,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             return {
                 status: "OK",
                 
-                timestamp: Date.now(),
+                timestamp: Math.floor(Date.now() / 1000),
 
                 username: request.user.username,
                 username_id: request.user.usernameCode.toString(),
