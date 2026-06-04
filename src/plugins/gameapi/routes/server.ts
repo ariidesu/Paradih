@@ -123,6 +123,13 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
 
             const data = bestPlays.map(play => {
                 const stats = statsMap[play.chartId] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0 };
+                const [prefix, songName, difficulty] = play.chartId.split("/");
+                const songData = app.gameDataService.getSongData(`${prefix}/${songName}`);
+                let maxRating = 0;
+                if (songData && difficulty in songData.charts) {
+                    const chartConst = songData.charts[difficulty as keyof typeof songData.charts];
+                    maxRating = Math.floor((chartConst + 1) * 1000 + 0.00002);
+                }
 
                 return {
                     create_time: play.createdAt.getTime() / 1000,
@@ -132,7 +139,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                     score: play.score,
                     grade: play.grade,
                     rating: play.rating,
-                    max_rating: stats.maxRating,
+                    max_rating: maxRating,
 
                     combo: play.combo,
                     max_combo: play.maxCombo,

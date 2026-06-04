@@ -113,22 +113,25 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             latestSeasonPlays.sort((a, b) => b.rating - a.rating);
             otherPlays.sort((a, b) => b.rating - a.rating);
 
-            const topLatestSeasonPlays = latestSeasonPlays.slice(0, 15).map((play, i) => {
+            const topLatestSeasonPlays = latestSeasonPlays.filter((play) => play.chartId.split("/")[2] != "chaotic").slice(0, 15).map((play, i) => {
                 const [prefix, songName, difficulty] = play.chartId.split("/");
                 const parsedDifficulty = app.gameDataService.difficultyStringToNumber(difficulty);
                 const songId = `${prefix}/${songName}`;
                 return { index: i + 1, id: songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
             });
-            const topOtherPlays = otherPlays.slice(0, 35).map((play, i) => {
+            const topOtherPlays = otherPlays.filter((play) => play.chartId.split("/")[2] != "chaotic").slice(0, 35).map((play, i) => {
                 const [prefix, songName, difficulty] = play.chartId.split("/");
                 const parsedDifficulty = app.gameDataService.difficultyStringToNumber(difficulty);
                 const songId = `${prefix}/${songName}`;
                 return { index: i + 1, id: songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
             });
 
-            const highestRating = bestPlays?.length
-                ? Math.max(...bestPlays.map(p => p.rating))
-                : 0;
+            let highestRating = 0;
+            for (const song of app.gameDataService.getSongs()) {
+                for (const chartConst of Object.values(song.charts)) {
+                    highestRating = Math.max(highestRating, Math.floor((chartConst + 1) * 1000 + 0.00002));
+                }
+            }
 
             return {
                 status: "OK",
@@ -173,6 +176,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     bestPlays ? await Promise.all(bestPlays.map(
                         async (play) => {
                             const stats = statsMap[play.chartId] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0, maxRating: 0 };
+                            const [prefix, songName, difficulty] = play.chartId.split("/");
+                            const songData = app.gameDataService.getSongData(`${prefix}/${songName}`);
+                            let maxRating = 0;
+                            if (songData && difficulty in songData.charts) {
+                                const chartConst = songData.charts[difficulty as keyof typeof songData.charts];
+                                maxRating = Math.floor((chartConst + 1) * 1000 + 0.00002);
+                            }
 
                             return {
                                 create_time: play.createdAt.getTime() / 1000,
@@ -182,7 +192,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                                 score: play.score,
                                 grade: play.grade,
                                 rating: play.rating,
-                                max_rating: stats.maxRating,
+                                max_rating: maxRating,
 
                                 combo: play.combo,
                                 max_combo: play.maxCombo,

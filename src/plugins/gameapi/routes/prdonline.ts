@@ -40,24 +40,25 @@ const prdonlineRoutes: FastifyPluginAsync = async (app) => {
             latestSeasonPlays.sort((a, b) => b.rating - a.rating);
             otherPlays.sort((a, b) => b.rating - a.rating);
 
-            const topLatestSeasonPlays = latestSeasonPlays.slice(0, 15).map((play, i) => {
+            const topLatestSeasonPlays = latestSeasonPlays.filter((play) => play.chartId.split("/")[2] != "chaotic").slice(0, 15).map((play, i) => {
                 const [prefix, songName, difficulty] = play.chartId.split("/");
                 const parsedDifficulty = app.gameDataService.difficultyStringToNumber(difficulty);
                 const songId = `${prefix}/${songName}`;
                 return { index: i + 1, id: songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
             });
-            const topOtherPlays = otherPlays.slice(0, 35).map((play, i) => {
+            const topOtherPlays = otherPlays.filter((play) => play.chartId.split("/")[2] != "chaotic").slice(0, 35).map((play, i) => {
                 const [prefix, songName, difficulty] = play.chartId.split("/");
                 const parsedDifficulty = app.gameDataService.difficultyStringToNumber(difficulty);
                 const songId = `${prefix}/${songName}`;
                 return { index: i + 1, id: songId, difficulty: parsedDifficulty, score: play.score, rating: play.rating, grade: play.grade };
             });
 
-            const bestPlays = [...topLatestSeasonPlays, ...topOtherPlays];
-
-            const highestRating = bestPlays?.length
-                ? Math.max(...bestPlays.map(p => p.rating))
-                : 0;
+            let highestRating = 0;
+            for (const song of app.gameDataService.getSongs()) {
+                for (const chartConst of Object.values(song.charts)) {
+                    highestRating = Math.max(highestRating, Math.floor((chartConst + 1) * 1000 + 0.00002));
+                }
+            }
 
             return { status: "OK", past: topOtherPlays, now: topLatestSeasonPlays, highest_rating: highestRating };
         }
