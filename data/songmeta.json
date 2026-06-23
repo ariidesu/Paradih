@@ -1,9 +1,62 @@
 {
-    "s/byakurendefaultwinge": {
+    "s/arklight": {
+        "chart": {
+            "massive": {
+                "isPlus": "true",
+                "level": "16"
+            }
+        }
+    },
+    "s/dajiahao": {
+        "chart": {
+            "massive": {
+                "isPlus": "true",
+                "level": "15"
+            }
+        }
+    },
+    "s/gaia": {
+        "chart": {
+            "detected": {
+                "level": "5"
+            },
+            "invaded": {
+                "isPlus": "false",
+                "level": "10"
+            },
+            "massive": {
+                "isPlus": "false",
+                "level": "14"
+            }
+        }
+    },
+    "s/goldtown": {
+        "chart": {
+            "detected": {
+                "level": "5"
+            },
+            "invaded": {
+                "isPlus": "false",
+                "level": "11"
+            },
+            "massive": {
+                "isPlus": "true",
+                "level": "15"
+            }
+        }
+    },
+    "s/quovadis": {
         "chart": {
             "invaded": {
                 "isPlus": "false",
-                "level": "12"
+                "level": "11"
+            }
+        }
+    },
+    "s/umbrella": {
+        "chart": {
+            "detected": {
+                "level": "3"
             }
         }
     }

@@ -740,6 +740,32 @@
         "limitedTime": 0,
         "startTime": 0
     },
+    "side54": {
+        "cost": 80,
+        "moneyType": "ac",
+        "productType": "side",
+        "discount": {
+            "afterDiscount": 0,
+            "beforeDiscount": 0,
+            "discountTime": 0,
+            "enable": false
+        },
+        "limitedTime": 0,
+        "startTime": 0
+    },
+    "side55": {
+        "cost": 80,
+        "moneyType": "ac",
+        "productType": "side",
+        "discount": {
+            "afterDiscount": 0,
+            "beforeDiscount": 0,
+            "discountTime": 0,
+            "enable": false
+        },
+        "limitedTime": 0,
+        "startTime": 0
+    },
     "single01": {
         "cost": 20,
         "moneyType": "ac",
@@ -1143,6 +1169,19 @@
         "limitedTime": 0,
         "startTime": 0
     },
+    "single32": {
+        "cost": 20,
+        "moneyType": "ac",
+        "productType": "single",
+        "discount": {
+            "afterDiscount": 0,
+            "beforeDiscount": 0,
+            "discountTime": 0,
+            "enable": false
+        },
+        "limitedTime": 0,
+        "startTime": 0
+    },
     "skin02": {
         "cost": 100,
         "moneyType": "ac",
@@ -1208,19 +1247,6 @@
         "limitedTime": 0,
         "startTime": 0
     },
-    "skin07": {
-        "cost": 100,
-        "moneyType": "ac",
-        "productType": "skin",
-        "discount": {
-            "afterDiscount": 0,
-            "beforeDiscount": 0,
-            "discountTime": 0,
-            "enable": false
-        },
-        "limitedTime": 1778083200,
-        "startTime": 1772769600
-    },
     "skin08": {
         "cost": 80,
         "moneyType": "ac",
@@ -1272,19 +1298,6 @@
         },
         "limitedTime": 0,
         "startTime": 0
-    },
-    "skin12": {
-        "cost": 100,
-        "moneyType": "ac",
-        "productType": "skin",
-        "discount": {
-            "afterDiscount": 0,
-            "beforeDiscount": 0,
-            "discountTime": 0,
-            "enable": false
-        },
-        "limitedTime": 1778083200,
-        "startTime": 1772769600
     },
     "skin13": {
         "cost": 80,

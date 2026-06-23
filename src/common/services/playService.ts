@@ -92,7 +92,7 @@ export function buildPlayService(app: FastifyInstance) {
                 const songData = app.gameDataService.getSongData(songId);
 
                 if (songData) {
-                    if (songData.version.x >= 4) {
+                    if ((songData.version.x == 4 && songData.version.y >= 8) || songData.version.x > 4) {
                         season.push(play);
                     } else {
                         nonSeason.push(play);
