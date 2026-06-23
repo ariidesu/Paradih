@@ -50,9 +50,9 @@ const data = JSON.parse(fs.readFileSync(rawDataPath, "utf8"));
             composer: song.musician,
             illustrator: song.illustrator,
             version: {
-                x: song.updateVersion.m_X,
-                y: song.updateVersion.m_Y,
-                z: song.updateVersion.m_Z,
+                x: song.updateVersion.x,
+                y: song.updateVersion.y,
+                z: song.updateVersion.z,
             },
             charts: charts,
         };
