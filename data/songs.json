@@ -6165,7 +6165,8 @@
         "charts": {
             "detected": 3,
             "invaded": 9.5,
-            "massive": 15.2
+            "massive": 15.2,
+            "reboot": 15.8
         }
     },
     {
@@ -6548,6 +6549,79 @@
         }
     },
     {
+        "songId": "s/parousia",
+        "title": "Parousia",
+        "bpm": "132-158",
+        "genre": "APOCALYPSIS JOHANNIS",
+        "composer": "xi",
+        "illustrator": "1B",
+        "version": {
+            "x": 4,
+            "y": 9,
+            "z": 1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 12,
+            "massive": 16.2
+        }
+    },
+    {
+        "songId": "s/poppy2026",
+        "title": "Poppy (2026 Remaster)",
+        "bpm": "220",
+        "genre": "Hardcore",
+        "composer": "Columba (Daily vs. Roon_kun)",
+        "illustrator": "雷欧@LeoO",
+        "version": {
+            "x": 4,
+            "y": 9,
+            "z": 1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 12,
+            "massive": 15.8
+        }
+    },
+    {
+        "songId": "s/glassyheart",
+        "title": "GlassyHeart.",
+        "bpm": "160",
+        "genre": "Botanica",
+        "composer": "ILusMin feat. Bob Hou",
+        "illustrator": "M.Ghost",
+        "version": {
+            "x": 4,
+            "y": 9,
+            "z": 1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 10.5,
+            "massive": 14.6,
+            "reboot": 16.6
+        }
+    },
+    {
+        "songId": "s/trickortreat",
+        "title": "Trick or treat",
+        "bpm": "175",
+        "genre": "CORE-FULLON",
+        "composer": "Shiroi-Ice/HanamaRuri/ariiol",
+        "illustrator": "BA",
+        "version": {
+            "x": 4,
+            "y": 9,
+            "z": 1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 13,
+            "massive": 16.3
+        }
+    },
+    {
         "songId": "s/classmemories",
         "title": "Class Memories",
         "bpm": "145",
@@ -6893,6 +6967,24 @@
         }
     },
     {
+        "songId": "s/cataclysm",
+        "title": "CATACLYSM",
+        "bpm": "214",
+        "genre": "RUIN CORE",
+        "composer": "U-ske feat. ricono",
+        "illustrator": "キドリ",
+        "version": {
+            "x": 4,
+            "y": 9,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 11.5,
+            "massive": 15.4
+        }
+    },
+    {
         "songId": "s/pulsar",
         "title": "Pulsar",
         "bpm": "160",
@@ -6961,7 +7053,8 @@
         "charts": {
             "detected": 5,
             "invaded": 10.5,
-            "massive": 15.1
+            "massive": 15.1,
+            "reboot": 16.4
         }
     },
     {
@@ -7250,6 +7343,24 @@
             "detected": 6,
             "invaded": 12,
             "massive": 16.1
+        }
+    },
+    {
+        "songId": "s/magicalrendastadium",
+        "title": "MAGICAL RENDA STADIUM",
+        "bpm": "175",
+        "genre": "VERTICAL MAGIC",
+        "composer": "ルゼ",
+        "illustrator": "tutidama + retu",
+        "version": {
+            "x": 4,
+            "y": 9,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 12,
+            "massive": 15.8
         }
     },
     {
