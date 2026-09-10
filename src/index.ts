@@ -54,7 +54,7 @@ const ENV_SCHEMA = {
     HOST: {
       type: "string",
       default: "127.0.0.1"
-    }
+    },
     PORT: {
       type: 'number',
       default: 3000
