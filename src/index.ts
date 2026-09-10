@@ -16,6 +16,7 @@ import battleApp from "./plugins/battle";
 declare module 'fastify' {
   interface FastifyInstance {
     config: {
+      HOST: string,
       PORT: number,
       API_PORT: number,
       BATTLE_PORT: number,
@@ -50,6 +51,10 @@ const ENV_SCHEMA = {
   type: 'object',
   required: [ "PORT", "BATTLE_PORT", "TRUST_PROXY", "AES_KEY", "BATTLE_AES_KEY", "MONGODB_URI", "JWT_SECRET", "SMTP_HOST", "SMTP_PORT", "SMTP_USERNAME", "SMTP_PASSWORD", "SMTP_FROM" ],
   properties: {
+    HOST: {
+      type: "string",
+      default: "127.0.0.1"
+    }
     PORT: {
       type: 'number',
       default: 3000
@@ -170,7 +175,7 @@ async function main() {
     gameApiInstance.register(gameApiApp);
     gameApiInstance.listen({
         port: gameApiInstance.config.PORT,
-        host: "0.0.0.0",
+        host: gameApiInstance.config.HOST,
     });
 
     const apiInstance = fastify({ logger: true });
@@ -191,7 +196,7 @@ async function main() {
     apiInstance.register(apiApp);
     apiInstance.listen({
         port: apiInstance.config.API_PORT,
-        host: "0.0.0.0",
+        host: apiInstance.config.HOST,
     });
 
     const battleInstance = fastify({ logger: true });
@@ -212,7 +217,7 @@ async function main() {
     battleInstance.register(battleApp);
     battleInstance.listen({
         port: battleInstance.config.BATTLE_PORT,
-        host: "0.0.0.0",
+        host: battleInstance.config.HOST,
     });
 
     gameApiInstance.playService.recalculateAllRatings().catch(console.error);
