@@ -721,6 +721,97 @@
         }
     },
     {
+        "songId": "s/phasebreak",
+        "title": "PHASEBREAK",
+        "bpm": "185",
+        "genre": "Hard Renaissance",
+        "composer": "Zekk",
+        "illustrator": "31chan",
+        "version": {
+            "x": 4,
+            "y": 10,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 10.5,
+            "massive": 15.8
+        }
+    },
+    {
+        "songId": "s/renegadeparadise",
+        "title": "Renegade Paradise",
+        "bpm": "190",
+        "genre": "Hard Renaissance",
+        "composer": "Reku Mochizuki",
+        "illustrator": "果粲",
+        "version": {
+            "x": 4,
+            "y": 10,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 12.5,
+            "massive": 16.5
+        }
+    },
+    {
+        "songId": "s/canopy",
+        "title": "＊･ﾟcanopy +｡.ﾟ",
+        "bpm": "165",
+        "genre": "Future Bass / Complextro",
+        "composer": "硝酸生菜Synzak",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 10,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 10.5,
+            "massive": 16.2
+        }
+    },
+    {
+        "songId": "s/ternion",
+        "title": "Ternion",
+        "bpm": "60-162",
+        "genre": "⟁",
+        "composer": "黒皇帝 × Supire × rN feat. Sennzai",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 10,
+            "z": -1
+        },
+        "charts": {
+            "detected": 8,
+            "invaded": 14,
+            "massive": 16.8
+        }
+    },
+    {
+        "songId": "s/noxsilva",
+        "title": "Nox Silva",
+        "bpm": "180",
+        "genre": "Nox Silva",
+        "composer": "Nox Silva",
+        "illustrator": "画纱",
+        "version": {
+            "x": 4,
+            "y": 10,
+            "z": -1
+        },
+        "charts": {
+            "detected": 8,
+            "invaded": 14.2,
+            "massive": 16.7,
+            "reboot": 17.2
+        }
+    },
+    {
         "songId": "s/umbrella",
         "title": "雨伞 (Umbrella)",
         "bpm": "120",
@@ -5966,6 +6057,24 @@
             "detected": 7,
             "invaded": 13.8,
             "massive": 16.6
+        }
+    },
+    {
+        "songId": "s/tothe4pex",
+        "title": "TO THE 4PEX",
+        "bpm": "180",
+        "genre": "Let The Game Begin",
+        "composer": "Reku Mochizuki",
+        "illustrator": "Kago",
+        "version": {
+            "x": 4,
+            "y": 10,
+            "z": 1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 11.5,
+            "massive": 15.4
         }
     },
     {
