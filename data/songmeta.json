@@ -8,5 +8,189 @@
                 "noter": "The Platinum -COP 2026-"
             }
         }
+    },
+    "s/bang": {
+        "chart": {
+            "detected": {
+                "level": "3",
+                "noter": "lino"
+            },
+            "invaded": {
+                "level": "8",
+                "noter": "lino"
+            },
+            "massive": {
+                "isPlus": "true",
+                "level": "14",
+                "noter": "lino"
+            }
+        }
+    },
+    "s/beyondyourwords": {
+        "chart": {
+            "detected": {
+                "level": "5",
+                "noter": "あめもりさえ //rev. SR"
+            },
+            "invaded": {
+                "level": "10",
+                "noter": "あめもりさえ"
+            },
+            "massive": {
+                "level": "15",
+                "noter": "あめもりさえ //rev. SR"
+            }
+        }
+    },
+    "s/cryogenic": {
+        "chart": {
+            "detected": {
+                "level": "3",
+                "noter": "PANDA×PENGUiN △▽絶対零度へ▽△"
+            },
+            "invaded": {
+                "level": "9",
+                "noter": "PANDA×PENGUiN △▽絶対零度へ▽△"
+            },
+            "massive": {
+                "level": "15",
+                "noter": "PANDA×PENGUiN △▽絶対零度へ▽△"
+            }
+        }
+    },
+    "s/dbirth": {
+        "chart": {
+            "detected": {
+                "level": "6",
+                "noter": "ScrewCat"
+            },
+            "invaded": {
+                "level": "12",
+                "noter": "Sileary"
+            },
+            "massive": {
+                "level": "16",
+                "noter": "Sileary vs ScrewCat"
+            }
+        }
+    },
+    "s/lingeringsouls": {
+        "chart": {
+            "detected": {
+                "level": "2",
+                "noter": "ScendRez"
+            },
+            "invaded": {
+                "level": "11",
+                "noter": "mitanashi"
+            },
+            "massive": {
+                "isPlus": "true",
+                "level": "15",
+                "noter": "SRMT -Improvisé-"
+            }
+        }
+    },
+    "s/noctiluca": {
+        "chart": {
+            "detected": {
+                "level": "7",
+                "noter": "Sileary"
+            },
+            "invaded": {
+                "isPlus": "true",
+                "level": "13",
+                "noter": "ScendRez"
+            },
+            "massive": {
+                "isPlus": "true",
+                "level": "16",
+                "noter": "ScendRez & Sileary"
+            }
+        }
+    },
+    "s/oblivio": {
+        "chart": {
+            "detected": {
+                "level": "4",
+                "noter": "TangScend"
+            },
+            "invaded": {
+                "level": "10",
+                "noter": "TangScend"
+            },
+            "massive": {
+                "level": "15",
+                "noter": "TangScend"
+            }
+        }
+    },
+    "s/oceanus": {
+        "chart": {
+            "detected": {
+                "level": "6",
+                "noter": "Francesca //rev. SR"
+            },
+            "invaded": {
+                "level": "12",
+                "noter": "Francesca"
+            },
+            "massive": {
+                "level": "16",
+                "noter": "Francesca"
+            }
+        }
+    },
+    "s/tuneyourbasstoours": {
+        "chart": {
+            "detected": {
+                "level": "5",
+                "noter": "AXERA"
+            },
+            "invaded": {
+                "level": "11",
+                "noter": "AXERA"
+            },
+            "massive": {
+                "isPlus": "true",
+                "level": "15",
+                "noter": "AXERA"
+            }
+        }
+    },
+    "s/veritas": {
+        "chart": {
+            "detected": {
+                "level": "4",
+                "noter": "lino"
+            },
+            "invaded": {
+                "level": "10",
+                "noter": "lino"
+            },
+            "massive": {
+                "isPlus": "true",
+                "level": "14",
+                "noter": "lino"
+            }
+        }
+    },
+    "s/worlddevotion": {
+        "chart": {
+            "detected": {
+                "level": "8",
+                "noter": "Alter-X as \"世界への献身\""
+            },
+            "invaded": {
+                "isPlus": "true",
+                "level": "13",
+                "noter": "Alter-X as \"世界への献身\""
+            },
+            "massive": {
+                "isPlus": "true",
+                "level": "16",
+                "noter": "Alter-X as \"世界への献身\""
+            }
+        }
     }
 }
