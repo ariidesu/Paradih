@@ -54,17 +54,23 @@ export default fp<{ aesKey: Buffer }>(async (fastify, opts) => {
     });
 
     fastify.addHook("onSend", async (request, reply, payload) => {
-        if (request.routeOptions.config?.encrypted) {
-            try {
-                let stringPayload: string;
-                if (Buffer.isBuffer(payload)) {
-                    stringPayload = payload.toString("utf8");
-                } else if (typeof payload !== "string") {
-                    stringPayload = JSON.stringify(payload);
-                } else stringPayload = payload as string;
+        reply.header("cache-control", "private, no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0, no-transform");
+        reply.header("pragma", "no-cache");
+        reply.header("expires", "0");
+        reply.header("surrogate-control", "no-store");
 
-                return encrypt(stringPayload, AES_KEY);
-            } catch (e) {}
+        if (request.routeOptions.config?.encrypted) {
+            let stringPayload: string;
+            if (Buffer.isBuffer(payload)) {
+                stringPayload = payload.toString("utf8");
+            } else if (typeof payload !== "string") {
+                stringPayload = JSON.stringify(payload);
+            } else stringPayload = payload as string;
+
+            const encryptedPayload = encrypt(stringPayload, AES_KEY);
+            reply.removeHeader("content-encoding");
+            reply.removeHeader("content-length");
+            return encryptedPayload;
         }
         return payload;
     });
