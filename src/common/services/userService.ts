@@ -117,7 +117,12 @@ export function buildUserService(app: FastifyInstance) {
             user: UserDoc,
             itemType: "titles" | "backgrounds" | "purchases",
             itemId: string,
+            isNew = true,
         ) {
+
+            if (user.owned[itemType].some((item) => item.id === itemId)) {
+                return;
+            }
             const result = await User.findByIdAndUpdate(
                 user._id,
                 {
@@ -125,7 +130,7 @@ export function buildUserService(app: FastifyInstance) {
                         [`owned.${itemType}`]: {
                             id: itemId,
                             acquiredAt: new Date(),
-                            new: true,
+                            new: isNew,
                         },
                     },
                 },
@@ -146,17 +151,17 @@ export function buildUserService(app: FastifyInstance) {
                 { _id: user._id, [`owned.${itemType}.id`]: itemId },
                 {
                     $set: {
-                        [`owned.${itemType}.$.new`]: false,
+                        [`owned.${itemType}.$[item].new`]: false,
                     },
                 },
+                { arrayFilters: [{ "item.id": itemId }] },
             );
 
             if (result.modifiedCount > 0) {
-                const item = user.owned[itemType].find(
-                    (i) => i.id === itemId,
-                );
-                if (item) {
+                for (const item of user.owned[itemType]) {
+                    if (item.id === itemId) {
                     item.new = false;
+                    }
                 }
             }
         },

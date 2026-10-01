@@ -75,8 +75,11 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             await app.playService.updatePlayerRating(request.user);
 
             // Check if existing user don't own the item (bug)
-            if (!request.user.owned.backgrounds.find((b) => b.id == "BGDefault")) {
-                await app.userService.addOwnedItem(request.user, "backgrounds", "BGDefault");
+            const defaultBackground = request.user.owned.backgrounds.find((b) => b.id == "BGDefault");
+            if (!defaultBackground) {
+                await app.userService.addOwnedItem(request.user, "backgrounds", "BGDefault", false);
+            } else if (defaultBackground.new) {
+                await app.userService.setHasReadOwnedItem(request.user, "backgrounds", "BGDefault");
             }
 
             const purchasesList: any = {};

@@ -65,7 +65,7 @@ const UserSchema = new Schema(
                 { _id: false },
             ),
             required: true,
-            default: { titles: [], backgrounds: [ { id: "BGDefault", acquiredAt: new Date(), new: true } ], purchases: [] },
+            default: { titles: [], backgrounds: [ { id: "BGDefault", acquiredAt: new Date(), new: false } ], purchases: [] },
         },
         mailsRead: [{ type: String }],
         mailsClaimed: [{ type: String }],
