@@ -24,8 +24,9 @@ const RankResultSchema = new Schema(
 
 const UserSchema = new Schema(
     {
-        username: { type: String, required: true },
+        username: { type: String, default: "" },
         usernameCode: { type: Number, required: true },
+        hasSetUsername: { type: Boolean, default: true },
         email: { type: String, required: true, unique: true },
         passwordHash: { type: String, required: true },
 

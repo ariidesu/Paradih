@@ -17,14 +17,47 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 status: "OK",
 
                 api_min_ver: 78,
-                first_login: false,
-                last_device_id: "",
+                first_login: !request.user.hasSetUsername,
+                last_device_id: (request.headers["x-device-id"] as string) || "",
                 latest_ver: 78,
 
                 battle_token: battleToken,
                 web_token: "",
             };
         }
+    );
+
+    app.post(
+        "/set_name",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { name } = request.body as { name?: string };
+            if (typeof name !== "string") {
+                return { status: "failed", reason: 1 };
+            }
+
+            const username = name.trim();
+            if (username.length === 0) {
+                return { status: "failed", reason: 1 };
+            }
+            if (request.user.hasSetUsername) {
+                return { status: "failed", reason: 4 };
+            }
+
+            await app.userService.setInitialUsername(request.user, username);
+            return {
+                status: "OK",
+                username: request.user.username,
+                username_id: request.user.usernameCode.toString(),
+            };
+        },
     );
 
     app.get(

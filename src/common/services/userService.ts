@@ -13,9 +13,8 @@ export function buildUserService(app: FastifyInstance) {
         async createUser(email: string, password: string): Promise<UserDoc> {
             const passwordHash = await this.hashPassword(password);
 
-            // TODO: Better code choosing?
             let selectedCode = 1;
-            const usedCodes = await User.find({ username: "Para" })
+            const usedCodes = await User.find({ username: "" })
                 .select("usernameCode")
                 .sort({ usernameCode: 1 });
 
@@ -28,8 +27,9 @@ export function buildUserService(app: FastifyInstance) {
             }
 
             return await User.create({
-                username: "Para",
+                username: "",
                 usernameCode: selectedCode,
+                hasSetUsername: false,
                 email,
                 passwordHash,
 
@@ -39,6 +39,38 @@ export function buildUserService(app: FastifyInstance) {
                     navi: app.config.CONFIG_DEFAULT_NAVI,
                 },
             });
+        },
+
+        async setInitialUsername(user: UserDoc, username: string) {
+            let selectedCode = 1;
+            const usedCodes = await User.find({ username })
+                .select("usernameCode")
+                .sort({ usernameCode: 1 });
+
+            for (const existingUser of usedCodes) {
+                if (existingUser.usernameCode == selectedCode) {
+                    selectedCode++;
+                } else if (existingUser.usernameCode > selectedCode) {
+                    break;
+                }
+            }
+
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                {
+                    $set: {
+                        username,
+                        usernameCode: selectedCode,
+                        hasSetUsername: true,
+                    },
+                },
+                { new: true },
+            );
+            if (result) {
+                user.username = result.username;
+                user.usernameCode = result.usernameCode;
+                user.hasSetUsername = result.hasSetUsername;
+            }
         },
 
         async findByEmail(email: string): Promise<UserDoc | null> {
