@@ -721,6 +721,79 @@
         }
     },
     {
+        "songId": "s/beyondthetimeline",
+        "title": "タイムラインの向こう",
+        "bpm": "173",
+        "genre": "Hybrid Pop",
+        "composer": "SADA 2Futureanthem feat. せいら",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 4,
+            "invaded": 10.5,
+            "massive": 14.2,
+            "reboot": 15
+        }
+    },
+    {
+        "songId": "s/singaloud",
+        "title": "SING A LOUD",
+        "bpm": "170",
+        "genre": "ROCK",
+        "composer": "Tatsh feat. 佐伯伊織",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 11,
+            "massive": 14.7
+        }
+    },
+    {
+        "songId": "s/yumenomamono",
+        "title": "ゆめのまもの",
+        "bpm": "190",
+        "genre": "DREAM CHASER",
+        "composer": "ルゼ × ゆめゆめ feat. 甘暦 × 小宮真央",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 12.5,
+            "massive": 15.9
+        }
+    },
+    {
+        "songId": "s/shishunkiaisyndrome",
+        "title": "思春期AI Syndrome",
+        "bpm": "182",
+        "genre": "Hyper Idol Pop",
+        "composer": "technoplanet feat. 木下珠子",
+        "illustrator": "U11",
+        "version": {
+            "x": 4,
+            "y": 12,
+            "z": -1
+        },
+        "charts": {
+            "detected": 6,
+            "invaded": 13.4,
+            "massive": 16.5
+        }
+    },
+    {
         "songId": "s/bang",
         "title": "BANG!",
         "bpm": "128",
@@ -811,24 +884,6 @@
         }
     },
     {
-        "songId": "s/beyondyourwords",
-        "title": "Beyond Your Words",
-        "bpm": "178",
-        "genre": "Orchestral Uptempo",
-        "composer": "Sad Keyboard Guy feat. vally.exe",
-        "illustrator": "usi",
-        "version": {
-            "x": 4,
-            "y": 11,
-            "z": -1
-        },
-        "charts": {
-            "detected": 5,
-            "invaded": 10.5,
-            "massive": 15.5
-        }
-    },
-    {
         "songId": "s/veritas",
         "title": "Veritas",
         "bpm": "135",
@@ -844,6 +899,24 @@
             "detected": 4,
             "invaded": 10,
             "massive": 14.9
+        }
+    },
+    {
+        "songId": "s/beyondyourwords",
+        "title": "Beyond Your Words",
+        "bpm": "178",
+        "genre": "Orchestral Uptempo",
+        "composer": "Sad Keyboard Guy feat. vally.exe",
+        "illustrator": "usi",
+        "version": {
+            "x": 4,
+            "y": 11,
+            "z": -1
+        },
+        "charts": {
+            "detected": 5,
+            "invaded": 10.5,
+            "massive": 15.5
         }
     },
     {
@@ -5010,7 +5083,8 @@
         "charts": {
             "detected": 6,
             "invaded": 11,
-            "massive": 16.1
+            "massive": 16.1,
+            "reboot": 16.4
         }
     },
     {
@@ -6309,7 +6383,8 @@
         "charts": {
             "detected": 5,
             "invaded": 9,
-            "massive": 12.5
+            "massive": 12.5,
+            "reboot": 15.3
         }
     },
     {

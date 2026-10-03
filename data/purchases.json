@@ -801,6 +801,19 @@
         "limitedTime": 0,
         "startTime": 0
     },
+    "side59": {
+        "cost": 80,
+        "moneyType": "ac",
+        "productType": "main",
+        "discount": {
+            "afterDiscount": 0,
+            "beforeDiscount": 0,
+            "discountTime": 0,
+            "enable": false
+        },
+        "limitedTime": 0,
+        "startTime": 0
+    },
     "single01": {
         "cost": 20,
         "moneyType": "ac",
@@ -1269,19 +1282,6 @@
         "limitedTime": 0,
         "startTime": 0
     },
-    "skin01": {
-        "cost": 100,
-        "moneyType": "ac",
-        "productType": "single",
-        "discount": {
-            "afterDiscount": 0,
-            "beforeDiscount": 0,
-            "discountTime": 0,
-            "enable": false
-        },
-        "limitedTime": 1789919940,
-        "startTime": 1784260800
-    },
     "skin02": {
         "cost": 100,
         "moneyType": "ac",
@@ -1486,6 +1486,19 @@
             "beforeDiscount": 0,
             "discountTime": 0,
             "enable": false
+        },
+        "limitedTime": 0,
+        "startTime": 0
+    },
+    "skin21": {
+        "cost": 80,
+        "moneyType": "ac",
+        "productType": "single",
+        "discount": {
+            "afterDiscount": 80,
+            "beforeDiscount": 100,
+            "discountTime": 1794542400,
+            "enable": true
         },
         "limitedTime": 0,
         "startTime": 0
