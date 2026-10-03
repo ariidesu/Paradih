@@ -64,6 +64,37 @@ const unauthenticatedUserRoutes: FastifyPluginAsync = async (app) => {
     );
 
     app.post(
+        "/migration",
+        async (request) => {
+            const { email, password } = request.body as {
+                email?: string;
+                password?: string;
+            };
+            if (typeof email !== "string" || typeof password !== "string") {
+                return { status: "failed", code: "INVALID_REQUEST" };
+            }
+
+            const user = await app.authService.verifyPassword(email, password);
+            if (!user) {
+                return { status: "failed", code: "MIGRATION_FAILED" };
+            }
+
+            const authToken = app.authService.issueAuthToken(
+                user._id as string,
+                user.email,
+            );
+            return {
+                status: "success",
+                code: "OK",
+                data: {
+                    authToken,
+                    sure_migrated: true,
+                },
+            };
+        },
+    );
+
+    app.post(
         "/login/password",
         async (request) => {
             const { email, password } = request.body as { email: string, verifyCode: string, password: string };

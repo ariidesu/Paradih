@@ -1,6 +1,95 @@
 import { FastifyPluginAsync } from "fastify";
 
+interface RankQueryInfo {
+    id: string;
+    clear_state: number;
+    fc_ad_state: number;
+    get_reward_id_list: string[];
+    max_view_chart_count: number;
+    pass_star_count: number;
+    play_cost: number;
+    result_total_score: number;
+}
+
+interface ContestInfo {
+    contest_id: string;
+    stage: number;
+}
+
+interface RankListEntry {
+    is_new: boolean;
+    is_time_limited: boolean;
+    id: string;
+    level: number;
+    type: number;
+    diff_type: number;
+    until_time: number;
+    play_cost_type: number;
+    max_hp: number;
+    borders: [number, number];
+    star_borders: [number, number];
+    chart_list: string[];
+    challenge_reward: {
+        id: string;
+        condition_params: string[];
+        reward_params: string[];
+    }[];
+    unlock_tag: Record<string, string[]>;
+    gauge_type: number;
+    decrypted: number;
+    received: number;
+    lost: number;
+}
+
 const rankRoutes: FastifyPluginAsync = async (app) => {
+    app.get(
+        "/special_rank_remain",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            return {
+                status: "ok",
+                data: [
+                    "special_megarex_02",
+                    "special_megarex_01",
+                    "special_lanota_02",
+                    "special_lanota_01",
+                    "special_finding_hoppe_02",
+                    "special_finding_hoppe_01",
+                    "special_voez_02",
+                    "special_voez_01",
+                    "special_cytus2_02",
+                    "special_cytus2_01",
+                    "special_wacca_02",
+                    "special_wacca_01",
+                    "special_megarex2_02",
+                    "special_megarex2_01",
+                ].map((id) => ({
+                    id,
+                    is_time_limited: false,
+                    until_time: 0,
+                })).concat([
+                    {
+                        id: "special_diversesystem_02",
+                        is_time_limited: true,
+                        until_time: 1792728000,
+                    },
+                    {
+                        id: "special_diversesystem_01",
+                        is_time_limited: true,
+                        until_time: 1792728000,
+                    },
+                ]),
+            };
+        },
+    );
+
     app.get(
         "/list",
         {
@@ -12,7 +101,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const data: any[] = [];
+            const data: RankListEntry[] = [];
             for (const item of app.gameDataService.getRanks()) {
                 let playCostType = 1;
                 if (item.playCostType == "dp") {
@@ -26,9 +115,10 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                     id: item.id,
                     level: item.level,
                     type: item.type,
+                    diff_type: item.id.endsWith("_01") ? 2 : item.id.endsWith("_02") ? 1 : 0,
                     until_time: item.untilTime,
                     play_cost_type: playCostType,
-                    cop_mark: false,
+                    max_hp: 1000000,
 
                     borders: item.borders,
                     star_borders: item.starBorders,
@@ -73,45 +163,55 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const { rank_id_list } = request.body as { rank_id_list: string[] };
+            const body = request.body as { rank_id_list?: unknown } | undefined;
+            const rankIdList = body?.rank_id_list;
+            if (
+                !Array.isArray(rankIdList) ||
+                !rankIdList.every((rankId): rankId is string => typeof rankId === "string")
+            ) {
+                return { status: "error", msg: "Missing info" };
+            }
 
-            const data: any[] = request.user.ranksResult.filter((item) => rank_id_list.length == 0 || rank_id_list.includes(item.id)).map((item) => {
+            if (rankIdList.length === 0) {
                 return {
-                    id: item.id,
-                    clear_state: item.clearState,
-                    fc_ad_state: item.fcAdState,
-                    get_reward_id_list: item.claimedRewards,
-                    is_passed: item.clearState == 2 ? true : null, // Original API returned null for false, so just a precaution.
-                    max_view_chart_count: item.maxViewChartCount,
-                    pass_star_count: item.passedStars,
-                    play_cost:
-                        app.gameDataService.getRankData(item.id)?.cost ?? 0,
-                    result_total_score: item.totalScore,
+                    status: "ok",
+                    data: [] as RankQueryInfo[],
+                    contest_info: {
+                        contest_id: "",
+                        stage: 1,
+                    } satisfies ContestInfo,
+                };
+            }
+
+            const knownRankIds = new Set(app.gameDataService.getRanks().map((rank) => rank.id));
+            if (rankIdList.some((rankId) => !knownRankIds.has(rankId))) {
+                return { status: "error", msg: "Rank not found" };
+            }
+
+            const data: RankQueryInfo[] = rankIdList.map((rankId) => {
+                const result = request.user!.ranksResult.find((item) => item.id === rankId);
+                const rankData = app.gameDataService.getRankData(rankId)!;
+
+                return {
+                    id: rankId,
+                    clear_state: result?.clearState ?? 0,
+                    fc_ad_state: result?.fcAdState ?? 0,
+                    get_reward_id_list: result?.claimedRewards ?? [],
+                    max_view_chart_count: result?.maxViewChartCount ?? 0,
+                    pass_star_count: result?.passedStars ?? 0,
+                    play_cost: rankData.cost,
+                    result_total_score: result?.totalScore ?? 0,
                 };
             });
 
-            // Add default entries if they don't exist
-            const allRankIds = app.gameDataService.getRanks().map((r) => r.id);
-            for (const rankId of allRankIds) {
-                if (!data.some((item) => item && item.id === rankId) && rank_id_list.includes(rankId)) {
-                    const rankData = app.gameDataService.getRankData(rankId);
-                    if (rankData) {
-                        data.push({
-                            id: rankId,
-                            clear_state: 0,
-                            fc_ad_state: 0,
-                            get_reward_id_list: [],
-                            is_passed: null,
-                            max_view_chart_count: 0,
-                            pass_star_count: 0,
-                            play_cost: rankData.cost,
-                            result_total_score: 0,
-                        });
-                    }
-                }
-            }
-
-            return { status: "ok", data };
+            return {
+                status: "ok",
+                data,
+                contest_info: {
+                    contest_id: "",
+                    stage: 1,
+                } satisfies ContestInfo,
+            };
         },
     );
 
@@ -126,9 +226,16 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const { rank_id } = request.body as { rank_id: string };
+            const body = request.body as { rank_id?: unknown } | undefined;
+            if (typeof body?.rank_id !== "string") {
+                return { status: "error", msg: "Missing info" };
+            }
+            const rank_id = body.rank_id;
             const rankData = app.gameDataService.getRankData(rank_id);
-            if (!rankData || rankData.cost > request.user.eco[rankData.playCostType]) {
+            if (!rankData) {
+                return { status: "error", msg: "Rank not found" };
+            }
+            if (rankData.cost > request.user.eco[rankData.playCostType]) {
                 return { status: "failed" };
             }
 
@@ -142,7 +249,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             // Regardless of if there exists a session already
             // Shitty behavior, but works for our case.
             // We will just treat the existing session as finished.
-            app.userService.setRankSession(
+            await app.userService.setRankSession(
                 request.user,
                 newSession._id as string,
             );
@@ -161,7 +268,30 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
             if (!request.user) {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
+            const body = request.body as {
+                play_id?: unknown;
+                is_passed?: unknown;
+                pass_star_count?: unknown;
+                get_reward_list?: unknown;
+                result_id_list?: unknown;
+            } | undefined;
+            if (
+                typeof body?.play_id !== "string" ||
+                typeof body?.is_passed !== "boolean" ||
+                typeof body.pass_star_count !== "number" ||
+                !Number.isFinite(body.pass_star_count) ||
+                !Array.isArray(body.get_reward_list) ||
+                !body.get_reward_list.every((id): id is string => typeof id === "string") ||
+                !Array.isArray(body.result_id_list) ||
+                !body.result_id_list.every((id): id is string => typeof id === "string")
+            ) {
+                return { status: "error", msg: "Missing info" };
+            }
+            const playId = body.play_id;
             if (request.user.currentRankSession == "") {
+                return { status: "failed" };
+            }
+            if (playId !== request.user.currentRankSession) {
                 return { status: "failed" };
             }
 
@@ -170,12 +300,7 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 pass_star_count,
                 get_reward_list,
                 result_id_list,
-            } = request.body as {
-                is_passed: boolean;
-                pass_star_count: number;
-                get_reward_list: string[];
-                result_id_list: string[];
-            };
+            } = body;
 
             const playData =
                 await app.rankPlayService.getCurrentRankPlaySession(
@@ -264,19 +389,6 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 fcAdState = 1;
             }
 
-            let maxClear = 0;
-            for (const result of request.user.ranksResult) {
-                if (result.clearState == 2 && result.id.startsWith("common_season02_")) {
-                    try {
-                        const suffix = parseInt(result.id.split("_").pop() || "0");
-                        maxClear = Math.max(maxClear, suffix);
-                    } catch (_) {
-                    }
-                }
-            }
-
-            await app.userService.updateMaxClearedCommonChallenge(request.user, maxClear);
-
             await app.userService.setRankResult(
                 request.user,
                 playData.rankId,
@@ -287,6 +399,18 @@ const rankRoutes: FastifyPluginAsync = async (app) => {
                 maxViewChartCount,
                 claimedRewards,
             );
+
+            let maxClear = 0;
+            for (const result of request.user.ranksResult) {
+                if (result.clearState == 2 && result.id.startsWith("common_season02_")) {
+                    const suffix = Number.parseInt(result.id.split("_").pop() || "0", 10);
+                    if (Number.isFinite(suffix)) {
+                        maxClear = Math.max(maxClear, suffix);
+                    }
+                }
+            }
+
+            await app.userService.updateMaxClearedCommonChallenge(request.user, maxClear);
             await app.userService.setRankSession(request.user, "");
 
             const newResult = await app.userService.findRankResultById(request.user, playData.rankId);

@@ -8,6 +8,7 @@ import { buildUserSaveService } from "../services/userSaveService";
 import { buildPlayService } from "../services/playService";
 import { buildGameDataService } from "../services/gameDataService";
 import { buildRankPlayService } from "../services/rankPlayService";
+import { buildAnnouncementService } from "../services/announcementService";
 
 declare module "fastify" {
     interface FastifyInstance {
@@ -18,6 +19,7 @@ declare module "fastify" {
         playService: ReturnType<typeof buildPlayService>;
         gameDataService: ReturnType<typeof buildGameDataService>;
         rankPlayService: ReturnType<typeof buildRankPlayService>;
+        announcementService: ReturnType<typeof buildAnnouncementService>;
     }
 }
 
@@ -29,6 +31,7 @@ const servicesPlugin: FastifyPluginAsync = async (fastify) => {
     fastify.decorate("playService", buildPlayService(fastify));
     fastify.decorate("gameDataService", buildGameDataService(fastify));
     fastify.decorate("rankPlayService", buildRankPlayService(fastify));
+    fastify.decorate("announcementService", buildAnnouncementService(fastify));
 };
 
 export default fp(servicesPlugin);

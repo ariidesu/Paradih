@@ -119,10 +119,10 @@ export function buildUserService(app: FastifyInstance) {
             itemId: string,
             isNew = true,
         ) {
-
             if (user.owned[itemType].some((item) => item.id === itemId)) {
                 return;
             }
+
             const result = await User.findByIdAndUpdate(
                 user._id,
                 {
@@ -160,7 +160,7 @@ export function buildUserService(app: FastifyInstance) {
             if (result.modifiedCount > 0) {
                 for (const item of user.owned[itemType]) {
                     if (item.id === itemId) {
-                    item.new = false;
+                        item.new = false;
                     }
                 }
             }
@@ -207,6 +207,53 @@ export function buildUserService(app: FastifyInstance) {
             }
         },
 
+        async setMailFavorite(user: UserDoc, mailId: string, favorite: boolean) {
+            const update = favorite
+                ? { $addToSet: { mailsFavorite: mailId } }
+                : { $pull: { mailsFavorite: mailId } };
+            const result = await User.findByIdAndUpdate(user._id, update, { new: true });
+            if (result) {
+                user.mailsFavorite = result.mailsFavorite;
+            }
+        },
+
+        async deleteMail(user: UserDoc, mailId: string) {
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                { $addToSet: { mailsDeleted: mailId } },
+                { new: true },
+            );
+            if (result) {
+                user.mailsDeleted = result.mailsDeleted;
+            }
+        },
+
+        async deleteAllMails(user: UserDoc, mailIds: string[]) {
+            if (mailIds.length === 0) {
+                return;
+            }
+
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                { $addToSet: { mailsDeleted: { $each: mailIds } } },
+                { new: true },
+            );
+            if (result) {
+                user.mailsDeleted = result.mailsDeleted;
+            }
+        },
+
+        async readAnnouncement(user: UserDoc, announcementId: string) {
+            const result = await User.findByIdAndUpdate(
+                user._id,
+                { $addToSet: { announcementsRead: announcementId } },
+                { new: true },
+            );
+            if (result) {
+                user.announcementsRead = result.announcementsRead;
+            }
+        },
+
         async changePassword(user: UserDoc, password: string) {
             const hashedPassword = await this.hashPassword(password);
             const result = await User.findByIdAndUpdate(
@@ -223,16 +270,19 @@ export function buildUserService(app: FastifyInstance) {
             }
         },
 
-        async setRankSession(user: UserDoc, rankId: string) {
-            await User.findByIdAndUpdate(
+        async setRankSession(user: UserDoc, sessionId: string) {
+            const result = await User.findByIdAndUpdate(
                 user._id,
                 {
                     $set: {
-                        currentRankSession: rankId,
+                        currentRankSession: sessionId,
                     },
                 },
                 { new: true },
             );
+            if (result) {
+                user.currentRankSession = result.currentRankSession;
+            }
         },
 
         findRankResultById(user: UserDoc, rankId: string) {

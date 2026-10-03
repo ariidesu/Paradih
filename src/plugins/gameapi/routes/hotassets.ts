@@ -1,11 +1,19 @@
 import { FastifyPluginAsync } from "fastify";
 
+interface PlatformParams {
+    platform?: string;
+}
+
+interface AssetParams extends PlatformParams {
+    "*": string;
+}
+
 const serverRoutes: FastifyPluginAsync = async (app) => {
     // NOTE: These three doesn't exist in the actual server lol
     app.get(
         "/download_catalog/:platform",
         async (request, reply) => {
-            const platform = (request.params as any).platform?.toLowerCase();
+            const platform = (request.params as PlatformParams).platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
                 return { status: "failed", code: "INVALID_PLATFORM" };
@@ -17,7 +25,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
     app.get(
         "/download_catalog_checksum/:platform",
         async (request, reply) => {
-            const platform = (request.params as any).platform?.toLowerCase();
+            const platform = (request.params as PlatformParams).platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
                 return { status: "failed", code: "INVALID_PLATFORM" };
@@ -29,12 +37,13 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
     app.get(
         "/download_asset/:platform/*",
         async (request, reply) => {
-            const platform = (request.params as any).platform?.toLowerCase();
+            const params = request.params as AssetParams;
+            const platform = params.platform?.toLowerCase();
             if (platform !== "ios" && platform !== "android") {
                 reply.status(400);
                 return { status: "failed", code: "INVALID_PLATFORM" };
             }
-            const assetPath = (request.params as any)["*"];
+            const assetPath = params["*"];
             if (!app.gameDataService.assetExists(platform, assetPath)) {
                 reply.status(404);
                 return "";

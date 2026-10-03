@@ -33,6 +33,12 @@ const prdonlineRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
+            const now = Math.floor(Date.now() / 1000);
+            const paradigmOnlineActive =
+                app.config.PARADIGM_ONLINE_ENABLED &&
+                (app.config.PARADIGM_ONLINE_FORCE_ACTIVE ||
+                    (request.user.prdOnline && request.user.prdOnlineTime > now));
+
             const { season: latestSeasonPlays, nonSeason: otherPlays } = await app.playService.getBestPlaysBySeason(request.user);
             latestSeasonPlays.sort((a, b) => b.rating - a.rating);
             otherPlays.sort((a, b) => b.rating - a.rating);
@@ -60,7 +66,12 @@ const prdonlineRoutes: FastifyPluginAsync = async (app) => {
                 }
             }
 
-            return { status: "OK", past: topOtherPlays, now: topLatestSeasonPlays, highest_rating: highestRating };
+            return {
+                status: "OK",
+                past: paradigmOnlineActive ? topOtherPlays : [],
+                now: paradigmOnlineActive ? topLatestSeasonPlays : [],
+                highest_rating: highestRating,
+            };
         }
     );
 
@@ -75,11 +86,15 @@ const prdonlineRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const { gear } = request.body as { gear: number };
+            const body = request.body as { gear?: unknown } | undefined;
+            if (typeof body?.gear !== "number" || !Number.isFinite(body.gear)) {
+                return { status: "error", msg: "Missing info" };
+            }
+            const gear = body.gear;
 
             const tier = app.gameDataService.getPrdOnlinePurchases().find(p => p.gear === gear);
             if (!tier) {
-                return { status: "failed" };
+                return { status: "error", msg: "Gear not found" };
             }
             if (request.user.eco.ac < tier.price) {
                 return { status: "failed" };

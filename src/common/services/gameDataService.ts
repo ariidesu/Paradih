@@ -81,7 +81,7 @@ interface RankData {
             lost: number;
         };
     };
-    unlockTag: string[];
+    unlockTag: Record<string, string[]>;
 }
 
 interface BattleData {
@@ -95,6 +95,16 @@ interface BattleData {
         start: string;
         end: string;
     }[];
+}
+
+interface AnnouncementData {
+    id: string;
+    level: number;
+    title: string;
+    content: string;
+    sendTime: number;
+    updateTime: number;
+    link: { addr: string; text: string }[];
 }
 
 interface SongMetaData  {
@@ -113,6 +123,7 @@ export interface GameData {
     songs: SongData[];
     ranks: RankData[];
     battleData: BattleData;
+    announcements: AnnouncementData[];
     songMeta: SongMetaData;
     translation: TranslationData;
     prdOnlinePurchases: PrdOnlinePurchase[];
@@ -139,6 +150,7 @@ export function buildGameDataService(app: FastifyInstance) {
     const songsPath = path.join(__dirname, "../../../data/songs.json");
     const ranksPath = path.join(__dirname, "../../../data/ranks.json");
     const battlePath = path.join(__dirname, "../../../data/battle.json");
+    const announcementsPath = path.join(__dirname, "../../../data/announcements.json");
     const songMetaPath = path.join(__dirname, "../../../data/songmeta.json");
     const translationPath = path.join(__dirname, "../../../data/translation.json");
     const prdOnlinePurchasesPath = path.join(__dirname, "../../../data/prdonline_purchases.json");
@@ -156,6 +168,7 @@ export function buildGameDataService(app: FastifyInstance) {
         songs: JSON.parse(readFileSync(songsPath, "utf8")),
         ranks: JSON.parse(readFileSync(ranksPath, "utf8")),
         battleData: JSON.parse(readFileSync(battlePath, "utf8")),
+        announcements: JSON.parse(readFileSync(announcementsPath, "utf8")),
         songMeta: JSON.parse(readFileSync(songMetaPath, "utf8")),
         translation: JSON.parse(readFileSync(translationPath, "utf8")),
         prdOnlinePurchases: JSON.parse(readFileSync(prdOnlinePurchasesPath, "utf8")),
@@ -207,6 +220,10 @@ export function buildGameDataService(app: FastifyInstance) {
 
         getBattleData(): BattleData {
             return gameData.battleData;
+        },
+
+        getAnnouncements(): AnnouncementData[] {
+            return gameData.announcements;
         },
 
         getTranslations(): TranslationData {

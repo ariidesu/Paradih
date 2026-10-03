@@ -1,4 +1,36 @@
-import { FastifyPluginAsync } from "fastify";
+import { FastifyInstance, FastifyPluginAsync } from "fastify";
+import type { UserDoc } from "../../../common/models/User";
+
+function isParadigmOnlineActive(app: FastifyInstance, user: UserDoc): boolean {
+    return (
+        app.config.PARADIGM_ONLINE_ENABLED &&
+        (app.config.PARADIGM_ONLINE_FORCE_ACTIVE ||
+            (user.prdOnline && user.prdOnlineTime > Math.floor(Date.now() / 1000)))
+    );
+}
+
+function getChartMaxRating(app: FastifyInstance, chartId: string): number {
+    const [prefix, songName, difficulty] = chartId.split("/");
+    const songData = app.gameDataService.getSongData(`${prefix}/${songName}`);
+    if (!songData || !(difficulty in songData.charts)) {
+        return -1;
+    }
+
+    const chartConst = songData.charts[difficulty as keyof typeof songData.charts];
+    return Math.floor((chartConst + 1) * 1000 + 0.00002);
+}
+
+interface UploadResultRequest {
+    chart_id: string;
+    score: number;
+    grade: number;
+    combo: number;
+    max_combo: number;
+    decrypted_plus_count: number;
+    decrypted_count: number;
+    received_count: number;
+    lost_count: number;
+}
 
 const serverRoutes: FastifyPluginAsync = async (app) => {
     app.get("/check", async (request, reply) => {
@@ -16,6 +48,29 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
+            const body = request.body as Partial<UploadResultRequest> | undefined;
+            const numericFields: (keyof Omit<UploadResultRequest, "chart_id">)[] = [
+                "score",
+                "grade",
+                "combo",
+                "max_combo",
+                "decrypted_plus_count",
+                "decrypted_count",
+                "received_count",
+                "lost_count",
+            ];
+            if (
+                !body ||
+                typeof body.chart_id !== "string" ||
+                numericFields.some(
+                    (field) =>
+                        typeof body[field] !== "number" ||
+                        !Number.isFinite(body[field]),
+                )
+            ) {
+                return { status: "error", msg: "Missing info" };
+            }
+
             const {
                 chart_id,
                 score,
@@ -26,17 +81,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                 decrypted_count,
                 received_count,
                 lost_count,
-            } = request.body as {
-                chart_id: string,
-                score: number,
-                grade: number,
-                combo: number,
-                max_combo: number,
-                decrypted_plus_count: number,
-                decrypted_count: number,
-                received_count: number,
-                lost_count: number,
-            };
+            } = body as UploadResultRequest;
 
             const newResultEntry = await app.playService.submitPlay(
                 request.user,
@@ -55,6 +100,17 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
             const is_best = bestResult!.score == score;
             const statsMap = await app.playService.getChartPlayStatsForCharts(request.user, [chart_id]);
             const stats = statsMap[chart_id] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0 };
+            const paradigmOnlineActive = isParadigmOnlineActive(app, request.user);
+            const { season: seasonBestPlays } =
+                await app.playService.getBestPlaysBySeason(request.user);
+            seasonBestPlays.sort((a, b) => b.rating - a.rating);
+            const is_b15 =
+                paradigmOnlineActive &&
+                is_best &&
+                bestResult!.createdAt.getTime() === newResultEntry.createdAt.getTime() &&
+                seasonBestPlays
+                    .slice(0, 15)
+                    .some((play) => play.chartId === chart_id);
 
             return {
                 status: "OK",
@@ -67,6 +123,11 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                     play_times: stats.playTimes
                 },
                 rating: request.user.rating,
+                single_rating: paradigmOnlineActive ? newResultEntry.rating : -1,
+                is_b15,
+                max_rating: paradigmOnlineActive
+                    ? getChartMaxRating(app, chart_id)
+                    : -1,
                 
                 is_best,
                 best_result: {
@@ -77,6 +138,8 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                     score: bestResult!.score,
                     grade: bestResult!.grade,
                     rating: bestResult!.rating,
+                    combo: bestResult!.combo,
+                    max_combo: bestResult!.maxCombo,
 
                     decrypted_plus_count: bestResult!.stats.decrypted_plus,
                     decrypted_count: bestResult!.stats.decrypted,
@@ -98,7 +161,7 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            return { status: 'OK', amount: 200, is_purchased: false };
+            return { status: 'OK', amount: 0, is_purchased: false };
         }
     );
 
@@ -120,16 +183,13 @@ const serverRoutes: FastifyPluginAsync = async (app) => {
 
             const chartIds = bestPlays.map(p => p.chartId);
             const statsMap = await app.playService.getChartPlayStatsForCharts(request.user, chartIds);
+            const paradigmOnlineActive = isParadigmOnlineActive(app, request.user);
 
             const data = bestPlays.map(play => {
                 const stats = statsMap[play.chartId] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0 };
-                const [prefix, songName, difficulty] = play.chartId.split("/");
-                const songData = app.gameDataService.getSongData(`${prefix}/${songName}`);
-                let maxRating = 0;
-                if (songData && difficulty in songData.charts) {
-                    const chartConst = songData.charts[difficulty as keyof typeof songData.charts];
-                    maxRating = Math.floor((chartConst + 1) * 1000 + 0.00002);
-                }
+                const maxRating = paradigmOnlineActive
+                    ? getChartMaxRating(app, play.chartId)
+                    : -1;
 
                 return {
                     create_time: play.createdAt.getTime() / 1000,

@@ -69,6 +69,9 @@ const UserSchema = new Schema(
         },
         mailsRead: [{ type: String }],
         mailsClaimed: [{ type: String }],
+        mailsFavorite: [{ type: String }],
+        mailsDeleted: [{ type: String }],
+        announcementsRead: [{ type: String }],
 
         battleBanned: { type: Boolean, default: false },
         battleBanUntil: { type: Date, default: 0 },

@@ -24,7 +24,7 @@ export function buildMailService(app: FastifyInstance) {
                 ],
             });
 
-            return mails;
+            return mails.filter((mail) => !user.mailsDeleted.includes(mail.id));
         },
 
         async getUnreadMails(user: UserDoc): Promise<MailDoc[]> {
@@ -33,7 +33,7 @@ export function buildMailService(app: FastifyInstance) {
         },
 
         async getMailItems(user: UserDoc, mailId: string): Promise<{ type: string, count: number, id: string }[] | null> {
-            const mail = await Mail.findById(mailId);
+            const mail = (await this.getMails(user)).find((item) => item.id === mailId);
             if (!mail) {
                 return null;
             }
@@ -80,10 +80,15 @@ export function buildMailService(app: FastifyInstance) {
             }
 
             const mails = await this.getMails(user);
-            return mails.filter(mail => !this.hasReadMail(user, mailId));
+            return mails.filter((mail) => !this.hasReadMail(user, mail.id));
         },
 
         async claimMail(user: UserDoc, mailId: string): Promise<void> {
+            const mail = (await this.getMails(user)).find((item) => item.id === mailId);
+            if (!mail) {
+                return;
+            }
+
             if (!user.mailsClaimed.includes(mailId)) {
                 const result = await User.findByIdAndUpdate(
                     user._id,
@@ -138,7 +143,7 @@ export function buildMailService(app: FastifyInstance) {
                     false,
                     [(user._id as any).toString()],
                     new Date(Date.now() + 999999999),
-                    [{ type: "bg", count: 1, id: "BGEverlastingRain" }],
+                    [{ type: "background", count: 1, id: "BGEverlastingRain" }],
                     []
                 );
             }

@@ -1,5 +1,20 @@
 import { FastifyPluginAsync } from "fastify";
 
+interface PurchaseListEntry {
+    discount: {
+        after_discount: number;
+        before_discount: number;
+        discount_time: number;
+        enable: boolean;
+        discount_in_web: boolean;
+    };
+    limited_time: number;
+    money_count: number;
+    money_type: string;
+    product_type: number;
+    start_time: number;
+}
+
 const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
     app.get(
         "/login",
@@ -16,13 +31,14 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             return {
                 status: "OK",
 
-                api_min_ver: 78,
+                api_min_ver: 97,
                 first_login: !request.user.hasSetUsername,
                 last_device_id: (request.headers["x-device-id"] as string) || "",
-                latest_ver: 78,
+                latest_ver: 97,
 
                 battle_token: battleToken,
                 web_token: "",
+                timestamp: Math.floor(Date.now() / 1000),
             };
         }
     );
@@ -82,16 +98,16 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 await app.userService.setHasReadOwnedItem(request.user, "backgrounds", "BGDefault");
             }
 
-            const purchasesList: any = {};
+            const purchasesList: Record<string, PurchaseListEntry> = {};
 
             for (const [id, item] of Object.entries(
                 app.gameDataService.getPurchases()
             )) {
-                let productType = 1;
-                if (item.productType === "main") productType = 1;
-                else if (item.productType === "side") productType = 2;
-                else if (item.productType === "single") productType = 3;
-                else if (item.productType === "skin") productType = 4;
+                let productType = 0;
+                if (item.productType === "main") productType = 0;
+                else if (item.productType === "side") productType = 1;
+                else if (item.productType === "single") productType = 2;
+                else if (item.productType === "skin") productType = 3;
 
                 purchasesList[id] = {
                     discount: {
@@ -125,7 +141,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
             const now = Math.floor(Date.now() / 1000);
             let paradigmOnlineActive = false;
-            let paradigmOnlineExpireTime = -1;
+            let paradigmOnlineExpireTime = 0;
 
             if (app.config.PARADIGM_ONLINE_ENABLED) {
                 if (app.config.PARADIGM_ONLINE_FORCE_ACTIVE) {
@@ -134,7 +150,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 } else {
                     const isActive = request.user.prdOnline && request.user.prdOnlineTime > now;
                     paradigmOnlineActive = isActive;
-                    paradigmOnlineExpireTime = isActive ? request.user.prdOnlineTime : -1;
+                    paradigmOnlineExpireTime = isActive ? request.user.prdOnlineTime : 0;
                 }
             }
 
@@ -195,7 +211,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     has_unread_mail: (await app.mailService.getUnreadMails(request.user)).length > 0,
                     is_fool_sp: 0,
                     max_clear_common_challenge: request.user.maxClearedCommonChallenge,
-                    max_unread_anno_level: 0,
+                    max_unread_anno_level: Math.max(
+                        0,
+                        ...app.announcementService
+                            .getAnnouncements(request.user)
+                            .filter((anno) => !anno.is_read)
+                            .map((anno) => anno.anno_level),
+                    ),
                     shika: false,
 
                     prd_online: paradigmOnlineActive,
@@ -212,12 +234,14 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                     bestPlays ? await Promise.all(bestPlays.map(
                         async (play) => {
                             const stats = statsMap[play.chartId] ?? { playTimes: 0, totalDecrypted: 0, totalReceived: 0, totalLost: 0, maxRating: 0 };
-                            const [prefix, songName, difficulty] = play.chartId.split("/");
-                            const songData = app.gameDataService.getSongData(`${prefix}/${songName}`);
-                            let maxRating = 0;
-                            if (songData && difficulty in songData.charts) {
-                                const chartConst = songData.charts[difficulty as keyof typeof songData.charts];
-                                maxRating = Math.floor((chartConst + 1) * 1000 + 0.00002);
+                            let maxRating = -1;
+                            if (paradigmOnlineActive) {
+                                const [prefix, songName, difficulty] = play.chartId.split("/");
+                                const songData = app.gameDataService.getSongData(`${prefix}/${songName}`);
+                                if (songData && difficulty in songData.charts) {
+                                    const chartConst = songData.charts[difficulty as keyof typeof songData.charts];
+                                    maxRating = Math.floor((chartConst + 1) * 1000 + 0.00002);
+                                }
                             }
 
                             return {
@@ -265,8 +289,8 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 purchase_list: purchasesList,
 
                 po_b50: {
-                    past: topOtherPlays,
-                    now: topLatestSeasonPlays,
+                    past: paradigmOnlineActive ? topOtherPlays : [],
+                    now: paradigmOnlineActive ? topLatestSeasonPlays : [],
                     highest_rating: highestRating
                 }
             };
@@ -293,7 +317,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
             const now = Math.floor(Date.now() / 1000);
             let paradigmOnlineActive = false;
-            let paradigmOnlineExpireTime = -1;
+            let paradigmOnlineExpireTime = 0;
 
             if (app.config.PARADIGM_ONLINE_ENABLED) {
                 if (app.config.PARADIGM_ONLINE_FORCE_ACTIVE) {
@@ -302,7 +326,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 } else {
                     const isActive = request.user.prdOnline && request.user.prdOnlineTime > now;
                     paradigmOnlineActive = isActive;
-                    paradigmOnlineExpireTime = isActive ? request.user.prdOnlineTime : -1;
+                    paradigmOnlineExpireTime = isActive ? request.user.prdOnlineTime : 0;
                 }
             }
 
@@ -331,7 +355,13 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 has_unread_mail: (await app.mailService.getUnreadMails(request.user)).length > 0,
                 is_fool_sp: 0,
                 max_clear_common_challenge: request.user.maxClearedCommonChallenge,
-                max_unread_anno_level: 0,
+                max_unread_anno_level: Math.max(
+                    0,
+                    ...app.announcementService
+                        .getAnnouncements(request.user)
+                        .filter((anno) => !anno.is_read)
+                        .map((anno) => anno.anno_level),
+                ),
                 shika: false,
 
                 prd_online: paradigmOnlineActive,
@@ -352,7 +382,10 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            return { status: "OK", data: [] };
+            return {
+                status: "OK",
+                data: app.announcementService.getAnnouncements(request.user),
+            };
         }
     );
 
@@ -368,11 +401,22 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             }
 
             const { coin_list } = request.body as {
-                coin_list: {
+                coin_list?: {
                     type: "ac" | "dp" | "navi";
                     count: number;
                 }[];
             };
+            if (
+                !Array.isArray(coin_list) ||
+                coin_list.some(
+                    (coin) =>
+                        !coin ||
+                        !["ac", "dp", "navi"].includes(coin.type) ||
+                        typeof coin.count !== "number",
+                )
+            ) {
+                return { status: "error", msg: "Missing info" };
+            }
             for (const c of coin_list) {
                 await app.userService.addEconomy(request.user, c.type, c.count);
             }
@@ -389,6 +433,26 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
     );
 
     app.post(
+        "/gift_code",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { code } = request.body as { code?: string };
+            if (typeof code !== "string" || code.length === 0) {
+                return { status: "error", msg: "Missing info" };
+            }
+
+            return { status: "failed", reason: 1 };
+        },
+    );
+
+    app.post(
         "/unlock_style",
         {
             preHandler: app.authService.verifyAuthToken,
@@ -399,17 +463,20 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const { style_type, style_id } = request.body as {
-                style_type: "title" | "background";
-                style_id: string;
-            };
+            const body = request.body as {
+                style_type?: unknown;
+                style_id?: unknown;
+            } | undefined;
+            if (typeof body?.style_id !== "string") {
+                return { status: "error", msg: "Missing info" };
+            }
 
-            const actualStyleType = style_type == "title" ? "titles" : "backgrounds";
+            const actualStyleType = body.style_type === "title" ? "titles" : "backgrounds";
 
             await app.userService.addOwnedItem(
                 request.user,
                 actualStyleType,
-                style_id
+                body.style_id
             );
 
             return { status: "OK" };
@@ -427,12 +494,29 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const { update_list } = request.body as { update_list: {
-                style_type: "title" | "background";
-                style_id: string;
-            }[] };
+            const body = request.body as {
+                update_list?: unknown;
+            } | undefined;
+            if (!Array.isArray(body?.update_list)) {
+                return { status: "error", msg: "Missing info" };
+            }
+            if (
+                !body.update_list.every(
+                    (item): item is {
+                        style_type: "title" | "background";
+                        style_id: string;
+                    } =>
+                        !!item &&
+                        typeof item === "object" &&
+                        ((item as { style_type?: unknown }).style_type === "title" ||
+                            (item as { style_type?: unknown }).style_type === "background") &&
+                        typeof (item as { style_id?: unknown }).style_id === "string",
+                )
+            ) {
+                return { status: "error", msg: "Bad argument" };
+            }
 
-            for (const item of update_list) {
+            for (const item of body.update_list) {
                 await app.userService.changeStyle(
                     request.user,
                     item.style_type,
@@ -440,7 +524,14 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 );
             }
 
-            return { status: "OK" };
+            return {
+                status: "OK",
+                style: {
+                    now_title: request.user.style.title,
+                    now_background: request.user.style.background,
+                    now_skin: "para/default",
+                },
+            };
         }
     );
 
@@ -486,6 +577,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                     is_get_item: hasClaimed,
                     is_read: hasRead,
+                    is_favorite: request.user.mailsFavorite.includes(mail.id),
                 });
             }
 
@@ -539,6 +631,7 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
                     is_get_item: hasClaimed,
                     is_read: hasRead,
+                    is_favorite: request.user.mailsFavorite.includes(mail.id),
                 });
             }
 
@@ -559,6 +652,9 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
 
             const { mail_id } = request.body as { mail_id: string };
 
+            if (!(await app.mailService.getMailItems(request.user, mail_id))) {
+                return { status: "failed" };
+            }
             await app.mailService.claimMail(request.user, mail_id);
 
             return { status: "OK" };
@@ -577,17 +673,25 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
             }
 
             const { update_data, eco_operation } = request.body as {
-                update_data: { [key: string]: any };
-                eco_operation: { dp: number; navi: number };
+                update_data?: Record<string, unknown>;
+                eco_operation?: { dp?: number; navi?: number };
             };
+            if (
+                !update_data ||
+                typeof update_data !== "object" ||
+                Array.isArray(update_data)
+            ) {
+                return { status: "error", msg: "Missing info" };
+            }
+
             await app.userSaveService.setSaves(request.user, update_data);
-            if (eco_operation.dp != 0)
+            if (eco_operation?.dp)
                 await app.userService.addEconomy(
                     request.user,
                     "dp",
                     eco_operation.dp
                 );
-            if (eco_operation.navi != 0)
+            if (eco_operation?.navi)
                 await app.userService.addEconomy(
                     request.user,
                     "navi",
@@ -603,6 +707,47 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 },
             };
         }
+    );
+
+    app.get(
+        "/sync_save",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const save = await app.userSaveService.getSave(request.user);
+            return {
+                status: "OK",
+                save_time: save.updatedAt.getTime() / 1000,
+                data: Object.fromEntries(save.data.entries()),
+            };
+        },
+    );
+
+    app.post(
+        "/read_anno",
+        {
+            preHandler: app.authService.verifyAuthToken,
+            config: { encrypted: true },
+        },
+        async (request) => {
+            if (!request.user) {
+                return { status: "failed", code: "USER_NOT_FOUND" };
+            }
+
+            const { anno_id } = request.body as { anno_id?: string };
+            if (typeof anno_id !== "string" || anno_id.length === 0) {
+                return { status: "error", msg: "Missing info" };
+            }
+
+            await app.userService.readAnnouncement(request.user, anno_id);
+            return { status: "OK" };
+        },
     );
     
     app.get(
@@ -649,14 +794,27 @@ const authenticatedUserRoutes: FastifyPluginAsync = async (app) => {
                 return { status: "failed", code: "USER_NOT_FOUND" };
             }
 
-            const { style_list } = request.body as {
-                style_list: {
-                    style_type: "title" | "background";
-                    style_id: string;
-                }[];
-            };
+            const body = request.body as {
+                style_list?: unknown;
+            } | undefined;
+            if (
+                !Array.isArray(body?.style_list) ||
+                !body.style_list.every(
+                    (item): item is {
+                        style_type: "title" | "background";
+                        style_id: string;
+                    } =>
+                        !!item &&
+                        typeof item === "object" &&
+                        ((item as { style_type?: unknown }).style_type === "title" ||
+                            (item as { style_type?: unknown }).style_type === "background") &&
+                        typeof (item as { style_id?: unknown }).style_id === "string",
+                )
+            ) {
+                return { status: "error", msg: "Missing info" };
+            }
 
-            for (const item of style_list) {
+            for (const item of body.style_list) {
                 const actualStyleType = item.style_type == "title" ? "titles" : "backgrounds";
                 await app.userService.setHasReadOwnedItem(request.user, actualStyleType, item.style_id);
             }
