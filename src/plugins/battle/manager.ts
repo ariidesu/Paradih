@@ -10,6 +10,9 @@ export class Player {
     public level: number;
     public rating: number;
     public battleRating: number;
+    public isPrdOnline = false;
+    public isHiddenInfo = false;
+    public isHiddenRating = false;
     public readonly style: { skin: string; bg: string; title: string; };
     private socket: WebSocket;
     private app: FastifyInstance;
@@ -40,8 +43,7 @@ export class Player {
 
     sendMessage(message: ServerMessage) {
         if (this.socket.readyState == 1) {
-            message.status = "ok";
-            message.nonce = randomUUID();
+            message.nonce ??= randomUUID();
             this.socket.send(this.app.encryptPara(JSON.stringify(message)).toString("base64"));
         }
     }
@@ -73,8 +75,9 @@ export class Room {
     private playersResultIds: [string?, string?] = [undefined, undefined];
     private playersJudgeDetails: [[number, number, number, number], [number, number, number, number]] = [[0, 0, 0, 0], [0, 0, 0, 0]];
     private bannedTrackIndexes: [number, number] = [-1, -1];
+    private cleanupTimeout?: NodeJS.Timeout;
 
-    constructor(app: FastifyInstance, players: [Player, Player]) {
+    constructor(app: FastifyInstance, players: [Player, Player], private onDestroy: () => void) {
         this.id = randomUUID();
         this.app = app;
         this.players = players;
@@ -97,7 +100,9 @@ export class Room {
 
     public onPlayerSetBan(player: Player, message: ClientBanChartMessage) {
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex == -1) return;
+        if (playerIndex == -1 || this.state !== "banning") return;
+        if (!Number.isInteger(message.data.chartIndex) || message.data.chartIndex < -1 || message.data.chartIndex >= this.roster.trackList.length) return;
+        if (this.playersBanned[playerIndex]) return;
 
         this.playersBanned[playerIndex] = true;
         this.bannedTrackIndexes[playerIndex] = message.data.chartIndex;
@@ -105,14 +110,14 @@ export class Room {
 
     public onPlayerReady(player: Player) {
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex == -1) return;
+        if (playerIndex == -1 || this.state !== "banning") return;
 
         this.playersReady[playerIndex] = true;
     }
 
     public onPlayerUpdateScore(player: Player, message: ClientUpdateScoreMessage) {
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex === -1) return;
+        if (playerIndex === -1 || this.state !== "ingame" || this.playersFinished[playerIndex]) return;
 
         const oppositeIndex = 1 - playerIndex;
         this.players[oppositeIndex].sendMessage({
@@ -122,13 +127,19 @@ export class Room {
         });
     }
 
-    public onPlayerDonePlaying(player: Player, message: ClientDonePlayingMessage) {
+    public async onPlayerDonePlaying(player: Player, message: ClientDonePlayingMessage): Promise<boolean> {
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex == -1) return;
+        if (playerIndex == -1 || !["ingame", "finished"].includes(this.state)) return false;
+        if (this.playersFinished[playerIndex]) {
+            return this.playersResultIds[playerIndex] === message.data.resultId;
+        }
+        const result = await this.app.playService.getChartPlayByOnlyId(message.data.resultId);
+        if (!result || result.userId.toString() !== player.id || this.state !== "ingame") return false;
 
         this.playersResultIds[playerIndex] = message.data.resultId;
         this.playersJudgeDetails[playerIndex] = message.data.judgeDetails;
         this.playersFinished[playerIndex] = true;
+        return true;
     }
 
     public onPlayerDisconnect(player: Player) {
@@ -140,19 +151,17 @@ export class Room {
 
         const oppositeIndex = 1 - playerIndex;
         if (this.state != "finished") {
-            if (!this.playersDisconnected[oppositeIndex] && (this.state == "banning" || this.state == "ingame")) {
+            if (!this.playersDisconnected[oppositeIndex] && this.state === "banning") {
                 this.players[oppositeIndex].sendMessage({
                     status: "ok",
-                    action: "gameOver",
-                    data: {
-                        isWin: true,
-                        beforeRating: 0,
-                        ratingChanges: 0,
-                        afterRating: 0,
-                        opponentRating: 0,
-                        opponentScore: { score: 0, grade: 'D', decrypted: 0, decryptedPlus: 0, lost: 0, received: 0 },
-                        opponentJudgeDetails: [0, 0, 0, 0],
-                    }
+                    action: "cancelMatch",
+                    data: { reason: "OPPONENT_CANCEL" }
+                });
+            } else if (!this.playersDisconnected[oppositeIndex] && this.state === "ingame") {
+                this.players[oppositeIndex].sendMessage({
+                    status: "ok",
+                    action: "opponentOffline",
+                    data: { reason: "OPPONENT_CANCEL" }
                 });
             }
 
@@ -162,6 +171,9 @@ export class Room {
     }
 
     public destroy() {
+        this.state = "finished";
+        if (this.cleanupTimeout) clearTimeout(this.cleanupTimeout);
+        this.onDestroy();
         this.players.forEach(p => p.disconnect());
     }
 
@@ -170,17 +182,15 @@ export class Room {
     }
 
     private makeRoster() {
-        const availableTracks = this.app.gameDataService.getSongs().map(s => s.songId);
-        const trackList = availableTracks.sort(() => 0.5 - Math.random()).slice(0, 5);
-
-        // NOTE: Not how official did it.
-        const diffList = [
-            2,
-            2,
-            Math.random() > 0.8 ? 1 : 2,
-            Math.random() > 0.6 ? 1 : 2,
-            Math.random() > 0.3 ? 1 : 2,
-        ];
+        const availableTracks = this.app.gameDataService.getSongs().filter(s => s.charts.invaded > 0 || s.charts.massive > 0);
+        const selectedTracks = availableTracks.sort(() => 0.5 - Math.random()).slice(0, 5);
+        const trackList = selectedTracks.map(s => s.songId);
+        const diffList = selectedTracks.map(s => {
+            const difficulties = [];
+            if (s.charts.invaded > 0) difficulties.push(1);
+            if (s.charts.massive > 0) difficulties.push(2);
+            return difficulties[Math.floor(Math.random() * difficulties.length)];
+        });
 
         this.roster = { trackList, diffList };
     }
@@ -210,12 +220,13 @@ export class Room {
                 roomId: this.id,
                 chartInfo: { ...this.roster, chartSpeacialEffectList: Array(this.roster.trackList.length).fill(null) },
                 opponentId: player2.id,
-                opponentRating: player2.rating,
+                opponentRating: player2.isHiddenRating ? -1 : player2.rating,
                 opponentBattleRating: player2.battleRating,
                 opponentStyle: player2.style,
-                opponentUsername: player2.username,
-                opponentUsernameMask: player2.usernameMask,
-                opponentLevel: player2.level
+                opponentUsername: player2.isHiddenInfo ? "[Player]" : player2.username,
+                opponentUsernameMask: player2.isHiddenInfo ? "[Player]" : player2.usernameMask,
+                opponentLevel: player2.level,
+                opponentIsPrdOnline: player2.isPrdOnline
             }
         });
         player2.sendMessage({
@@ -225,12 +236,13 @@ export class Room {
                 roomId: this.id,
                 chartInfo: { ...this.roster, chartSpeacialEffectList: Array(this.roster.trackList.length).fill(null) },
                 opponentId: player1.id,
-                opponentRating: player1.rating,
+                opponentRating: player1.isHiddenRating ? -1 : player1.rating,
                 opponentBattleRating: player1.battleRating,
                 opponentStyle: player1.style,
-                opponentUsername: player1.username,
-                opponentUsernameMask: player1.usernameMask,
+                opponentUsername: player1.isHiddenInfo ? "[Player]" : player1.username,
+                opponentUsernameMask: player1.isHiddenInfo ? "[Player]" : player1.usernameMask,
                 opponentLevel: player1.level,
+                opponentIsPrdOnline: player1.isPrdOnline,
             }
         });
 
@@ -248,6 +260,7 @@ export class Room {
 
         // Just in case........ can be removed though?
         await new Promise(resolve => setTimeout(resolve, 300));
+        if (this.playersDisconnected[0] || this.playersDisconnected[1]) return;
 
         const canChooseTrackIndexes = this.roster.trackList.map((_, index) => index).filter((i) => !this.bannedTrackIndexes.includes(i));
         const chosenTrackIndex = canChooseTrackIndexes[Math.floor(Math.random() * canChooseTrackIndexes.length)];
@@ -283,7 +296,7 @@ export class Room {
             if (this.playersDisconnected[0] || this.playersDisconnected[1]) return;
             await new Promise(resolve => setTimeout(resolve, 100));
         }
-        
+
         this.state = "finished";
 
         const [player1, player2] = this.players;
@@ -307,12 +320,13 @@ export class Room {
             grade: this.getGradeFromScore(player2Result?.score ?? 0),
         };
 
-        let player1Win = false;
+        let player1Win: boolean | null = false;
         if (player1Result && player2Result) {
-            player1Win = player1Result.score > player2Result.score;
+            player1Win = player1Result.score === player2Result.score ? null : player1Result.score > player2Result.score;
         } else {
             player1Win = player1Result != null;
         }
+
 
         // TODO: Battle rating
 
@@ -321,10 +335,10 @@ export class Room {
             action: "gameOver",
             data: {
                 isWin: player1Win,
-                beforeRating: 0,
+                beforeRating: player1.battleRating,
                 ratingChanges: 0,
-                afterRating: 0,
-                opponentRating: 0,
+                afterRating: player1.battleRating,
+                opponentRating: player2.battleRating,
                 opponentScore: player2Score,
                 opponentJudgeDetails: this.playersJudgeDetails[1],
             }
@@ -334,15 +348,17 @@ export class Room {
             action: "gameOver",
             nonce: randomUUID(),
             data: {
-                isWin: !player1Win,
-                beforeRating: 0,
+                isWin: player1Win === null ? null : !player1Win,
+                beforeRating: player2.battleRating,
                 ratingChanges: 0,
-                afterRating: 0,
-                opponentRating: 0,
+                afterRating: player2.battleRating,
+                opponentRating: player1.battleRating,
                 opponentScore: player1Score,
                 opponentJudgeDetails: this.playersJudgeDetails[0],
             }
         });
+        this.cleanupTimeout = setTimeout(() => this.destroy(), 30000);
+        this.cleanupTimeout.unref();
     }
 }
 
@@ -358,19 +374,22 @@ export class RoomsManager {
 
     public addPlayer(player: Player) {
         if (this.playerToRoomMap.has(player.id) || this.waitingQueue.some(p => p.id == player.id)) {
-            player.disconnect();
-            return;
+            return false;
         }
 
         console.log(`${player.username} added to queue`);
         this.waitingQueue.push(player);
         this.createRoom();
+        return true;
     }
 
     private createRoom() {
         if (this.waitingQueue.length >= 2) {
             const [player1, player2] = this.waitingQueue.splice(0, 2);
-            const room = new Room(this.app, [player1, player2]);
+            const room = new Room(this.app, [player1, player2], () => {
+                room.players.forEach(p => this.playerToRoomMap.delete(p.id));
+                this.rooms.delete(room.id);
+            });
 
             this.rooms.set(room.id, room);
             this.playerToRoomMap.set(player1.id, room.id);
@@ -380,14 +399,14 @@ export class RoomsManager {
             this.removeFromQueue(player2);
         }
     }
-    
+
     public getRoomByPlayerId(playerId: string): Room | undefined {
         const roomId = this.playerToRoomMap.get(playerId);
         return roomId ? this.rooms.get(roomId) : undefined;
     }
 
     public removeFromQueue(player: Player) {
-        const queueIndex = this.waitingQueue.findIndex(p => p.id === player.id);
+        const queueIndex = this.waitingQueue.indexOf(player);
         if (queueIndex != -1) {
             this.waitingQueue.splice(queueIndex, 1);
             console.log(`${player.username} removed from queue`);
@@ -395,14 +414,23 @@ export class RoomsManager {
         }
     }
 
-    public removePlayer(player: Player) {
+    public removePlayer(player: Player | undefined) {
+        if (!player) return;
         this.removeFromQueue(player);
 
         const room = this.getRoomByPlayerId(player.id);
-        if (room) {
+        if (room && room.players.includes(player)) {
             room.onPlayerDisconnect(player);
             room.players.forEach(p => this.playerToRoomMap.delete(p.id));
             this.rooms.delete(room.id);
         }
+    }
+
+    public close() {
+        for (const room of this.rooms.values()) room.destroy();
+        for (const player of this.waitingQueue) player.disconnect();
+        this.waitingQueue = [];
+        this.rooms.clear();
+        this.playerToRoomMap.clear();
     }
 }

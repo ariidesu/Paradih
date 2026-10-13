@@ -4,6 +4,7 @@ export type BaseMessage = {
     nonce?: string;
 }
 
+
 // Cross Decode messages
 
 export type UpdateScoreData = {
@@ -32,7 +33,7 @@ export type ServerMatchSuccessMessage = ServerBaseMessage & {
         chartInfo: {
             trackList: string[],
             diffList: number[],
-            chartSpeacialEffectList: any[];
+            chartSpeacialEffectList: (number | null)[];
         };
 
         opponentId: string;
@@ -46,6 +47,7 @@ export type ServerMatchSuccessMessage = ServerBaseMessage & {
         opponentUsername: string;
         opponentUsernameMask: string;
         opponentLevel: number;
+        opponentIsPrdOnline: boolean;
     };
 }
 
@@ -56,7 +58,7 @@ export type ServerAnnounceFinalMessage = ServerBaseMessage & {
         banChartIndex: number[];
         trackId: string;
         chartDiff: number;
-        chartSpeacialEffect: any;
+        chartSpeacialEffect: number | null;
     };
 }
 
@@ -76,7 +78,7 @@ export type ServerGameOverMessage = ServerBaseMessage & {
     status: "ok";
     action: "gameOver";
     data: {
-        isWin: boolean;
+        isWin: boolean | null;
         beforeRating: number;
         ratingChanges: number;
         afterRating: number;
@@ -94,7 +96,33 @@ export type ServerGameOverMessage = ServerBaseMessage & {
     };
 }
 
-export type ServerMessage = ServerMatchConfirmMessage | ServerMatchSuccessMessage | ServerAnnounceFinalMessage | ServerAllPlayerReadyMessage | ServerOpponentScoreUpdateMessage | ServerGameOverMessage;
+export type ServerAcknowledgementMessage = {
+    action?: never;
+    status: "ok";
+    code: "OK";
+    nonce: string;
+};
+
+export type ServerQueueErrorMessage = {
+    action?: never;
+    status: "failed";
+    code: "IN_BATTLE_ALREADY" | "NOT_IN_QUEUE";
+    nonce: string;
+};
+
+export type ServerCancelMatchMessage = ServerBaseMessage & {
+    status: "ok";
+    action: "cancelMatch";
+    data: { reason: "OPPONENT_CANCEL" | "SONG_NOT_ENOUGH" };
+};
+
+export type ServerOpponentOfflineMessage = ServerBaseMessage & {
+    status: "ok";
+    action: "opponentOffline";
+    data: { reason: string };
+};
+
+export type ServerMessage = ServerMatchConfirmMessage | ServerMatchSuccessMessage | ServerAnnounceFinalMessage | ServerAllPlayerReadyMessage | ServerOpponentScoreUpdateMessage | ServerGameOverMessage | ServerAcknowledgementMessage | ServerQueueErrorMessage | ServerCancelMatchMessage | ServerOpponentOfflineMessage;
 
 export type ClientHeartbeatMessage = ClientBaseMessage & {
     action: "heartbeat";
@@ -148,6 +176,7 @@ export type ClientGameOverMessage = ClientBaseMessage & {
 export type ClientMessage = ClientHeartbeatMessage | ClientStartMatchMessage | ClientCancelGameMessage | ClientBanChartMessage | ClientReadyMessage | ClientUpdateScoreMessage | ClientDonePlayingMessage | ClientGameOverMessage;
 
 // Linker messages
+
 export type LinkerMatchConfirmMessage = { linker: true, message: ServerMatchConfirmMessage };
 export type LinkerMatchSuccessMessage = { linker: true, message: ServerMatchSuccessMessage };
 export type LinkerAnnounceFinalMessage = { linker: true, message: ServerAnnounceFinalMessage };

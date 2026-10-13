@@ -86,6 +86,7 @@ interface RankData {
 
 interface BattleData {
     enabled: boolean;
+    announcement: string;
     endTime: number;
 
     seasonId: string;

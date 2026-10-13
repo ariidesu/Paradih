@@ -10,6 +10,7 @@ export interface PlayerInfo {
     level: number;
     rating: number;
     battleRating: number;
+    isPrdOnline: boolean;
     style: { skin: string; bg: string; title: string };
 }
 
@@ -51,6 +52,7 @@ export class LinkerClient {
     private heartbeatInterval: NodeJS.Timeout | null = null;
     private reconnectTimeout: NodeJS.Timeout | null = null;
     private isReconnecting = false;
+    private stopped = false;
 
     private static readonly HEARTBEAT_INTERVAL = 30000; // 30 seconds
     private static readonly RECONNECT_DELAY = 5000; // 5 seconds
@@ -60,9 +62,10 @@ export class LinkerClient {
     }
 
     public async connect(): Promise<void> {
+        if (this.stopped) return;
         const linkerUrl = this.app.config.CROSS_DECODE_LINKER_URL;
         const token = this.app.config.CROSS_DECODE_LINKER_TOKEN;
-        
+
         console.log(`Connecting to linker at ${linkerUrl}...`);
 
         const socket = new WebSocket(linkerUrl, {
@@ -70,6 +73,7 @@ export class LinkerClient {
                 "auth-token": token
             }
         });
+        this.linkerSocket = socket;
 
         socket.on("open", () => {
             console.log("Connected to linker");
@@ -94,12 +98,12 @@ export class LinkerClient {
         });
 
         socket.on("close", () => {
-            this.clearLinkerSocket();
+            if (this.linkerSocket === socket) this.clearLinkerSocket();
         });
 
         socket.on("error", (err) => {
             console.error("Linker socket error:", err);
-            this.clearLinkerSocket();
+            if (this.linkerSocket === socket) this.clearLinkerSocket();
         });
 
         socket.on("pong", () => {});
@@ -123,10 +127,10 @@ export class LinkerClient {
 
     public clearLinkerSocket(): void {
         if (!this.linkerSocket) return;
-        
+
         console.log("Linker disconnected, closing all user connections");
         this.stopHeartbeat();
-        
+
         for (const [playerId, socket] of this.userSockets) {
             if (socket.readyState == 1) {
                 socket.close();
@@ -136,12 +140,13 @@ export class LinkerClient {
         this.userSockets.clear();
         this.userInfo.clear();
         this.linkerSocket = null;
+        this.isReconnecting = false;
 
         this.scheduleReconnect();
     }
 
     private scheduleReconnect(): void {
-        if (this.isReconnecting || this.reconnectTimeout || this.isConnected()) {
+        if (this.stopped || this.isReconnecting || this.reconnectTimeout || this.isConnected()) {
             return;
         }
 
@@ -166,33 +171,52 @@ export class LinkerClient {
         return this.linkerSocket !== null && this.linkerSocket.readyState == 1;
     }
 
+    public close(): void {
+        this.stopped = true;
+        this.stopHeartbeat();
+        if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
+        this.reconnectTimeout = null;
+        const socket = this.linkerSocket;
+        this.linkerSocket = null;
+        socket?.terminate();
+        for (const [playerId, userSocket] of this.userSockets) {
+            userSocket.close();
+            this.cleanupPlayer(playerId);
+        }
+        this.userSockets.clear();
+        this.userInfo.clear();
+    }
+
     public handleLinkerMessage(message: LinkerToUserMessage): void {
         const targetSocket = this.userSockets.get(message.targetPlayerId);
         if (!targetSocket || targetSocket.readyState !== 1) {
             console.log(`Target player ${message.targetPlayerId} not connected`);
             return;
         }
-        
+
         const userMessage = message.message;
-        userMessage.status = "ok";
-        userMessage.nonce = randomUUID();
+        userMessage.nonce ??= randomUUID();
         targetSocket.send(this.app.encryptPara(JSON.stringify(userMessage)).toString("base64"));
     }
 
-    public addUser(playerInfo: PlayerInfo, socket: WebSocket): void {
+    public addUser(playerInfo: PlayerInfo, socket: WebSocket): boolean {
+        const currentSocket = this.userSockets.get(playerInfo.id);
+        if (currentSocket && currentSocket !== socket) return false;
         this.userSockets.set(playerInfo.id, socket);
         this.userInfo.set(playerInfo.id, playerInfo);
+        return true;
     }
 
-    public removeUser(playerInfo: PlayerInfo): void {
+    public removeUser(playerInfo: PlayerInfo | undefined, notifyLinker = true): void {
+        if (!playerInfo || !this.userInfo.has(playerInfo.id)) return;
         this.userSockets.delete(playerInfo.id);
         this.userInfo.delete(playerInfo.id);
         this.cleanupPlayer(playerInfo.id);
 
-        if (this.isConnected()) {
+        if (notifyLinker && this.isConnected()) {
             this.forwardToLinker(playerInfo, {
                 action: "cancelGame",
-                timestamp: Date.now(),
+                timestamp: Math.floor(Date.now() / 1000),
                 data: {}
             });
         }
@@ -214,19 +238,19 @@ export class LinkerClient {
         }
 
         if (message.action == "updateScore") {
-            this.handleScoreUpdate(playerInfo, message.data as UpdateScoreData);
+            this.handleScoreUpdate(playerInfo, message.data);
             return;
         }
 
-        const forwardMessage = {
+        const forwardMessage: LinkerForwardMessage = {
             message,
             linker: true,
             playerInfo,
-        } as LinkerForwardMessage;
+        };
 
         if (message.action == "donePlaying") {
             const playResult = await this.app.playService.getChartPlayByOnlyId(message.data.resultId);
-            if (playResult) {
+            if (playResult && playResult.userId.toString() === playerInfo.id) {
                 forwardMessage.playResult = {
                     score: playResult.score,
                     grade: playResult.grade,
@@ -239,7 +263,8 @@ export class LinkerClient {
                         lost: playResult.stats.lost,
                     }
                 };
-            }
+            } else return;
+            this.cleanupPlayer(playerInfo.id);
         }
 
         this.sendToLinker(forwardMessage);
@@ -257,7 +282,7 @@ export class LinkerClient {
                         playerInfo,
                         message: {
                             action: "updateScore",
-                            timestamp: Date.now(),
+                            timestamp: Math.floor(Date.now() / 1000),
                             data: lastScore
                         }
                     });

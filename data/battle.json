@@ -1,5 +1,6 @@
 {
     "enabled": true,
+    "announcement": "",
     "endTime": 9999999999,
     "seasonId": "phase_03",
     "seasonStartTime": 1769153797,
