@@ -175,6 +175,34 @@ export type ClientGameOverMessage = ClientBaseMessage & {
 
 export type ClientMessage = ClientHeartbeatMessage | ClientStartMatchMessage | ClientCancelGameMessage | ClientBanChartMessage | ClientReadyMessage | ClientUpdateScoreMessage | ClientDonePlayingMessage | ClientGameOverMessage;
 
+export function isClientMessage(value: unknown): value is ClientMessage {
+    if (typeof value !== "object" || value === null) return false;
+    const message = value as Record<string, unknown>;
+    if (!Number.isSafeInteger(message.timestamp) ||
+        (message.nonce !== undefined && (typeof message.nonce !== "string" || message.nonce.length === 0)) ||
+        typeof message.data !== "object" || message.data === null || Array.isArray(message.data)) return false;
+    const data = message.data as Record<string, unknown>;
+    const count = (value: unknown) => typeof value === "number" && Number.isInteger(value) && value >= 0 && value <= 0x7fffffff;
+    switch (message.action) {
+        case "heartbeat":
+        case "cancelGame":
+        case "gameIsOver":
+        case "playerReady":
+            return true;
+        case "startMatch":
+            return count(data.playerLevel) && typeof data.isHiddenInfo === "boolean" && typeof data.isHiddenRating === "boolean";
+        case "banChart":
+            return typeof data.chartIndex === "number" && Number.isInteger(data.chartIndex) && data.chartIndex >= -1;
+        case "updateScore":
+            return ["score", "totalNote", "near", "received", "lost"].every(key => count(data[key])) && typeof data.hasMiss === "boolean";
+        case "donePlaying":
+            return typeof data.resultId === "string" && data.resultId.length > 0 &&
+                Array.isArray(data.judgeDetails) && data.judgeDetails.length === 4 && data.judgeDetails.every(count);
+        default:
+            return false;
+    }
+}
+
 // Linker messages
 
 export type LinkerMatchConfirmMessage = { linker: true, message: ServerMatchConfirmMessage };

@@ -6,6 +6,7 @@ import PlayResultModel from "../models/PlayResult";
 import MailModel from "../models/Mail";
 import VerifyModel from "../models/Verify";
 import RankPlayModel from "../models/RankPlay";
+import BattleParticipationModel from "../models/BattleParticipation";
 
 declare module "fastify" {
     interface FastifyInstance {
@@ -16,6 +17,7 @@ declare module "fastify" {
             PlayResult: typeof PlayResultModel;
             Verify: typeof VerifyModel;
             RankPlay: typeof RankPlayModel;
+            BattleParticipation: typeof BattleParticipationModel;
         };
     }
 }
@@ -28,5 +30,6 @@ export default fp(async (fastify: FastifyInstance) => {
         PlayResult: PlayResultModel,
         Verify: VerifyModel,
         RankPlay: RankPlayModel,
+        BattleParticipation: BattleParticipationModel,
     });
 });

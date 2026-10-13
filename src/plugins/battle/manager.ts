@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { WebSocket } from "@fastify/websocket";
 import { randomUUID } from "crypto";
 import { ClientBanChartMessage, ClientDonePlayingMessage, ClientUpdateScoreMessage, ServerMessage } from "./types";
+import type { PlayResultLean } from "../../common/models/PlayResult";
 
 export class Player {
     public readonly id: string;
@@ -76,22 +77,26 @@ export class Room {
     private playersJudgeDetails: [[number, number, number, number], [number, number, number, number]] = [[0, 0, 0, 0], [0, 0, 0, 0]];
     private bannedTrackIndexes: [number, number] = [-1, -1];
     private cleanupTimeout?: NodeJS.Timeout;
+    private destroyed = false;
+    private selectedChartId?: string;
+    private startedAt = 0;
+    private playersResults: [PlayResultLean?, PlayResultLean?] = [undefined, undefined];
 
     constructor(app: FastifyInstance, players: [Player, Player], private onDestroy: () => void) {
         this.id = randomUUID();
         this.app = app;
         this.players = players;
 
-        this.broadcast({
-            status: "ok",
-            action: "matchConfirm",
-            data: {}
-        });
-
         this.makeRoster();
 
         console.log(`Room ${this.id} created for ${players[0].username} and ${players[1].username}`);
-        this.begin();
+    }
+
+    public start() {
+        this.begin().catch(error => {
+            this.app.log.error(error, "Failed to start battle room");
+            this.destroy();
+        });
     }
 
     public getPlayerIndex(player: Player) {
@@ -100,24 +105,26 @@ export class Room {
 
     public onPlayerSetBan(player: Player, message: ClientBanChartMessage) {
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex == -1 || this.state !== "banning") return;
-        if (!Number.isInteger(message.data.chartIndex) || message.data.chartIndex < -1 || message.data.chartIndex >= this.roster.trackList.length) return;
-        if (this.playersBanned[playerIndex]) return;
+        if (this.destroyed || playerIndex == -1 || this.state !== "banning") return false;
+        if (!Number.isInteger(message.data.chartIndex) || message.data.chartIndex < -1 || message.data.chartIndex >= this.roster.trackList.length) return false;
+        if (this.playersBanned[playerIndex]) return this.bannedTrackIndexes[playerIndex] === message.data.chartIndex;
 
         this.playersBanned[playerIndex] = true;
         this.bannedTrackIndexes[playerIndex] = message.data.chartIndex;
+        return true;
     }
 
     public onPlayerReady(player: Player) {
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex == -1 || this.state !== "banning") return;
+        if (this.destroyed || playerIndex == -1 || this.state !== "banning" || !this.selectedChartId) return false;
 
         this.playersReady[playerIndex] = true;
+        return true;
     }
 
     public onPlayerUpdateScore(player: Player, message: ClientUpdateScoreMessage) {
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex === -1 || this.state !== "ingame" || this.playersFinished[playerIndex]) return;
+        if (this.destroyed || playerIndex === -1 || this.state !== "ingame" || this.playersFinished[playerIndex]) return false;
 
         const oppositeIndex = 1 - playerIndex;
         this.players[oppositeIndex].sendMessage({
@@ -125,19 +132,22 @@ export class Room {
             action: "opponentScoreUpdate",
             data: message.data
         });
+        return true;
     }
 
     public async onPlayerDonePlaying(player: Player, message: ClientDonePlayingMessage): Promise<boolean> {
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex == -1 || !["ingame", "finished"].includes(this.state)) return false;
+        if (this.destroyed || playerIndex == -1 || this.playersDisconnected[playerIndex] || !["ingame", "finished"].includes(this.state)) return false;
         if (this.playersFinished[playerIndex]) {
             return this.playersResultIds[playerIndex] === message.data.resultId;
         }
         const result = await this.app.playService.getChartPlayByOnlyId(message.data.resultId);
-        if (!result || result.userId.toString() !== player.id || this.state !== "ingame") return false;
+        if (!result || result.userId.toString() !== player.id || this.destroyed || this.playersDisconnected[playerIndex] || this.state !== "ingame" ||
+            result.chartId !== this.selectedChartId || result.createdAt.getTime() < this.startedAt) return false;
 
         this.playersResultIds[playerIndex] = message.data.resultId;
         this.playersJudgeDetails[playerIndex] = message.data.judgeDetails;
+        this.playersResults[playerIndex] = result;
         this.playersFinished[playerIndex] = true;
         return true;
     }
@@ -145,13 +155,13 @@ export class Room {
     public onPlayerDisconnect(player: Player) {
         console.log(`Room ${this.id}: Player ${player.username} disconnected`);
         const playerIndex = this.getPlayerIndex(player);
-        if (playerIndex == -1) return;
+        if (this.destroyed || playerIndex == -1 || this.playersDisconnected[playerIndex]) return;
 
         this.playersDisconnected[playerIndex] = true;
 
         const oppositeIndex = 1 - playerIndex;
         if (this.state != "finished") {
-            if (!this.playersDisconnected[oppositeIndex] && this.state === "banning") {
+            if (!this.playersDisconnected[oppositeIndex] && (this.state === "waiting" || this.state === "banning")) {
                 this.players[oppositeIndex].sendMessage({
                     status: "ok",
                     action: "cancelMatch",
@@ -165,12 +175,14 @@ export class Room {
                 });
             }
 
-            this.state = "finished";
-            this.destroy();
+            if (this.state !== "ingame") this.destroy();
         }
+        if (this.playersDisconnected.every(Boolean)) this.destroy();
     }
 
     public destroy() {
+        if (this.destroyed) return;
+        this.destroyed = true;
         this.state = "finished";
         if (this.cleanupTimeout) clearTimeout(this.cleanupTimeout);
         this.onDestroy();
@@ -196,7 +208,7 @@ export class Room {
     }
 
     private getGradeFromScore(score: number): "INF+" | "INF" | "AAA+" | "AAA" | "AA+" | "AA" | "A+" | "A" | "B" | "C" | "D" {
-        if (score >= 1010000) return "INF+";
+        if (score >= 1009000) return "INF+";
         if (score >= 1000000) return "INF";
         if (score >= 990000) return "AAA+";
         if (score >= 980000) return "AAA";
@@ -209,10 +221,22 @@ export class Room {
         return "D";
     }
 
-    private begin() {
-        if (this.state != "waiting") return;
+    private async begin() {
+        if (this.destroyed || this.state != "waiting") return;
+        if (this.roster.trackList.length < 5) {
+            this.broadcast({ status: "ok", action: "cancelMatch", data: { reason: "SONG_NOT_ENOUGH" } });
+            this.destroy();
+            return;
+        }
 
         const [player1, player2] = this.players;
+        await Promise.all(this.players.map((player, index) => this.app.models.BattleParticipation.updateOne(
+            { userId: player.id, roomId: this.id },
+            { $setOnInsert: { opponentId: this.players[1 - index].id } },
+            { upsert: true }
+        )));
+        if (this.destroyed) return;
+        this.broadcast({ status: "ok", action: "matchConfirm", data: {} });
         player1.sendMessage({
             status: "ok",
             action: "matchSuccess",
@@ -246,24 +270,26 @@ export class Room {
             }
         });
 
-        this.banPhase();
+        await this.banPhase();
     }
 
     private async banPhase() {
-        if (this.state != "waiting") return;
+        if (this.destroyed || this.state != "waiting") return;
         this.state = "banning";
 
         while (!this.playersBanned[0] || !this.playersBanned[1]) {
-            if (this.playersDisconnected[0] || this.playersDisconnected[1]) return;
+            if (this.destroyed || this.playersDisconnected[0] || this.playersDisconnected[1]) return;
             await new Promise(resolve => setTimeout(resolve, 100));
         }
 
         // Just in case........ can be removed though?
         await new Promise(resolve => setTimeout(resolve, 300));
-        if (this.playersDisconnected[0] || this.playersDisconnected[1]) return;
+        if (this.destroyed || this.playersDisconnected[0] || this.playersDisconnected[1]) return;
 
         const canChooseTrackIndexes = this.roster.trackList.map((_, index) => index).filter((i) => !this.bannedTrackIndexes.includes(i));
         const chosenTrackIndex = canChooseTrackIndexes[Math.floor(Math.random() * canChooseTrackIndexes.length)];
+        const difficulty = ["detected", "invaded", "massive", "reboot"][this.roster.diffList[chosenTrackIndex]];
+        this.selectedChartId = `${this.roster.trackList[chosenTrackIndex]}/${difficulty}`;
         this.broadcast({
             status: "ok",
             action: "annoFinnalChart",
@@ -276,32 +302,33 @@ export class Room {
         });
 
         while (!this.playersReady[0] || !this.playersReady[1]) {
-            if (this.playersDisconnected[0] || this.playersDisconnected[1]) return;
+            if (this.destroyed || this.playersDisconnected[0] || this.playersDisconnected[1]) return;
             await new Promise(resolve => setTimeout(resolve, 100));
         }
-        this.ingamePhase();
+        await this.ingamePhase();
     }
 
     private async ingamePhase() {
-        if (this.state != "banning") return;
+        if (this.destroyed || this.state != "banning") return;
 
         this.state = "ingame";
+        this.startedAt = Date.now();
         this.broadcast({
             status: "ok",
             action: "allPlayerReady",
             data: {}
         });
 
-        while (!this.playersFinished[0] || !this.playersFinished[1]) {
-            if (this.playersDisconnected[0] || this.playersDisconnected[1]) return;
+        while (!this.playersFinished.every((finished, index) => finished || this.playersDisconnected[index])) {
+            if (this.destroyed) return;
             await new Promise(resolve => setTimeout(resolve, 100));
         }
+        if (this.destroyed) return;
 
         this.state = "finished";
 
         const [player1, player2] = this.players;
-        const player1Result = await this.app.playService.getChartPlayByOnlyId(this.playersResultIds[0] ?? "");
-        const player2Result = await this.app.playService.getChartPlayByOnlyId(this.playersResultIds[1] ?? "");
+        const [player1Result, player2Result] = this.playersResults;
 
         const player1Score = {
             score: player1Result?.score ?? 0,
@@ -321,7 +348,9 @@ export class Room {
         };
 
         let player1Win: boolean | null = false;
-        if (player1Result && player2Result) {
+        if (this.playersDisconnected[0] !== this.playersDisconnected[1]) {
+            player1Win = !this.playersDisconnected[0];
+        } else if (player1Result && player2Result) {
             player1Win = player1Result.score === player2Result.score ? null : player1Result.score > player2Result.score;
         } else {
             player1Win = player1Result != null;
@@ -373,7 +402,7 @@ export class RoomsManager {
     }
 
     public addPlayer(player: Player) {
-        if (this.playerToRoomMap.has(player.id) || this.waitingQueue.some(p => p.id == player.id)) {
+        if (this.hasPlayer(player.id)) {
             return false;
         }
 
@@ -383,17 +412,24 @@ export class RoomsManager {
         return true;
     }
 
+    public hasPlayer(playerId: string) {
+        return this.playerToRoomMap.has(playerId) || this.waitingQueue.some(player => player.id === playerId);
+    }
+
     private createRoom() {
         if (this.waitingQueue.length >= 2) {
             const [player1, player2] = this.waitingQueue.splice(0, 2);
             const room = new Room(this.app, [player1, player2], () => {
-                room.players.forEach(p => this.playerToRoomMap.delete(p.id));
+                room.players.forEach(p => {
+                    if (this.playerToRoomMap.get(p.id) === room.id) this.playerToRoomMap.delete(p.id);
+                });
                 this.rooms.delete(room.id);
             });
 
             this.rooms.set(room.id, room);
             this.playerToRoomMap.set(player1.id, room.id);
             this.playerToRoomMap.set(player2.id, room.id);
+            room.start();
 
             this.removeFromQueue(player1);
             this.removeFromQueue(player2);
@@ -421,8 +457,7 @@ export class RoomsManager {
         const room = this.getRoomByPlayerId(player.id);
         if (room && room.players.includes(player)) {
             room.onPlayerDisconnect(player);
-            room.players.forEach(p => this.playerToRoomMap.delete(p.id));
-            this.rooms.delete(room.id);
+            if (this.playerToRoomMap.get(player.id) === room.id) this.playerToRoomMap.delete(player.id);
         }
     }
 

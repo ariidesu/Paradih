@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from "fastify";
 import fastifyWebsocket from "@fastify/websocket";
-import { ClientMessage } from "./types";
+import { isClientMessage } from "./types";
 import { Player, RoomsManager } from "./manager";
 import { LinkerClient, PlayerInfo } from "./linkerClient";
 import { randomUUID } from "crypto";
@@ -25,13 +25,13 @@ const battleWs: FastifyPluginAsync = async (app) => {
         preHandler: app.authService.verifyBattleToken,
         websocket: true
     }, async (socket, request) => {
-        if (!request.user) {
+        if (!request.user || !app.gameDataService.getBattleData().enabled) {
             socket.close();
             return;
         }
 
         // NOTE: Is this correct?
-        if (request.user.battleBanned && request.user.battleBanUntil.getTime() > Date.now()) {
+        if (request.user.battleBanned && (request.user.battleBanUntil.getTime() === 0 || request.user.battleBanUntil.getTime() > Date.now())) {
             socket.close();
             return;
         }
@@ -45,7 +45,8 @@ const battleWs: FastifyPluginAsync = async (app) => {
             processing = processing.then(async () => {
                 try {
                     if (socket.readyState !== 1) return;
-                    const message: ClientMessage = JSON.parse(app.decryptPara(Buffer.from(msg.toString(), "base64")));
+                    const message: unknown = JSON.parse(app.decryptPara(Buffer.from(msg.toString(), "base64")));
+                    if (!isClientMessage(message)) return;
                     const acknowledge = () => {
                         if (message.nonce && socket.readyState === 1) {
                             socket.send(app.encryptPara(JSON.stringify({ status: "ok", code: "OK", nonce: message.nonce })).toString("base64"));
@@ -69,6 +70,7 @@ const battleWs: FastifyPluginAsync = async (app) => {
                         if (app.config.CROSS_DECODE_USE_LINKER) {
                             linkerPlayerInfo = {
                                 id: playerId,
+                                connectionId: randomUUID(),
                                 username: request.user!.username,
                                 usernameMask: request.user!.usernameCode.toString(),
                                 level: 0,
@@ -133,6 +135,10 @@ const battleWs: FastifyPluginAsync = async (app) => {
 
                         switch (message.action) {
                             case "startMatch":
+                                if (manager.hasPlayer(player.id)) {
+                                    player.sendMessage({ status: "failed", code: "IN_BATTLE_ALREADY", nonce: message.nonce ?? randomUUID() });
+                                    return;
+                                }
                                 player.level = message.data.playerLevel;
                                 player.isHiddenInfo = message.data.isHiddenInfo;
                                 player.isHiddenRating = message.data.isHiddenRating;
@@ -142,26 +148,29 @@ const battleWs: FastifyPluginAsync = async (app) => {
                                 }
                                 break;
                             case "cancelGame":
+                                acknowledge();
                                 manager.removePlayer(player);
-                                break;
+                                socket.close();
+                                return;
                             case "banChart":
-                                room!.onPlayerSetBan(player, message);
+                                if (!room!.onPlayerSetBan(player, message)) return;
                                 break;
                             case "playerReady":
-                                room!.onPlayerReady(player);
+                                if (!room!.onPlayerReady(player)) return;
                                 break;
                             case "updateScore":
-                                room!.onPlayerUpdateScore(player, message);
+                                if (!room!.onPlayerUpdateScore(player, message)) return;
                                 break;
                             case "donePlaying":
                                 if (!await room!.onPlayerDonePlaying(player, message)) return;
                                 break;
                             case "gameIsOver":
+                                acknowledge();
                                 manager.removePlayer(player);
-                                break;
+                                socket.close();
+                                return;
                         }
                         acknowledge();
-                        if (message.action === "cancelGame" || message.action === "gameIsOver") socket.close();
                     }
 
                 } catch (error) {

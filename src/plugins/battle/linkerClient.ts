@@ -1,10 +1,11 @@
 import { FastifyInstance } from "fastify";
 import WebSocket from "ws";
 import { randomUUID } from "crypto";
-import { ClientMessage, ServerMessage, UpdateScoreData } from "./types";
+import { ClientMessage, ClientUpdateScoreMessage, ServerMessage } from "./types";
 
 export interface PlayerInfo {
     id: string;
+    connectionId: string;
     username: string;
     usernameMask: string;
     level: number;
@@ -15,6 +16,10 @@ export interface PlayerInfo {
 }
 
 export interface LinkerPlayResultData {
+    roomId: string;
+    roundStartedAt: string;
+    chartId: string;
+    createdAt: string;
     score: number;
     grade: number;
     combo: number;
@@ -37,6 +42,7 @@ export type LinkerForwardMessage = {
 export type LinkerToUserMessage = {
     linker: true;
     targetPlayerId: string;
+    targetConnectionId: string;
     message: ServerMessage;
 }
 
@@ -45,14 +51,16 @@ export class LinkerClient {
     private linkerSocket: WebSocket | null = null;
     private userSockets = new Map<string, WebSocket>();
     private userInfo = new Map<string, PlayerInfo>();
+    private rounds = new Map<string, { roomId: string; chartId?: string; startedAt?: number }>();
 
-    private lastScoreData = new Map<string, UpdateScoreData>();
+    private pendingScores = new Map<string, ClientUpdateScoreMessage>();
     private scoreIntervals = new Map<string, NodeJS.Timeout>();
 
     private heartbeatInterval: NodeJS.Timeout | null = null;
     private reconnectTimeout: NodeJS.Timeout | null = null;
     private isReconnecting = false;
     private stopped = false;
+    private processing = Promise.resolve();
 
     private static readonly HEARTBEAT_INTERVAL = 30000; // 30 seconds
     private static readonly RECONNECT_DELAY = 5000; // 5 seconds
@@ -76,6 +84,10 @@ export class LinkerClient {
         this.linkerSocket = socket;
 
         socket.on("open", () => {
+            if (this.stopped || this.linkerSocket !== socket) {
+                socket.terminate();
+                return;
+            }
             console.log("Connected to linker");
             this.linkerSocket = socket;
             this.isReconnecting = false;
@@ -87,14 +99,17 @@ export class LinkerClient {
         });
 
         socket.on("message", (data) => {
-            try {
-                const message = JSON.parse(data.toString());
-                if (message.linker && message.targetPlayerId) {
-                    this.handleLinkerMessage(message as LinkerToUserMessage);
+            this.processing = this.processing.then(async () => {
+                if (this.stopped || this.linkerSocket !== socket) return;
+                try {
+                    const message = JSON.parse(data.toString());
+                    if (message.linker && message.targetPlayerId) {
+                        await this.handleLinkerMessage(message as LinkerToUserMessage);
+                    }
+                } catch (error) {
+                    console.error("Error processing linker message:", error);
                 }
-            } catch (error) {
-                console.error("Error processing linker message:", error);
-            }
+            });
         });
 
         socket.on("close", () => {
@@ -127,6 +142,7 @@ export class LinkerClient {
 
     public clearLinkerSocket(): void {
         if (!this.linkerSocket) return;
+        const linkerSocket = this.linkerSocket;
 
         console.log("Linker disconnected, closing all user connections");
         this.stopHeartbeat();
@@ -139,7 +155,9 @@ export class LinkerClient {
         }
         this.userSockets.clear();
         this.userInfo.clear();
+        this.rounds.clear();
         this.linkerSocket = null;
+        linkerSocket.terminate();
         this.isReconnecting = false;
 
         this.scheduleReconnect();
@@ -185,32 +203,62 @@ export class LinkerClient {
         }
         this.userSockets.clear();
         this.userInfo.clear();
+        this.rounds.clear();
     }
 
-    public handleLinkerMessage(message: LinkerToUserMessage): void {
+    public async handleLinkerMessage(message: LinkerToUserMessage): Promise<void> {
         const targetSocket = this.userSockets.get(message.targetPlayerId);
-        if (!targetSocket || targetSocket.readyState !== 1) {
+        const targetPlayer = this.userInfo.get(message.targetPlayerId);
+        if (!targetSocket || targetSocket.readyState !== 1 ||
+            targetPlayer?.connectionId !== message.targetConnectionId) {
             console.log(`Target player ${message.targetPlayerId} not connected`);
             return;
         }
 
         const userMessage = message.message;
+        if (userMessage.action === "matchSuccess") {
+            try {
+                await this.app.models.BattleParticipation.updateOne(
+                    { userId: message.targetPlayerId, roomId: userMessage.data.roomId },
+                    { $setOnInsert: { opponentId: userMessage.data.opponentId } },
+                    { upsert: true }
+                );
+            } catch (error) {
+                targetSocket.close();
+                this.removeUser(targetPlayer);
+                throw error;
+            }
+        }
+        if (this.userSockets.get(message.targetPlayerId) !== targetSocket || targetSocket.readyState !== 1) return;
+        if (userMessage.action === "matchSuccess") {
+            this.rounds.set(message.targetPlayerId, { roomId: userMessage.data.roomId });
+        } else {
+            const round = this.rounds.get(message.targetPlayerId);
+            if (round && userMessage.action === "annoFinnalChart") {
+                const difficulty = ["detected", "invaded", "massive", "reboot"][userMessage.data.chartDiff];
+                round.chartId = `${userMessage.data.trackId}/${difficulty}`;
+            } else if (round && userMessage.action === "allPlayerReady") {
+                round.startedAt ??= Date.now();
+            }
+        }
         userMessage.nonce ??= randomUUID();
         targetSocket.send(this.app.encryptPara(JSON.stringify(userMessage)).toString("base64"));
     }
 
     public addUser(playerInfo: PlayerInfo, socket: WebSocket): boolean {
         const currentSocket = this.userSockets.get(playerInfo.id);
-        if (currentSocket && currentSocket !== socket) return false;
+        if (currentSocket && currentSocket !== socket && currentSocket.readyState < WebSocket.CLOSING) return false;
+        if (currentSocket && currentSocket !== socket) this.removeUser(this.userInfo.get(playerInfo.id));
         this.userSockets.set(playerInfo.id, socket);
         this.userInfo.set(playerInfo.id, playerInfo);
         return true;
     }
 
     public removeUser(playerInfo: PlayerInfo | undefined, notifyLinker = true): void {
-        if (!playerInfo || !this.userInfo.has(playerInfo.id)) return;
+        if (!playerInfo || this.userInfo.get(playerInfo.id) !== playerInfo) return;
         this.userSockets.delete(playerInfo.id);
         this.userInfo.delete(playerInfo.id);
+        this.rounds.delete(playerInfo.id);
         this.cleanupPlayer(playerInfo.id);
 
         if (notifyLinker && this.isConnected()) {
@@ -228,7 +276,7 @@ export class LinkerClient {
             clearInterval(interval);
             this.scoreIntervals.delete(playerId);
         }
-        this.lastScoreData.delete(playerId);
+        this.pendingScores.delete(playerId);
     }
 
     public async forwardToLinker(playerInfo: PlayerInfo, message: ClientMessage): Promise<void> {
@@ -238,7 +286,7 @@ export class LinkerClient {
         }
 
         if (message.action == "updateScore") {
-            this.handleScoreUpdate(playerInfo, message.data);
+            this.handleScoreUpdate(playerInfo, message);
             return;
         }
 
@@ -249,9 +297,16 @@ export class LinkerClient {
         };
 
         if (message.action == "donePlaying") {
+            const round = this.rounds.get(playerInfo.id);
+            if (!round || round.startedAt === undefined) return;
             const playResult = await this.app.playService.getChartPlayByOnlyId(message.data.resultId);
-            if (playResult && playResult.userId.toString() === playerInfo.id) {
+            if (playResult && playResult.userId.toString() === playerInfo.id &&
+                playResult.chartId === round.chartId && playResult.createdAt.getTime() >= round.startedAt) {
                 forwardMessage.playResult = {
+                    roomId: round.roomId,
+                    roundStartedAt: new Date(round.startedAt).toISOString(),
+                    chartId: playResult.chartId,
+                    createdAt: playResult.createdAt.toISOString(),
                     score: playResult.score,
                     grade: playResult.grade,
                     combo: playResult.combo,
@@ -264,33 +319,30 @@ export class LinkerClient {
                     }
                 };
             } else return;
+            if (this.userInfo.get(playerInfo.id) !== playerInfo || !this.isConnected()) return;
+            this.flushScore(playerInfo);
             this.cleanupPlayer(playerInfo.id);
         }
 
         this.sendToLinker(forwardMessage);
     }
 
-    private handleScoreUpdate(playerInfo: PlayerInfo, scoreData: UpdateScoreData): void {
-        this.lastScoreData.set(playerInfo.id, scoreData);
+    private handleScoreUpdate(playerInfo: PlayerInfo, message: ClientUpdateScoreMessage): void {
+        this.pendingScores.set(playerInfo.id, message);
 
         if (!this.scoreIntervals.has(playerInfo.id)) {
-            const interval = setInterval(() => {
-                const lastScore = this.lastScoreData.get(playerInfo.id);
-                if (lastScore && this.isConnected()) {
-                    this.sendToLinker({
-                        linker: true,
-                        playerInfo,
-                        message: {
-                            action: "updateScore",
-                            timestamp: Math.floor(Date.now() / 1000),
-                            data: lastScore
-                        }
-                    });
-                }
-            }, 300);
-
+            this.flushScore(playerInfo);
+            const interval = setInterval(() => this.flushScore(playerInfo), 300);
+            interval.unref();
             this.scoreIntervals.set(playerInfo.id, interval);
         }
+    }
+
+    private flushScore(playerInfo: PlayerInfo): void {
+        const message = this.pendingScores.get(playerInfo.id);
+        if (!message || !this.isConnected()) return;
+        this.pendingScores.delete(playerInfo.id);
+        this.sendToLinker({ linker: true, playerInfo, message });
     }
 
     private sendToLinker(message: LinkerForwardMessage): void {
